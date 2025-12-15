@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"snd_Thunder0Close",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "channelFormat":1,
+  "compression":0,
+  "compressionQuality":6,
+  "conversionMode":0,
+  "duration":7.432854,
+  "exportDir":"",
+  "name":"snd_Thunder0Close",
+  "parent":{
+    "name":"Environment",
+    "path":"folders/Sounds/SFX/Environment.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_Thunder0Close.wav",
+  "volume":0.25,
+}

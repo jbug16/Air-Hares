@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"snd_Rain2Soft",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":59.9375,
+  "exportDir":"",
+  "name":"snd_Rain2Soft",
+  "parent":{
+    "name":"Environment",
+    "path":"folders/Sounds/SFX/Environment.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_Rain2Soft.wav",
+  "volume":1.0,
+}

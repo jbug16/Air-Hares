@@ -1,0 +1,4 @@
+
+TweenStart("image_xscale", 2.24, 0.64, 0.3*GAMESPD, TWEENTYPE.CIRC_OUT, 0.1*GAMESPD);
+TweenStart("image_yscale", 2.24, 0.64, 0.3*GAMESPD, TWEENTYPE.CIRC_OUT, 0.1*GAMESPD);
+TweenStart("y", 210, 60, 0.3*GAMESPD, TWEENTYPE.CIRC_OUT, 0.1*GAMESPD);

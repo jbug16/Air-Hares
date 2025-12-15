@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"snd_ScoreScreenClose",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":1.75,
+  "exportDir":"",
+  "name":"snd_ScoreScreenClose",
+  "parent":{
+    "name":"Other",
+    "path":"folders/Sounds/SFX/Other.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_ScoreScreenClose.wav",
+  "volume":1.0,
+}

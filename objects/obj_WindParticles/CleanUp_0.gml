@@ -1,0 +1,2 @@
+part_system_destroy(particle_system);
+audio_stop_sound(snd_DesertWind);

@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"snd_ProjSeedShot",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":0.390625,
+  "exportDir":"",
+  "name":"snd_ProjSeedShot",
+  "parent":{
+    "name":"Projectiles",
+    "path":"folders/Sounds/SFX/Projectiles.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_ProjSeedShot",
+  "volume":1.0,
+}

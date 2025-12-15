@@ -1,0 +1,2 @@
+///@desc Pellet machinegun speed
+

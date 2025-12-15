@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"snd_MusicStage1_1",
+  "audioGroupId":{
+    "name":"audiogroup_music",
+    "path":"audiogroups/audiogroup_music",
+  },
+  "bitDepth":1,
+  "channelFormat":1,
+  "compression":0,
+  "compressionQuality":6,
+  "conversionMode":0,
+  "duration":120.0,
+  "exportDir":"",
+  "name":"snd_MusicStage1_1",
+  "parent":{
+    "name":"Stage 1",
+    "path":"folders/Sounds/Music Tracks/Stage 1.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_MusicStage1_1.wav",
+  "volume":1.0,
+}

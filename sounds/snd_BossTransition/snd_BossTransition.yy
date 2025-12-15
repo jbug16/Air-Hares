@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"snd_BossTransition",
+  "audioGroupId":{
+    "name":"audiogroup_music",
+    "path":"audiogroups/audiogroup_music",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":7.0588436,
+  "exportDir":"",
+  "name":"snd_BossTransition",
+  "parent":{
+    "name":"General",
+    "path":"folders/Sounds/Music Tracks/Boss Fights/General.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_BossTransition.wav",
+  "volume":1.0,
+}

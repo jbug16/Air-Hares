@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"snd_SplashScreen",
+  "audioGroupId":{
+    "name":"audiogroup_music",
+    "path":"audiogroups/audiogroup_music",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":122.9663,
+  "exportDir":"",
+  "name":"snd_SplashScreen",
+  "parent":{
+    "name":"Cutscenes",
+    "path":"folders/Sounds/Cutscenes.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_SplashScreen",
+  "volume":1.0,
+}

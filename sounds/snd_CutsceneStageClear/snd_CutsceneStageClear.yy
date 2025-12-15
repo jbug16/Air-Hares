@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"snd_CutsceneStageClear",
+  "audioGroupId":{
+    "name":"audiogroup_music",
+    "path":"audiogroups/audiogroup_music",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":7.126349,
+  "exportDir":"",
+  "name":"snd_CutsceneStageClear",
+  "parent":{
+    "name":"Cutscenes",
+    "path":"folders/Sounds/Cutscenes.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_CutsceneStageClear.wav",
+  "volume":1.0,
+}

@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"snd_DialogTypingEnd",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":1.25,
+  "exportDir":"",
+  "name":"snd_DialogTypingEnd",
+  "parent":{
+    "name":"Other",
+    "path":"folders/Sounds/SFX/Other.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_DialogTypingEnd.wav",
+  "volume":1.0,
+}

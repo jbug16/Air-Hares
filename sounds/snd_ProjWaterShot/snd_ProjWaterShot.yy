@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"snd_ProjWaterShot",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":0.5625,
+  "exportDir":"",
+  "name":"snd_ProjWaterShot",
+  "parent":{
+    "name":"Projectiles",
+    "path":"folders/Sounds/SFX/Projectiles.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_ProjWaterShot",
+  "volume":1.0,
+}

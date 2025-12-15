@@ -1,0 +1,1 @@
+trig_anim_end = true;

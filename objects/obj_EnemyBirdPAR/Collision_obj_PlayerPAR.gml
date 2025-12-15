@@ -1,0 +1,1 @@
+other.trig_damaged = true;

@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"snd_MusicStage3_3",
+  "audioGroupId":{
+    "name":"audiogroup_music",
+    "path":"audiogroups/audiogroup_music",
+  },
+  "bitDepth":1,
+  "channelFormat":1,
+  "compression":0,
+  "compressionQuality":6,
+  "conversionMode":0,
+  "duration":112.55174,
+  "exportDir":"",
+  "name":"snd_MusicStage3_3",
+  "parent":{
+    "name":"Stage 3",
+    "path":"folders/Sounds/Music Tracks/Stage 3.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_MusicStage3_3.wav",
+  "volume":1.0,
+}

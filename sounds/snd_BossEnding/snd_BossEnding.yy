@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"snd_BossEnding",
+  "audioGroupId":{
+    "name":"audiogroup_music",
+    "path":"audiogroups/audiogroup_music",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":8.7572565,
+  "exportDir":"",
+  "name":"snd_BossEnding",
+  "parent":{
+    "name":"General",
+    "path":"folders/Sounds/Music Tracks/Boss Fights/General.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_BossEnding.wav",
+  "volume":1.0,
+}

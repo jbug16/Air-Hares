@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"snd_BossHighTopPhase1",
+  "audioGroupId":{
+    "name":"audiogroup_music",
+    "path":"audiogroups/audiogroup_music",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":57.133198,
+  "exportDir":"",
+  "name":"snd_BossHighTopPhase1",
+  "parent":{
+    "name":"Boss Fights",
+    "path":"folders/Sounds/Music Tracks/Boss Fights.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_BossHighTopPhase1.wav",
+  "volume":1.0,
+}

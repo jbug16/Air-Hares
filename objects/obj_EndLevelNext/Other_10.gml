@@ -1,0 +1,8 @@
+
+// Inherit the parent event
+event_inherited();
+
+if(global.current_level == 4) room_goto(rm_StageClear1);
+else if(global.current_level == 8) room_goto(rm_StageClear2);
+else if(global.current_level == 12) room_goto(rm_StageClear3);
+else room_goto(global.story_mode_level[global.current_level][STORYPROP.ROOM]);

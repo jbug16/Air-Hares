@@ -2,12 +2,16 @@
 if (parent_index == obj_TitlebBtnGeneralPAR and mode_on) exit;
 
 
-// MOUSE hover-in
-if (!global.mouse_disable and !focus and (mouse_prev_x != mouse_x or mouse_prev_y != mouse_y)) 
+// Convert window mouse coordinates to room coordinates
+var _room_mouse_x = window_mouse_get_x() * (room_width / window_get_width());
+var _room_mouse_y = window_mouse_get_y() * (room_height / window_get_height());
+
+// MOUSE hover-in - use converted coordinates for movement detection too
+if (!global.mouse_disable and !focus and (mouse_prev_x != _room_mouse_x or mouse_prev_y != _room_mouse_y)) 
 {
 	var _scale = scale_big/image_xscale;	// check relative to original btn size
-	if (mouse_x > x - 0.5*sprite_width*_scale and mouse_x < x + 0.5*sprite_width*_scale)
-	if (mouse_y > y - 0.5*sprite_height*_scale and mouse_y < y + 0.5*sprite_height*_scale)
+	if (_room_mouse_x > x - 0.5*sprite_width*_scale and _room_mouse_x < x + 0.5*sprite_width*_scale)
+	if (_room_mouse_y > y - 0.5*sprite_height*_scale and _room_mouse_y < y + 0.5*sprite_height*_scale)
 	{
 		with (parent_index)
 		{
@@ -62,6 +66,6 @@ if(alarm[2] < 0 and focus)
 
 image_yscale = image_xscale;	// tweeining is done only on xscale, so this ensures the same scaling
 
-// Remember previous mouse x/y (for mouse hover)
-mouse_prev_x = mouse_x;
-mouse_prev_y = mouse_y;
+// Remember previous mouse x/y (for mouse hover) - store converted coordinates
+mouse_prev_x = _room_mouse_x;
+mouse_prev_y = _room_mouse_y;

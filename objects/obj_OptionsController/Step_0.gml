@@ -149,12 +149,8 @@ else if(menu_selected > menu_count - 1) menu_selected = 0;
 
 if(global.mouse_disable) exit;
 
-// Convert window mouse coordinates to room coordinates
-var _room_mouse_x = window_mouse_get_x() * (room_width / window_get_width());
-var _room_mouse_y = window_mouse_get_y() * (room_height / window_get_height());
-
-// Only if mouse moving - use converted coordinates
-if(mouse_prev_x != _room_mouse_x or mouse_prev_y != _room_mouse_y)
+// Only if mouse moving
+if(mouse_prev_x != mouse_x or mouse_prev_y != mouse_y)
 {
 	var _x_left = room_width * 0.2; //position of the text
 	var _y_start = 0.3*room_height;
@@ -165,7 +161,7 @@ if(mouse_prev_x != _room_mouse_x or mouse_prev_y != _room_mouse_y)
 	}
 	for(var _i = 0; _i < array_length(menu); _i++)
 	{
-		if(point_in_rectangle(_room_mouse_x, _room_mouse_y, _x_left, _y_start + (52*_i) - 0.03*room_height,
+		if(point_in_rectangle(mouse_x, mouse_y, _x_left, _y_start + (52*_i) - 0.03*room_height,
 			_x_left + string_width(menu[_i]), _y_start + (52*_i) + 0.03*room_height))
 			{
 				if(!in_controls or(in_controls and alarm[1] < 0)) menu_selected = _i;
@@ -204,7 +200,7 @@ else
 	}
 	for(var _i = 0; _i < array_length(menu); _i++)
 	{
-		if(point_in_rectangle(_room_mouse_x, _room_mouse_y, _x_left, _y_start + (52*_i) - 0.03*room_height,
+		if(point_in_rectangle(mouse_x, mouse_y, _x_left, _y_start + (52*_i) - 0.03*room_height,
 			_x_left + string_width(menu[_i]), _y_start + (52*_i) + 0.03*room_height))
 			{
 				if(_i == menu_selected)
@@ -232,6 +228,6 @@ else
 	}
 }
 
-// Remember previous mouse x/y (for mouse hover) - store converted coordinates
-mouse_prev_x = _room_mouse_x;
-mouse_prev_y = _room_mouse_y;
+// Remember previous mouse x/y (for mouse hover)
+mouse_prev_x = mouse_x;
+mouse_prev_y = mouse_y;

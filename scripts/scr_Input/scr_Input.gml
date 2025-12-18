@@ -135,14 +135,26 @@ function InputGet(_key = noone, _pressed = true, _device = all){
 						// Vertical move
 						if(_key_list[j] == gp_axislv)
 						{
-							if(_key == INPUT.UP) return (gamepad_axis_value(_gp[i], _key_list[j]) < -0.55 and !obj_Main.gp_left_axis[_gp[i]]);
-							else if(_key == INPUT.DOWN) return (gamepad_axis_value(_gp[i], _key_list[j]) > 0.55 and !obj_Main.gp_left_axis[_gp[i]]);
+							if(_key == INPUT.UP) {
+								if(_pressed) return (gamepad_axis_value(_gp[i], _key_list[j]) < -0.55 and !obj_Main.gp_left_axis[_gp[i]]);
+								else return (gamepad_axis_value(_gp[i], _key_list[j]) < -0.55);
+							}
+							else if(_key == INPUT.DOWN) {
+								if(_pressed) return (gamepad_axis_value(_gp[i], _key_list[j]) > 0.55 and !obj_Main.gp_left_axis[_gp[i]]);
+								else return (gamepad_axis_value(_gp[i], _key_list[j]) > 0.55);
+							}
 						}
 						// Horizontal move
 						else
 						{
-							if(_key == INPUT.LEFT) return (gamepad_axis_value(_gp[i], gp_axislh) < -0.55 and !obj_Main.gp_left_axis[_gp[i]]);
-							else if(_key == INPUT.RIGHT) return (gamepad_axis_value(_gp[i], gp_axislh) > 0.55 and !obj_Main.gp_left_axis[_gp[i]]);
+							if(_key == INPUT.LEFT) {
+								if(_pressed) return (gamepad_axis_value(_gp[i], gp_axislh) < -0.55 and !obj_Main.gp_left_axis[_gp[i]]);
+								else return (gamepad_axis_value(_gp[i], gp_axislh) < -0.55);
+							}
+							else if(_key == INPUT.RIGHT) {
+								if(_pressed) return (gamepad_axis_value(_gp[i], gp_axislh) > 0.55 and !obj_Main.gp_left_axis[_gp[i]]);
+								else return (gamepad_axis_value(_gp[i], gp_axislh) > 0.55);
+							}
 						}
 					}
 				}

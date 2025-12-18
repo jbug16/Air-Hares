@@ -124,7 +124,7 @@ if trig_death {
 // Get input
 var _device = global.control_device[player];
 // loop-de-loop
-var _in_loop = InputGet(INPUT.LOOP_DE_LOOP, 0, _device);
+var _in_loop = InputGet(INPUT.LOOP_DE_LOOP, 1, _device);
 if (alarm[0] > 0) _in_loop = false;
 //else if (_in_loop) {
 //	show_debug_message("loop-de-loop triggered."); 
@@ -324,7 +324,17 @@ switch(state) {
 		
 		// Transition
 		if trig_anim_end {
-			global.speed_parallax = parallax_speed_prev;
+			// Only restore if no other player is in LOOP state
+			var _other_player_looping = false;
+			with(obj_PlayerPAR) {
+				if (id != other.id && state == PLAYERSTATE.LOOP) {
+					_other_player_looping = true;
+				}
+			}
+			
+			if (!_other_player_looping) {
+				global.speed_parallax = parallax_speed_prev;
+			}
 			state = PLAYERSTATE.IDLE;	
 		}
 		break;

@@ -6,7 +6,7 @@ draw_set_valign(fa_top);
 draw_set_font(fnt_Federo16);
 draw_set_alpha(image_alpha);
 
-draw_text(x, bbox_bottom - 15, "Follow");
+draw_text(x, bbox_bottom - 15, text);
 
 
 

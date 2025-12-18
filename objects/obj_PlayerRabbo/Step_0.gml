@@ -126,10 +126,6 @@ var _device = global.control_device[player];
 // loop-de-loop
 var _in_loop = InputGet(INPUT.LOOP_DE_LOOP, 1, _device);
 if (alarm[0] > 0) _in_loop = false;
-//else if (_in_loop) {
-//	show_debug_message("loop-de-loop triggered."); 
-//	alarm[0] = loop_de_loop_cd;
-//}
 
 // Confusion exchanges input
 if confusion_counter > 0 {

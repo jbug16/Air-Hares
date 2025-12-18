@@ -48,12 +48,26 @@ function PlayerParryCheck(_in_parry){
 
 function PlayerLoopCheck(_in_loop){
 	if (_in_loop and global.movement_loop > 0) { // Check if input is true, and can loop.
+		
 		// Only save the previous speed if we're not already in a loop state
-		// (i.e., if another player is already looping, don't overwrite the saved value)
-		if (global.speed_parallax != -6) {
-			parallax_speed_prev = global.speed_parallax;
-		}
+		if (global.speed_parallax != -6) parallax_speed_prev = global.speed_parallax;
 		state = PLAYERSTATE.LOOP;
+		image_index = 0;
+				
+		// Trigger loop for the other player in co-op mode
+		with(obj_PlayerPAR) {
+			if (id != other.id && state != PLAYERSTATE.LOOP && state != PLAYERSTATE.DEATH) {
+				if (global.speed_parallax != -6) parallax_speed_prev = global.speed_parallax;
+				state = PLAYERSTATE.LOOP;
+				
+				PlayerSpriteSet(s_loop);
+				trig_anim_end = false;
+				image_index = 0;
+				
+				alarm[0] = loop_de_loop_cd; // cooldown
+			}
+		}
+		
 		return true;
 	}
 	return false;

@@ -35,8 +35,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_InstagramIcon",
-    "path":"sprites/spr_InstagramIcon/spr_InstagramIcon.yy",
+    "name":"spr_DiscordIcon",
+    "path":"sprites/spr_DiscordIcon/spr_DiscordIcon.yy",
   },
   "spriteMaskId":null,
   "visible":true,

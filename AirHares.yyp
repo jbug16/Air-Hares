@@ -426,6 +426,7 @@
     {"id":{"name":"spr_DirkRollLeft","path":"sprites/spr_DirkRollLeft/spr_DirkRollLeft.yy",},},
     {"id":{"name":"spr_DirkRollRight","path":"sprites/spr_DirkRollRight/spr_DirkRollRight.yy",},},
     {"id":{"name":"spr_DirtHitbox","path":"sprites/spr_DirtHitbox/spr_DirtHitbox.yy",},},
+    {"id":{"name":"spr_DiscordIcon","path":"sprites/spr_DiscordIcon/spr_DiscordIcon.yy",},},
     {"id":{"name":"spr_EffectBigRedConfusion","path":"sprites/spr_EffectBigRedConfusion/spr_EffectBigRedConfusion.yy",},},
     {"id":{"name":"spr_EffectConfusion","path":"sprites/spr_EffectConfusion/spr_EffectConfusion.yy",},},
     {"id":{"name":"spr_EffectParalysis","path":"sprites/spr_EffectParalysis/spr_EffectParalysis.yy",},},

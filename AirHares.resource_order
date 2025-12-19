@@ -357,6 +357,7 @@
     {"name":"spr_DirkRollLeft","order":7,"path":"sprites/spr_DirkRollLeft/spr_DirkRollLeft.yy",},
     {"name":"spr_DirkRollRight","order":8,"path":"sprites/spr_DirkRollRight/spr_DirkRollRight.yy",},
     {"name":"spr_DirtHitbox","order":3,"path":"sprites/spr_DirtHitbox/spr_DirtHitbox.yy",},
+    {"name":"spr_DiscordIcon","order":12,"path":"sprites/spr_DiscordIcon/spr_DiscordIcon.yy",},
     {"name":"spr_EffectBigRedConfusion","order":6,"path":"sprites/spr_EffectBigRedConfusion/spr_EffectBigRedConfusion.yy",},
     {"name":"spr_EffectParalysis","order":1,"path":"sprites/spr_EffectParalysis/spr_EffectParalysis.yy",},
     {"name":"spr_EndShrineBarrenHit","order":8,"path":"sprites/spr_EndShrineBarrenHit/spr_EndShrineBarrenHit.yy",},

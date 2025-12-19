@@ -63,8 +63,6 @@ function PlayerLoopCheck(_in_loop){
 				PlayerSpriteSet(s_loop);
 				trig_anim_end = false;
 				image_index = 0;
-				
-				alarm[0] = loop_de_loop_cd; // cooldown
 			}
 		}
 		

@@ -20,13 +20,13 @@ if (array_length(targeted) > 0 and !instance_exists(obj_EndShrine)) {
 			gpu_set_blendmode(bm_add);
 			draw_sprite_ext(sprite_index, image_index, _x_pos, _y_pos, scaling, scaling, image_angle, _col, _alpha);
 			gpu_set_blendmode(bm_normal);
-			draw_sprite_ext(spr_Targets, 1, _x_pos, _y_pos, 0.5*scaling, 0.5*scaling, image_angle, image_blend, 1);
+			draw_sprite_ext(spr_Targets, 2, _x_pos, _y_pos, 0.5*scaling, 0.5*scaling, image_angle, image_blend, 1);
 		}
 		else
 		{
 			var _col = c_yellow;
 			draw_sprite_ext(sprite_index, image_index, _x_pos, _y_pos, scaling, scaling, image_angle, _col, _alpha);
-			draw_sprite_ext(spr_Targets, 1, _x_pos, _y_pos, 0.5*scaling, 0.5*scaling, image_angle, image_blend, 1);
+			draw_sprite_ext(spr_Targets, 2, _x_pos, _y_pos, 0.5*scaling, 0.5*scaling, image_angle, image_blend, 1);
 		}
 	}
 	else

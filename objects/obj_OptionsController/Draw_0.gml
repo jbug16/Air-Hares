@@ -50,7 +50,7 @@ else if(menu_draw and in_controls)
 			if(alarm[1] > 0) draw_set_alpha(control_alpha);
 		}
 		else draw_set_color(c_white);
-		draw_text_transformed(_x_left, _y_start + (52 * i), menu[i], image_xscale, image_yscale, image_angle);
+		draw_text_transformed(_x_left, _y_start + (45 * i), menu[i], image_xscale, image_yscale, image_angle);
 		draw_set_alpha(image_alpha);
 	}
 	
@@ -64,7 +64,7 @@ else if(menu_draw and in_controls)
 			if(alarm[1] > 0) draw_set_alpha(control_alpha);
 		}
 		else draw_set_color(c_white);
-		draw_text_transformed(_x_left, _y_start + (52 * i), key_keyboard[i], image_xscale, image_yscale, image_angle);
+		draw_text_transformed(_x_left, _y_start + (45 * i), key_keyboard[i], image_xscale, image_yscale, image_angle);
 		draw_set_alpha(image_alpha);
 	}
 	
@@ -78,7 +78,7 @@ else if(menu_draw and in_controls)
 			if(alarm[1] > 0) draw_set_alpha(control_alpha);
 		}
 		else draw_set_color(c_white);
-		draw_text_transformed(_x_left, _y_start + (52 * i), key_joypad[i], image_xscale, image_yscale, image_angle);
+		draw_text_transformed(_x_left, _y_start + (45 * i), key_joypad[i], image_xscale, image_yscale, image_angle);
 		draw_set_alpha(image_alpha);
 	}
 }

@@ -61,5 +61,6 @@ input[6] = INPUT.PARRY;
 input[7] = INPUT.SEED;
 input[8] = INPUT.WATER;
 input[9] = INPUT.LOOP_DE_LOOP;
+input[10] = INPUT.TOGGLE_AIM;
 
 input_captured = false; // flag if new input for control is captured

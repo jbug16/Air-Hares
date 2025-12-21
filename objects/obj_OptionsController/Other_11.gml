@@ -24,7 +24,8 @@ if(in_controls)
 	menu[7] = "Shoot Seed";
 	menu[8] = "Shoot Water";
 	menu[9] = "Loop-de-loop";
-	menu[10] = "Back";
+	menu[10] = "Toggle Aim";
+	menu[11] = "Back";
 
 	menu_count = array_length(menu);
 	

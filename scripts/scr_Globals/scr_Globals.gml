@@ -294,6 +294,7 @@ global.keymap[? INPUT.MENU_UP] = [vk_up];
 global.keymap[? INPUT.MENU_DOWN] = [vk_down];
 global.keymap[? INPUT.MENU_LEFT] = [vk_left];
 global.keymap[? INPUT.MENU_RIGHT] = [vk_right];
+global.keymap[? INPUT.TOGGLE_AIM] = [vk_enter];
 
 // Gamepad
 global.gpmap = ds_map_create();
@@ -314,6 +315,8 @@ global.gpmap[? INPUT.MENU_LEFT] = [gp_padl];
 global.gpmap[? INPUT.MENU_RIGHT] = [gp_padr];
 global.gpmap[? INPUT.ROLL_RIGHT] = [gp_shoulderrb];
 global.gpmap[? INPUT.ROLL_LEFT] = [gp_shoulderlb];
+global.gpmap[? INPUT.ROLL_LEFT] = [gp_shoulderlb];
+global.gpmap[? INPUT.TOGGLE_AIM] = [gp_stickr];
 
 // Keyboard/gamepad names
 global.key_names = ds_map_create();
@@ -337,6 +340,8 @@ global.key_names[? gp_axislh] = "L horizont axis";
 global.key_names[? gp_axislv] = "L vert axis";
 global.key_names[? gp_axisrh] = "R horizont axis";
 global.key_names[? gp_axisrv] = "R vert axis";
+global.key_names[? gp_stickr] = "R stick";
+global.key_names[? gp_stickl] = "L stick";
 global.key_names[? vk_add] = "+";
 global.key_names[? vk_alt] = "Alt";
 global.key_names[? vk_backspace] = "Bckspc";
@@ -423,7 +428,7 @@ global.key_names[? ord("Z")] = "Z";
 // Gameplay input from ini file
 ini_open("save.sav");
 
-var _input = [INPUT.LEFT, INPUT.RIGHT, INPUT.UP, INPUT.DOWN, INPUT.ROLL_LEFT, INPUT.ROLL_RIGHT, INPUT.PARRY, INPUT.SEED, INPUT.WATER, INPUT.LOOP_DE_LOOP];
+var _input = [INPUT.LEFT, INPUT.RIGHT, INPUT.UP, INPUT.DOWN, INPUT.ROLL_LEFT, INPUT.ROLL_RIGHT, INPUT.PARRY, INPUT.SEED, INPUT.WATER, INPUT.LOOP_DE_LOOP, INPUT.TOGGLE_AIM];
 
 for(var i = 0; i < array_length(_input); i++)
 {

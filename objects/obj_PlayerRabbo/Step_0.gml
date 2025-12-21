@@ -162,6 +162,7 @@ var _key_shift_p = InputGet(INPUT.SHIFT,,_device);
 var _key_parry_p = InputGet(INPUT.PARRY,,_device);
 var _b_ltrig = InputGet(INPUT.L2,,_device);
 var _b_rtrig = InputGet(INPUT.R2,,_device);
+var _key_toggle = InputGet(INPUT.TOGGLE_AIM,, _device);
 
 // Check to disable input
 if !can_control 
@@ -177,6 +178,7 @@ if !can_control
 	_b_rtrig = false;
 	_roll_right = false;
 	_roll_left = false;
+	_key_toggle = false;
 }
 
 // State machine
@@ -337,43 +339,66 @@ switch(state) {
 }
 
 
+// Toggle to aim at crops or enemy
+if (!instance_exists(obj_Pause) && !instance_exists(obj_ControllerPause)) {
+	if (_key_toggle) {
+		aim_at_crops = !aim_at_crops;
+		show_debug_message($"aim at crops = {aim_at_crops}");
+	}
+}
+
 // Aim shooting
-var i = shoot_target_acquisition_minimum;	// Min acquisition range
-var _aim_success = false;
-repeat(shoot_target_acquisition_range)		// Aim for 1280 pixel
-{ 
-	var _plot = instance_position(x, y - i, obj_FarmPlot);
-	if (_plot != noone and (_plot.state == PLOTSTATE.EMPTY or _plot.state == PLOTSTATE.SEEDED or _plot.state == PLOTSTATE.WATERED)) 
-	{
-		if (shoot_target != noone and shoot_target.targeted != noone) 
+if (aim_at_crops) {
+	var i = shoot_target_acquisition_minimum;	// Min acquisition range
+	var _aim_success = false;
+	repeat(shoot_target_acquisition_range)		// Aim for 1280 pixel
+	{ 
+		var _plot = instance_position(x, y - i, obj_FarmPlot);
+		if (_plot != noone and (_plot.state == PLOTSTATE.EMPTY or _plot.state == PLOTSTATE.SEEDED or _plot.state == PLOTSTATE.WATERED)) 
 		{
+			if (shoot_target != noone and shoot_target.targeted != noone) 
+			{
+				var _index = -1;
+				for (var i = 0; i < array_length(shoot_target.targeted); i++) 
+					if (shoot_target.targeted[i] == player) _index = i;
+				if (_index > -1) array_delete(shoot_target.targeted, _index, 1);
+				//shoot_target.targeted = [];
+			}
+			shoot_target = _plot;
+			var _target = true;
+			for (var i = 0; i < array_length(shoot_target.targeted); i++) 
+			{
+				if (shoot_target.targeted[i] == player) _target = false;
+			}
+			if (_target) array_push(shoot_target.targeted, player);
+			_aim_success = true;
+			break;
+		}
+		i++;
+	}
+	if (!_aim_success && shoot_target != noone)
+	if (!instance_exists(obj_EndShrine)) 
+	{
+		var _index = -1;
+		for (var i = 0; i < array_length(shoot_target.targeted); i++) 
+			if (shoot_target.targeted[i] == player) _index = i;
+		if (_index > -1) array_delete(shoot_target.targeted, _index, 1);
+		//shoot_target.targeted = [];
+		shoot_target = noone;
+	}
+}
+else {
+	// Clear crop target when toggle is off (but keep shrine targeting)
+	if (shoot_target != noone && !instance_exists(obj_EndShrine)) {
+		// Only clear if it's a crop (FarmPlot), not shrine
+		if (shoot_target.object_index == obj_FarmPlot) {
 			var _index = -1;
 			for (var i = 0; i < array_length(shoot_target.targeted); i++) 
 				if (shoot_target.targeted[i] == player) _index = i;
 			if (_index > -1) array_delete(shoot_target.targeted, _index, 1);
-			//shoot_target.targeted = [];
+			shoot_target = noone;
 		}
-		shoot_target = _plot;
-		var _target = true;
-		for (var i = 0; i < array_length(shoot_target.targeted); i++) 
-		{
-			if (shoot_target.targeted[i] == player) _target = false;
-		}
-		if (_target) array_push(shoot_target.targeted, player);
-		_aim_success = true;
-		break;
 	}
-	i++;
-}
-if (!_aim_success && shoot_target != noone)
-if (!instance_exists(obj_EndShrine)) 
-{
-	var _index = -1;
-	for (var i = 0; i < array_length(shoot_target.targeted); i++) 
-		if (shoot_target.targeted[i] == player) _index = i;
-	if (_index > -1) array_delete(shoot_target.targeted, _index, 1);
-	//shoot_target.targeted = [];
-	shoot_target = noone;
 }
 
 // shoot_target is a shrine

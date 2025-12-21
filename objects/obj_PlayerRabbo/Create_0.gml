@@ -17,6 +17,7 @@ speed_roll_multiplier = 2;
 speed_projectile_water = 12;
 speed_projectile_seed = 12;
 shoot_target = noone;
+aim_at_crops = true;
 shoot_target_acquisition_minimum = 128;
 shoot_target_acquisition_range = 1280;
 shoot_cooldown_seed = 0;

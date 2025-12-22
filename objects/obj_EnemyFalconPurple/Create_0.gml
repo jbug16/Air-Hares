@@ -19,7 +19,7 @@ else if (_chance < 0.5)	// behave like blue falcon
 else					// behave like brown falcon, but faster
 {
 	timer_prepare = 50; //150;
-	direct_attack_speed = 32;
+	direct_attack_speed = 30;
 	direct_attack_homing = 0.55;	// Homing power
 	//obj_PlayerPAR.trig_foresight = true;
 	y = -720;

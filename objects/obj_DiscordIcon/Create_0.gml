@@ -1,7 +1,7 @@
 event_inherited();
 
 button_id = 7; 
-text = "Enlist Today"; 
+text = "Enlist"; 
 
 // Override scale settings to match icon size
 image_xscale = 0.02;

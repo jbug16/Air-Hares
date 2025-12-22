@@ -1,7 +1,7 @@
 event_inherited();
 
 button_id = 5;
-text = "Read Manga";
+text = "Read";
 
 // Override scale settings to match icon size 
 image_xscale = 0.35;

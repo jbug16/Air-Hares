@@ -161,8 +161,8 @@ if(mouse_prev_x != mouse_x or mouse_prev_y != mouse_y)
 	}
 	for(var _i = 0; _i < array_length(menu); _i++)
 	{
-		if(point_in_rectangle(mouse_x, mouse_y, _x_left, _y_start + (52*_i) - 0.03*room_height,
-			_x_left + string_width(menu[_i]), _y_start + (52*_i) + 0.03*room_height))
+		if(point_in_rectangle(mouse_x, mouse_y, _x_left, _y_start + (45*_i) - 0.03*room_height,
+			_x_left + string_width(menu[_i]), _y_start + (45*_i) + 0.03*room_height))
 			{
 				if(!in_controls or(in_controls and alarm[1] < 0)) menu_selected = _i;
 				// Left mouse pressed
@@ -200,8 +200,8 @@ else
 	}
 	for(var _i = 0; _i < array_length(menu); _i++)
 	{
-		if(point_in_rectangle(mouse_x, mouse_y, _x_left, _y_start + (52*_i) - 0.03*room_height,
-			_x_left + string_width(menu[_i]), _y_start + (52*_i) + 0.03*room_height))
+		if(point_in_rectangle(mouse_x, mouse_y, _x_left, _y_start + (45*_i) - 0.03*room_height,
+			_x_left + string_width(menu[_i]), _y_start + (45*_i) + 0.03*room_height))
 			{
 				if(_i == menu_selected)
 				{

@@ -92,11 +92,11 @@ function InputGet(_key = noone, _pressed = true, _device = all){
 		
 		// If the input is mapped - can be different keys
 		var _mapped = [INPUT.SEED, INPUT.WATER, INPUT.PARRY, INPUT.UP, INPUT.DOWN, INPUT.LEFT, INPUT.RIGHT, INPUT.MENU_DOWN, INPUT.MENU_LEFT, INPUT.MENU_RIGHT, INPUT.MENU_SELECT, 
-			INPUT.MENU_UP, INPUT.LOOP_DE_LOOP, INPUT.ROLL_LEFT, INPUT.ROLL_RIGHT];
+			INPUT.MENU_UP, INPUT.LOOP_DE_LOOP, INPUT.ROLL_LEFT, INPUT.ROLL_RIGHT, INPUT.TOGGLE_AIM];
 			
 		// Pause is double keyed only in menus
 		if(room == rm_MainMenu or (room != rm_MainMenu and instance_exists(obj_Pause))) _mapped = [INPUT.SEED, INPUT.WATER, INPUT.PARRY, INPUT.UP, INPUT.DOWN, INPUT.LEFT, INPUT.RIGHT, 
-			INPUT.PAUSE, INPUT.MENU_DOWN, INPUT.MENU_LEFT, INPUT.MENU_RIGHT, INPUT.MENU_SELECT, INPUT.MENU_UP, INPUT.LOOP_DE_LOOP, INPUT.ROLL_LEFT, INPUT.ROLL_RIGHT];
+			INPUT.PAUSE, INPUT.MENU_DOWN, INPUT.MENU_LEFT, INPUT.MENU_RIGHT, INPUT.MENU_SELECT, INPUT.MENU_UP, INPUT.LOOP_DE_LOOP, INPUT.ROLL_LEFT, INPUT.ROLL_RIGHT, INPUT.TOGGLE_AIM];
 		
 		var _key_list = -1;
 		if(array_contains(_mapped, _key)) _key_list = global.gpmap[? _key];
@@ -261,7 +261,7 @@ function InputGamepadGetJoinRequest(){
 // @func InputGamepadButton();
 // Return gamepad button which is being pressed
 function InputGamepadButton(_key = noone){
-	var _btns = [gp_face1, gp_face2, gp_face3, gp_face4, gp_padu, gp_padd, gp_padl, gp_padr, gp_start, gp_shoulderl, gp_shoulderlb, gp_shoulderr, gp_shoulderrb];
+	var _btns = [gp_face1, gp_face2, gp_face3, gp_face4, gp_padu, gp_padd, gp_padl, gp_padr, gp_start, gp_shoulderl, gp_shoulderlb, gp_shoulderr, gp_shoulderrb, gp_stickl, gp_stickr];
 	
 	for(var i = 0; i < array_length(_btns); i++)
 	{

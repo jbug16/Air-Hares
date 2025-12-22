@@ -46,6 +46,7 @@ enum INPUT
 	MENU_RIGHT,
 	ROLL_LEFT,
 	ROLL_RIGHT,
+	TOGGLE_AIM,
 	length
 }
 

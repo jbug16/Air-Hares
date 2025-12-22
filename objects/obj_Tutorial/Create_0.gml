@@ -4,7 +4,7 @@
 // ====== ADJUSTABLE =======
 // =========================
 fade_time = 0.2*GAMESPD;
-fade_alpha = 0;
+fade_alpha = 1; 
 
 hold_end = false; // if after cutscenes go straight to the next part
 // Image
@@ -62,3 +62,5 @@ fade_out = true;			// if fade out should happen next
 
 image_xscale = 1.6;
 image_yscale = 1.6;
+
+TweenStart("fade_alpha", 1, 0, fade_time, TWEENTYPE.LINEAR);

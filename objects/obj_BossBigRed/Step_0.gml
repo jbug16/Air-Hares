@@ -52,7 +52,7 @@ else if (_collide_water != noone)
 }
 else if (!parry_snd and _collide_counter) 
 {
-	audio_play_sound(snd_PlaneParry, 1, false);	// parry shot
+	audio_play_sound(snd_ParryHit, 1, false);	// parry hit
 	parry_snd = true;
 }
 if (_fx != noone)

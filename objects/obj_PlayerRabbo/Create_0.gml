@@ -93,6 +93,7 @@ damage_apply = function() {
 	hp -= 1;
 	CombosAddMiss(0);
 	if hp <= 0 trig_death = true;	
+	audio_play_sound(snd_PlayerHit, 1, false);
 }
 status_paralysis_clear = function() {
 	paralysis_counter = 0;	

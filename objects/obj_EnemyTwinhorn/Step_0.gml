@@ -526,6 +526,7 @@ switch(state)
 			TweenStart("y", y, y - yhurt_offset, 0.8*GAMESPD, TWEENTYPE.CUBIC_OUT);
 						
 			hp--;
+			audio_play_sound(snd_ParryHit, 1, false);
 			PropsFeatherSpecialSpawn(obj_PropFeatherTwinHorn);
 			feather = 1;
 			// Change music

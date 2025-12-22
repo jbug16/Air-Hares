@@ -10,7 +10,7 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":0.960833,
+  "duration":0.960839,
   "exportDir":"",
   "name":"snd_PlaneParry",
   "parent":{

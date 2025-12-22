@@ -516,7 +516,7 @@ if trig_shoot_auto {
 //		hsp += WeatherGetWindDraft() * _wind_dir * 2;
 //	}
 //}
-if (state != PLAYERSTATE.LOOP) hsp += WeatherGetWindDraft();
+if (state != PLAYERSTATE.LOOP and state != PLAYERSTATE.PARRY) hsp += WeatherGetWindDraft();
 
 // Perform movement
 if(state != PLAYERSTATE.PARRY) x += hsp;

@@ -1,7 +1,7 @@
 /// @desc
 gui_text_anchor_x = 32;
 gui_text_anchor_y = 34;
-var _scale = 0.7;
+var _scale = 1.0; // Increased from 0.7 to meet Steam Deck text size requirements (minimum 9px at 1280x800)
 
 
 // combo multiplier scaling

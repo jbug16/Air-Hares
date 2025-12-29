@@ -107,7 +107,7 @@ global.story_mode_progress = ini_read_real("story", "progress", global.story_mod
 global.arcade_max_unlocked = ini_read_real("arcade", "max_unlocked", global.arcade_max_unlocked);
 // Test
 //global.story_mode_progress = 16;
-//global.arcade_max_unlocked = 16;
+global.arcade_max_unlocked = 16;
 ini_close();
 	
 // Options
@@ -315,8 +315,7 @@ global.gpmap[? INPUT.MENU_LEFT] = [gp_padl];
 global.gpmap[? INPUT.MENU_RIGHT] = [gp_padr];
 global.gpmap[? INPUT.ROLL_RIGHT] = [gp_shoulderrb];
 global.gpmap[? INPUT.ROLL_LEFT] = [gp_shoulderlb];
-global.gpmap[? INPUT.ROLL_LEFT] = [gp_shoulderlb];
-global.gpmap[? INPUT.TOGGLE_AIM] = [gp_stickr];
+global.gpmap[? INPUT.TOGGLE_AIM] = [gp_shoulderr];
 
 // Keyboard/gamepad names
 global.key_names = ds_map_create();

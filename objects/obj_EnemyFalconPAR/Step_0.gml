@@ -79,7 +79,7 @@ switch(state) {
 			CombosAddHit(50);
 			hp -= 1;
 			if(hp <= 0) instance_create_layer(x, y, layer, feather_type);
-			audio_play_sound(snd_ParryHit, 1, false);
+			audio_play_sound(snd_PlaneParry, 1, false);
 			//
 			VfxShake(3, 15);
 			

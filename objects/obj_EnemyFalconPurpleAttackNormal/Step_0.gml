@@ -91,7 +91,7 @@ switch(state) {
 		{
 			CombosAddHit(50);
 			hp -= 1;
-			audio_play_sound(snd_ParryHit, 1, false);
+			audio_play_sound(snd_PlaneParry, 1, false);
 			
 			VfxShake(3, 15);
 			

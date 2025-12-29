@@ -83,7 +83,7 @@ if ((state == BOSS.IDLE or state == BOSS.DIVE or state == BOSS.HURT or state == 
 	{
 		if (!parry_snd) 
 		{
-			audio_play_sound(snd_ParryHit, 1, false);	// parry hit
+			audio_play_sound(snd_PlaneParry, 1, false);	// parry hit
 			parry_snd = true;
 		}
 	

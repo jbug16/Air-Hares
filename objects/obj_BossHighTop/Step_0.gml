@@ -81,7 +81,7 @@ if (_collide_seed or _collide_water or _collide_counter)
 			CombosAddHit(100);
 			if (!parry_snd) 
 			{
-				audio_play_sound(snd_ParryHit, 1, false);	// parry hit
+				audio_play_sound(snd_PlaneParry, 1, false);	// parry hit
 				parry_snd = true;
 			}
 		}

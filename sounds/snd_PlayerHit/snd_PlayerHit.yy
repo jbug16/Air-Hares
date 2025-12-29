@@ -14,8 +14,8 @@
   "exportDir":"",
   "name":"snd_PlayerHit",
   "parent":{
-    "name":"AirHares",
-    "path":"AirHares.yyp",
+    "name":"Player",
+    "path":"folders/Sounds/SFX/Player.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

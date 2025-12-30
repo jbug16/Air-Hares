@@ -17,7 +17,7 @@ text[2] = "The two sides rush to the crash, braced to find their leaders dead.";
 text[3] = "But to their surprise, they see only machine has been destroyed.";
 text[4] = "Twin Horn cries in revelation, his faith in natural law forsaken...";
 text[5] = "...as Rabbo sees her plane's mark stamped upon his robot frame.";
-text[6] = "Thus, within another storm of dust, their fates—reclaimed—were destined for the same.";
+text[6] = "Thus, within another storm of dust, their\nfates-reclaimed-were destined for the same.";
 
 // Transition lengths
 //-> Fade-ins

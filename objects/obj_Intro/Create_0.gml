@@ -11,13 +11,13 @@ zoom_img[5] =[1.4,1];
 zoom_img[6] = [1.4,1];
 
 // Text
-text[0] = "The Black Blaze has destroyed the land and humankind has fled.";
-text[1] = "In its wake lies a barren realm where food is scarce and life is short.";
-text[2] = "But from this hopeless void, a young bunny vows to change her fate...";
-text[3] = "And finds a fleet of planes to farm her carrot crop.";
-text[4] = "Thus, by refusing to yield to her natural destiny...";
-text[5] = "She'll unleash not only the fury of the Gale Gang...";
-text[6] = "But the courage of her peers, who take to the sky in becoming...";
+text[0] = "A deadly dust storm has destroyed the land, and humankind has fled.";
+text[1] = "In its wake lies a barren world, where food is scarce and life is short.";
+text[2] = "Yet from this hopeless void, a small bunny vows to defy her destiny...";
+text[3] = "...and discovers a forgotten fleet of remote-control airplanes.";
+text[4] = "But as she builds them out to seed and water her withered carrot crop...";
+text[5] = "...she'll unleash not just the fury of the villainous Gale Gang...";
+text[6] = "...but the courage of her peers, who must take to the sky in becoming:";
 
 // Transition lengths
 //-> Fade-ins

@@ -1,16 +1,23 @@
 // Text - credits
-text = "----------------- DEVELOPMENT -----------------";
+
+text = "In loving memory of Mark Leo Mendoza."
+
+text += "\n\n\n\n\n\n\n----------------- DEVELOPMENT -----------------";
 text += "\n~Written and Designed by~";
 text += "\nTim Bungeroth";
 text += "\n\n~Art and Character Creation by~";
 text += "\nMark Leo Mendoza";
-text += "\n\n~Main Programming~";
-text += "\nGameGlis studio (gameglis.com) Eugen Stimac & Ivana Tus";
-text += "\n\n~Additional Programming~";
+text += "\n\n~Programming and Game Design~";
 text += "\nRidho Heramasa";
+text += "\n\n~Programming and UI Design~";
+text += "\nGameGlis Studio"
+text += "\nEugen Stimac"
+text += "\nIvana Tus";
+text += "\n\n~Programming and Debugging~";
+text += "\nJenna Curls";
 text += "\n\n~Music by~";
 text += "\nOmar Chakor";
-text += "\n\n~Executive Produced By~";
+text += "\n\n~Executive Produced by~";
 text += "\nMegan Bungeroth";
 
 text += "\n\n\n\n\n\n\n----------------- PUBLISHING -----------------";
@@ -38,7 +45,7 @@ text += "\nIanna Dria Besa";
 text += "\n\n~Graphic Designers~";
 text += "\nVeronica Irizarry";
 text += "\nAngela Maldonado";
-text += "\n\nVideo Editor";
+text += "\n\n~Video Editor~";
 text += "\nBruno Bonini";
 
 text += "\n\n~Copywriter~";

@@ -2,7 +2,7 @@ event_inherited();
 
 zoom_img[0] = [1,1.35];
 
-text[0] = "Not fooled by Trick Shot's phantom attack, the Air Hares\nstrike back, rab jabbing their way to another knockout.";
+text[0] = "Not fooled by Trick Shot's phantom attack,\nthe Air Hares strike back with very real Rab Jabs.";
 fadein_img = [3*GAMESPD];
 fadein_txt = [3.5*GAMESPD];
 timings_ends = [6*GAMESPD];

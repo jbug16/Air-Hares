@@ -2,7 +2,7 @@ event_inherited();
 
 zoom_img[0] = [1,1.35];
 
-text[0] = "In defending their land, the Air Hares send High Top back\nto the taxpayers and declare sky supremacy over Winrose.";
+text[0] = "In defending their crop, the Air Hares send High Top packing-\nand declare sky supremacy over Winrose.";
 fadein_img = [3*GAMESPD];
 fadein_txt = [3.5*GAMESPD];
 timings_ends = [6*GAMESPD];

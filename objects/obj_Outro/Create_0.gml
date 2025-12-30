@@ -12,12 +12,12 @@ zoom_img[6] = [1.6,1];
 
 // Text
 text[0] = "In her final act, Rabbo rams Twin Horn out of the sky forever.";
-text[1] = "Both leaders plummet to the ground, sharing the same tragic end.";
-text[2] = "The two factions rush to the crash, braced to find their leaders dead.";
+text[1] = "Both fall to the ground, sharing the same tragic end.";
+text[2] = "The two sides rush to the crash, braced to find their leaders dead.";
 text[3] = "But to their surprise, they see only machine has been destroyed.";
 text[4] = "Twin Horn cries in revelation, his faith in natural law forsaken...";
-text[5] = "As Rabbo sees the logo from her planes stamped upon his frame.";
-text[6] = "Thus, her final victory came...as did the return of the Black Blaze.";
+text[5] = "...as Rabbo sees her plane's mark stamped upon his robot frame.";
+text[6] = "Thus, within another storm of dust, their fates—reclaimed—were destined for the same.";
 
 // Transition lengths
 //-> Fade-ins

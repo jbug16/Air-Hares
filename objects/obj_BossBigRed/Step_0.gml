@@ -33,6 +33,29 @@ if(_sidekick_dodge)
 	if(alarm[1] > 0) alarm[1]++;
 }
 
+// If shot while hurt - allow continuous hits like Twin Horn
+if (state == BOSS.HURT and (_collide_seed != noone or _collide_water != noone))
+{
+	if (_collide_seed != noone)
+	{
+		hit_fx_seed(_collide_seed);
+		CombosAddHit(50);
+		hp--;
+		_collide_seed = noone;
+	}
+	if (_collide_water != noone)
+	{
+		_HitFXWater(_collide_water);
+		CombosAddHit(50);
+		hp--;
+		_collide_water = noone;
+	}
+	VfxShake(3, 15);
+	
+	// Apply knockback for continuous hits
+	TweenStop();
+	TweenStart("y", y, y - 128, GAMESPD, TWEENTYPE.CUBIC_OUT);
+}
 
 //==========================================================
 // VFX/SFX - water/seed splash

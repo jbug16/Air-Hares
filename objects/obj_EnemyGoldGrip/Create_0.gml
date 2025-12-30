@@ -218,7 +218,7 @@ _HurtSetup = function() {
 	speed = 0;
 	direction = 0;
 	TweenStop();
-	TweenStart("y", y, y - 96, 0.8*GAMESPD);
+	TweenStart("y", y, y - 128, GAMESPD);
 		
 	hp -= 1; // take damage
 	PropsFeatherSpecialSpawn(obj_PropFeatherGoldGrip);

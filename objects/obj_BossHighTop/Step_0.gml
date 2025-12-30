@@ -34,22 +34,28 @@ if(_sidekick_dodge)
 	if(alarm[1] > 0) alarm[1]++;
 }
 
-// If shot while hurt
+// If shot while hurt - allow continuous hits like Twin Horn
 if (state == BOSS.HURT and (_collide_seed != noone or _collide_water != noone))
 {
 	if (_collide_seed != noone)
 	{
 		hit_fx_seed(_collide_seed);
 		CombosAddHit(50);
+		hp--;
 		_collide_seed = noone;
 	}
 	if (_collide_water != noone)
 	{
 		_HitFXWater(_collide_water);
 		CombosAddHit(50);
+		hp--;
 		_collide_water = noone;
 	}
 	VfxShake(3, 15);
+	
+	// Apply knockback for continuous hits
+	TweenStop();
+	TweenStart("y", y, y - 128, GAMESPD, TWEENTYPE.CUBIC_OUT);
 }
 
 //==========================================================
@@ -65,19 +71,20 @@ if (_collide_seed or _collide_water or _collide_counter)
 	if (state == BOSS.DIVE or state == BOSS.HURT or state == BOSS.DYING or (state == BOSS.INIT and hp_lost_during_dive))
 	{
 		// VFX/SFX - water/seed splash
-		if (_collide_seed != noone and alarm[2] > 0)	
+		if (_collide_seed != noone)	
 		{
 			hit_fx_seed(_collide_seed);			// seed shot
 			CombosAddHit(100);
+			hp--;
 		}
-		if (_collide_water != noone and alarm[2] > 0) 
+		if (_collide_water != noone) 
 		{
 			_HitFXWater(_collide_water);
 			CombosAddHit(100);
+			hp--;
 		}
 		if (_collide_counter)
 		{
-			alarm[2] = hurt_delay;
 			CombosAddHit(100);
 			if (!parry_snd) 
 			{
@@ -102,9 +109,9 @@ if (_collide_seed or _collide_water or _collide_counter)
 			}
 		}
 	
-		// Tween shot back
+		// Tween shot back - changed to match Twin Horn behavior
 		TweenStop();
-		TweenStart("y", y, y - 96, 2*GAMESPD, TWEENTYPE.CUBIC_OUT);
+		TweenStart("y", y, y - 128, GAMESPD, TWEENTYPE.CUBIC_OUT);
 		
 		// Damage
 		if (!hp_lost_during_dive) 

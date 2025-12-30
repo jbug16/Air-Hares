@@ -11,9 +11,9 @@ if (hp_lost_during_dive == 0 and obj_WindParticles.wind_blowing != 0
 	state = BOSS.HURT;
 	VfxShake(3, 15);
 	
-	// Tween shot back
+	// Tween shot back - changed to match Twin Horn behavior
 	TweenStop();
-	TweenStart("y", y, y - 96, 2*GAMESPD, TWEENTYPE.CUBIC_OUT);
+	TweenStart("y", y, y - 128, GAMESPD, TWEENTYPE.CUBIC_OUT);
 			
 	// damage and score
 	CombosAddHit(50);
@@ -43,8 +43,8 @@ else if (hp_lost_during_dive == 0 and (other.state == PLAYERSTATE.ROLL_LEFT or o
 	image_index = 0;
 	state = BOSS.DODGE;
 	
-	// Tween shot back
+	// Tween shot back - changed to match Twin Horn behavior
 	TweenStop();
-	TweenStart("y", y, y - 96, 2*GAMESPD, TWEENTYPE.CUBIC_OUT);
+	TweenStart("y", y, y - 128, GAMESPD, TWEENTYPE.CUBIC_OUT);
 }
 else event_inherited();

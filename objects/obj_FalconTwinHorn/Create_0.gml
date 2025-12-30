@@ -5,7 +5,8 @@ event_inherited();
 scaling = 1;
 hp = 4;
 feather = 1;
-y_base = choose(-sprite_height, 0.2*sprite_height);
+//y_base = choose(-sprite_height, 0.2*sprite_height);
+y_base = 0.2*sprite_height; // always show the enemy before diving
 
 //state = ENEMIES.PREPARING;
 state = BOSS.INIT;

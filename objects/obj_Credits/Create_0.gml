@@ -1,6 +1,6 @@
 // Text - credits
 
-text = "In loving memory of Mark Leo Mendoza."
+text = "In loving memory of Mark Leo Mendoza"
 
 text += "\n\n\n\n\n\n\n----------------- DEVELOPMENT -----------------";
 text += "\n~Written and Designed by~";

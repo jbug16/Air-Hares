@@ -471,17 +471,39 @@ switch(state)
 		// Homing towards enemy
 		EnemyHomingTarget(target_id, attack_1_dive_master_homing);
 		
-		// If player try to parry, twinhorn will just feint (stop in place)
-		var _parry = instance_nearest(x, y, obj_PlayerParry);
-		if(_parry != noone) 
+		// When countered, hp will deplete (but not during cheap shot before title card)
+		if(_collide_counter != noone and !(cheap_shot and !obj_ControllerFightBoss4_3.boss_card))
 		{
-			var _dist = point_distance(x, y, _parry.x, _parry.y);
-			if (_dist < 256)
+			CombosAddHit(100);
+			VfxShake(3, 15);
+			speed = 0;
+			direction = 0;
+			TweenStart("y", y, y - yhurt_offset, 0.8*GAMESPD, TWEENTYPE.CUBIC_OUT);
+					
+			hp--;
+			audio_play_sound(snd_PlaneParry, 1, false);
+			PropsFeatherSpecialSpawn(obj_PropFeatherTwinHorn);
+			feather = 1;
+			
+			state = ENEMIES.HURT;
+			break;
+		}
+		
+		// If player try to parry, twinhorn will just feint (stop in place)
+		// But not during cheap shot before title card
+		if(!(cheap_shot and !obj_ControllerFightBoss4_3.boss_card))
+		{
+			var _parry = instance_nearest(x, y, obj_PlayerParry);
+			if(_parry != noone) 
 			{
-				TweenStart("speed", speed , 0, 0.05*GAMESPD);
+				var _dist = point_distance(x, y, _parry.x, _parry.y);
+				if (_dist < 256)
+				{
+					TweenStart("speed", speed , 0, 0.05*GAMESPD);
 								
-				dive_feint_counter = dive_feint_period;
-				state = ENEMIES.DIVE_FEINT;
+					dive_feint_counter = dive_feint_period;
+					state = ENEMIES.DIVE_FEINT;
+				}
 			}
 		}
 	

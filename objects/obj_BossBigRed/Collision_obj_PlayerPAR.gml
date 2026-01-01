@@ -29,9 +29,10 @@ if (hp_lost_during_dive == 0 and obj_WindParticles.wind_blowing != 0
 			music_bg = audio_play_sound(snd_BossTransition, 1, false);
 		}
 	}
+	exit; // Prevent event_inherited when boss is hurt
 }
 // Dodge the attack
-else if (hp_lost_during_dive == 0 and (other.state == PLAYERSTATE.ROLL_LEFT or other.state == PLAYERSTATE.ROLL_RIGHT))
+if (hp_lost_during_dive == 0 and (other.state == PLAYERSTATE.ROLL_LEFT or other.state == PLAYERSTATE.ROLL_RIGHT))
 {
 	hp_lost_during_dive = -1;
 	
@@ -46,5 +47,8 @@ else if (hp_lost_during_dive == 0 and (other.state == PLAYERSTATE.ROLL_LEFT or o
 	// Tween shot back - changed to match Twin Horn behavior
 	TweenStop();
 	TweenStart("y", y, y - 128, GAMESPD, TWEENTYPE.CUBIC_OUT);
+	exit; // Prevent event_inherited when boss dodges (player is rolling, invincible anyway)
 }
-else event_inherited();
+
+// Player is not rolling - they should take damage
+event_inherited();

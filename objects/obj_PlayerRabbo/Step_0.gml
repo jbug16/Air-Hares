@@ -1,3 +1,15 @@
+// Get device for toggle check
+var _device = global.control_device[player];
+var _key_toggle = InputGet(INPUT.TOGGLE_AIM, false, _device);
+
+// Toggle to aim at crops or enemy
+if (!instance_exists(obj_Pause) && !instance_exists(obj_ControllerPause)) {
+	if (_key_toggle) {
+		aim_at_crops = !aim_at_crops;
+		audio_play_sound(snd_ToggleSwitch, 1, false);
+	}
+}
+
 // Check if can move
 if(alarm[2] > 0 or !can_move) exit;
 
@@ -162,7 +174,7 @@ var _key_shift_p = InputGet(INPUT.SHIFT,,_device);
 var _key_parry_p = InputGet(INPUT.PARRY,,_device);
 var _b_ltrig = InputGet(INPUT.L2,,_device);
 var _b_rtrig = InputGet(INPUT.R2,,_device);
-var _key_toggle = InputGet(INPUT.TOGGLE_AIM,, _device);
+var _key_toggle = InputGet(INPUT.TOGGLE_AIM, false, _device);
 
 // Check to disable input
 if !can_control 
@@ -336,16 +348,6 @@ switch(state) {
 			state = PLAYERSTATE.IDLE;	
 		}
 		break;
-}
-
-
-// Toggle to aim at crops or enemy
-if (!instance_exists(obj_Pause) && !instance_exists(obj_ControllerPause)) {
-	if (_key_toggle) {
-		aim_at_crops = !aim_at_crops;
-		audio_play_sound(snd_ToggleSwitch, 1, false);
-		show_debug_message($"aim at crops = {aim_at_crops}");
-	}
 }
 
 // Aim shooting

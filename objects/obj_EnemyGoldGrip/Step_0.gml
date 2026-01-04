@@ -303,7 +303,6 @@ switch(state) {
 			VfxShake(3, 10);
 			hurt_counter += 0.075*GAMESPD;
 			hit_fx_seed(_collide_seed);
-			hp--;
 			TweenStop();
 			TweenStart("y", y, y - 128, GAMESPD);
 		}
@@ -313,7 +312,6 @@ switch(state) {
 			VfxShake(3, 10);
 			hurt_counter += 0.075*GAMESPD;
 			_HitFXWater(_collide_water);
-			hp--;
 			TweenStop();
 			TweenStart("y", y, y - 128, GAMESPD);
 		}

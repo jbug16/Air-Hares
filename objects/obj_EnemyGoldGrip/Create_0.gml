@@ -224,6 +224,7 @@ _HurtSetup = function() {
 	PropsFeatherSpecialSpawn(obj_PropFeatherGoldGrip);
 	feather = 1;
 	state = ENEMIES.HURT;
+	hurt_counter = hurt_duration; // Reset counter to allow multiple hits like Twin Horn
 	alarm[1] = 3*hurt_duration;
 	
 	// Change sequence 2 phase -> change music

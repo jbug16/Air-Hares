@@ -343,6 +343,7 @@ switch(state) {
 if (!instance_exists(obj_Pause) && !instance_exists(obj_ControllerPause)) {
 	if (_key_toggle) {
 		aim_at_crops = !aim_at_crops;
+		audio_play_sound(snd_ToggleSwitch, 1, false);
 		show_debug_message($"aim at crops = {aim_at_crops}");
 	}
 }

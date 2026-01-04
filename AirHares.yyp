@@ -396,6 +396,7 @@
     {"id":{"name":"snd_SplashScreen","path":"sounds/snd_SplashScreen/snd_SplashScreen.yy",},},
     {"id":{"name":"snd_Theme","path":"sounds/snd_Theme/snd_Theme.yy",},},
     {"id":{"name":"snd_Thunder0Close","path":"sounds/snd_Thunder0Close/snd_Thunder0Close.yy",},},
+    {"id":{"name":"snd_ToggleSwitch","path":"sounds/snd_ToggleSwitch/snd_ToggleSwitch.yy",},},
     {"id":{"name":"spr_AnimSeed","path":"sprites/spr_AnimSeed/spr_AnimSeed.yy",},},
     {"id":{"name":"spr_AnimShine","path":"sprites/spr_AnimShine/spr_AnimShine.yy",},},
     {"id":{"name":"spr_AnimWater","path":"sprites/spr_AnimWater/spr_AnimWater.yy",},},

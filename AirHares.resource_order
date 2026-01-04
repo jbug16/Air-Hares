@@ -329,6 +329,7 @@
     {"name":"snd_SplashScreen","order":1,"path":"sounds/snd_SplashScreen/snd_SplashScreen.yy",},
     {"name":"snd_Theme","order":4,"path":"sounds/snd_Theme/snd_Theme.yy",},
     {"name":"snd_Thunder0Close","order":6,"path":"sounds/snd_Thunder0Close/snd_Thunder0Close.yy",},
+    {"name":"snd_ToggleSwitch","order":4,"path":"sounds/snd_ToggleSwitch/snd_ToggleSwitch.yy",},
     {"name":"spr_AnimSeed","order":5,"path":"sprites/spr_AnimSeed/spr_AnimSeed.yy",},
     {"name":"spr_AnimShine","order":6,"path":"sprites/spr_AnimShine/spr_AnimShine.yy",},
     {"name":"spr_AnimWater","order":4,"path":"sprites/spr_AnimWater/spr_AnimWater.yy",},

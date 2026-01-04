@@ -8,7 +8,7 @@ draw_set_color(c_white);
 draw_set_font(fnt_Federo37);
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
-draw_text_transformed(x, 0.95*room_height, "WONDORO 2025 ©", 0.4, 0.4, 0);
+draw_text_transformed(x, 0.95*room_height, "WONDORO 2026 ©", 0.4, 0.4, 0);
 
 // white fade-in
 draw_set_alpha(fade_alpha);

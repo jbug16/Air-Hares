@@ -1,7 +1,8 @@
 /// @desc
 gui_text_anchor_x = 32;
 gui_text_anchor_y = 34;
-var _scale = 1.0; // Increased from 0.7 to meet Steam Deck text size requirements (minimum 9px at 1280x800)
+var _scale = 1.0; // Text scale - increased from 0.7 to meet Steam Deck text size requirements (minimum 9px at 1280x800)
+var _scale_ui = 0.7; // UI element scale - keeps sprites, icons, and bars at original size
 
 
 // combo multiplier scaling
@@ -14,7 +15,7 @@ if (_combo > combo_prev)
 }
 var _scale_combo = 1 + combo_multiplier1*(_combo_max - clamp(alarm[7], 1, 5000))/_combo_max + 
 	combo_multiplier2*(1 - (_combo_max - clamp(alarm[7], 1, 5000))/_combo_max);
-_scale_combo *= _scale;
+_scale_combo *= _scale_ui;
 	
 combo_prev = global.combos_multiplier;
 // Draw the pronoun
@@ -62,54 +63,54 @@ if instance_exists(obj_PlayerPAR) {
 	{
 
 		// Draw player icon
-		var _x1 = gui_text_anchor_x - _scale*20 + _scale*0.5*sprite_get_width(spr_PlayerIcon);
-		var _y1 = gui_text_anchor_y - _scale*20 + _scale*0.5*sprite_get_height(spr_PlayerIcon);
-		draw_sprite_ext(spr_PlayerIcon, 0, _x1, _y1, _scale, _scale, 0, c_white, 0.8);
+		var _x1 = gui_text_anchor_x - _scale_ui*20 + _scale_ui*0.5*sprite_get_width(spr_PlayerIcon);
+		var _y1 = gui_text_anchor_y - _scale_ui*20 + _scale_ui*0.5*sprite_get_height(spr_PlayerIcon);
+		draw_sprite_ext(spr_PlayerIcon, 0, _x1, _y1, _scale_ui, _scale_ui, 0, c_white, 0.8);
 		
 		// Draw current lives
-		DrawText3(gui_text_anchor_x + 10, gui_text_anchor_y + _scale*114, string(p1_lives) + "x", fa_left, 
+		DrawText3(gui_text_anchor_x + 10, gui_text_anchor_y + _scale_ui*114, string(p1_lives) + "x", fa_left, 
 			fa_middle, c_white,fnt_Federo24, -1, 5000, 0, _scale);
 		
 		// draw combo multiplier
-		var _x_pos= _x1 + _scale*0.5*sprite_get_width(spr_PlayerIcon) + _scale*0.5*sprite_get_width(spr_HPFrame);
-		 _x_pos -= _scale*0.36*sprite_get_width(spr_HPFrame);
-		DrawText3(_x_pos, gui_text_anchor_y + _scale*114, "x" + string(global.combos_multiplier), fa_left, 
+		var _x_pos= _x1 + _scale_ui*0.5*sprite_get_width(spr_PlayerIcon) + _scale_ui*0.5*sprite_get_width(spr_HPFrame);
+		 _x_pos -= _scale_ui*0.36*sprite_get_width(spr_HPFrame);
+		DrawText3(_x_pos, gui_text_anchor_y + _scale_ui*114, "x" + string(global.combos_multiplier), fa_left, 
 			fa_middle, c_white,fnt_Federo24, -1, 5000, 0, _scale_combo);
 		//DrawText3(gui_text_anchor_x + 50, gui_text_anchor_y + _scale*114, "x" + string(global.combos_multiplier), fa_left, 
 		//	fa_middle, c_white,fnt_Federo24, -1, 5000, 0, _scale_combo);
 		
 		// Draw HP Frame
-		_x1 += _scale*0.5*sprite_get_width(spr_PlayerIcon) + _scale*0.5*sprite_get_width(spr_HPFrame);
-		draw_sprite_ext(spr_HPFrame, 0, _x1, _y1, _scale,_scale, 0, c_white, 0.8);
+		_x1 += _scale_ui*0.5*sprite_get_width(spr_PlayerIcon) + _scale_ui*0.5*sprite_get_width(spr_HPFrame);
+		draw_sprite_ext(spr_HPFrame, 0, _x1, _y1, _scale_ui,_scale_ui, 0, c_white, 0.8);
 		
 		// Draw the score (below 1st player)
 		_x_pos += 60; //_scale*0.5*sprite_get_width(spr_PlayerIcon) + _scale*0.5*sprite_get_width(spr_HPFrame);
-		DrawText3(_x_pos, gui_text_anchor_y + _scale*114, 
+		DrawText3(_x_pos, gui_text_anchor_y + _scale_ui*114,
 			round(global.score_current), fa_left, fa_middle, c_white,fnt_Federo24, -1, 5000, 0, _scale);
 		//DrawText3(_x1 - _scale*0.4*sprite_get_width(spr_HPFrame)+ 5, gui_text_anchor_y + _scale*114, 
 		//	round(global.score_current), fa_left, fa_middle, c_white,fnt_Federo24, -1, 5000, 0, _scale)
 		
 		// draw water (adjusts x1, so needs re-adjustment later for that)
-		_x1 += _scale*0.6*sprite_get_width(spr_HPFrame);
-		draw_sprite_ext(spr_WaterCountGUI, 0, _x1, _y1, _scale,_scale, 0, c_white, 0.8);
+		_x1 += _scale_ui*0.6*sprite_get_width(spr_HPFrame);
+		draw_sprite_ext(spr_WaterCountGUI, 0, _x1, _y1, _scale_ui,_scale_ui, 0, c_white, 0.8);
 		var _max_water = 0;
 		with _p1 _max_water = GetAmmo();
-		var _xx1 = _x1 - _scale*8;
-		var _xx2 = _xx1 + _scale*16;
-		var _yy2 = _y1 + 43*_scale;
-		var _yy1 = _y1 - 42*_scale;
+		var _xx1 = _x1 - _scale_ui*8;
+		var _xx2 = _xx1 + _scale_ui*16;
+		var _yy2 = _y1 + 43*_scale_ui;
+		var _yy1 = _y1 - 42*_scale_ui;
 		draw_healthbar(_xx1, _yy1, _xx2, _yy2, (_p1.shoot_ammo_water/_max_water)*100, c_black, c_aqua, c_aqua, 3, false, false);
 		
 		// Draw seeds
-		draw_sprite_ext(spr_SeedProjectile, 0, _x1 - 0.3*_scale*sprite_get_width(spr_WaterCountGUI), gui_text_anchor_y + _scale*114, _scale, _scale, 0, 
+		draw_sprite_ext(spr_SeedProjectile, 0, _x1 - 0.3*_scale_ui*sprite_get_width(spr_WaterCountGUI), gui_text_anchor_y + _scale_ui*114, _scale_ui, _scale_ui, 0, 
 			c_white, 0.8);
-		DrawText3(_x1, gui_text_anchor_y + _scale*114, _p1.shoot_ammo_seed, fa_left, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
+		DrawText3(_x1, gui_text_anchor_y + _scale_ui*114, _p1.shoot_ammo_seed, fa_left, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
 		
 		// HP/armor data
-		_x1 -= _scale*0.92*sprite_get_width(spr_HPFrame);
-		_y1 -= _scale*0.1*sprite_get_height(spr_HPFrame);
-		var _x2 = _x1 + _scale*0.63*sprite_get_width(spr_HPFrame);
-		var _y2 = _y1 + 12*_scale;
+		_x1 -= _scale_ui*0.92*sprite_get_width(spr_HPFrame);
+		_y1 -= _scale_ui*0.1*sprite_get_height(spr_HPFrame);
+		var _x2 = _x1 + _scale_ui*0.63*sprite_get_width(spr_HPFrame);
+		var _y2 = _y1 + 12*_scale_ui;
 		var _max_hp = 0;
 		var _max_armor = 0;
 		var _armor = 0;
@@ -128,8 +129,8 @@ if instance_exists(obj_PlayerPAR) {
 		if hp_flash_on1 draw_healthbar(_x1, _y1, _x2, _y2, (_armor/_max_armor)*100, c_black, c_white, c_white, 0, false, false);
 		
 		// HP bar
-		_y1 = _y2 + _scale*0.1*sprite_get_height(spr_HPFrame);
-		_y2 = _y1 + _scale*12;
+		_y1 = _y2 + _scale_ui*0.1*sprite_get_height(spr_HPFrame);
+		_y2 = _y1 + _scale_ui*12;
 		draw_healthbar(_x1, _y1, _x2, _y2, (_p1.hp/global.armor_strength)*100, c_black, c_aqua, c_blue, 0, false, false);
 		if (hp_flash_on1 and _armor <= 0)
 			draw_healthbar(_x1, _y1, _x2, _y2, (_p1.hp/global.armor_strength)*100, c_black, c_white, c_white, 0, false, false);
@@ -149,54 +150,54 @@ if instance_exists(obj_PlayerPAR) {
 	if _p2 != noone && instance_exists(_p2) 
 	{
 		// Draw player icon
-		var _x1 = 1280 - _scale*0.5*sprite_get_width(spr_PlayerIcon);
-		var _y1 = gui_text_anchor_y - _scale*20 + _scale*0.5*sprite_get_height(spr_PlayerIcon);
-		draw_sprite_ext(spr_PlayerIcon, 1, _x1, _y1, _scale, _scale, 0, c_white, 0.8);
+		var _x1 = 1280 - _scale_ui*0.5*sprite_get_width(spr_PlayerIcon);
+		var _y1 = gui_text_anchor_y - _scale_ui*20 + _scale_ui*0.5*sprite_get_height(spr_PlayerIcon);
+		draw_sprite_ext(spr_PlayerIcon, 1, _x1, _y1, _scale_ui, _scale_ui, 0, c_white, 0.8);
 		
 		// Draw lives
-		DrawText3(_x1 - _scale*20, gui_text_anchor_y + _scale*114, string(p1_lives) + "x", fa_left, 
+		DrawText3(_x1 - _scale_ui*20, gui_text_anchor_y + _scale_ui*114, string(p1_lives) + "x", fa_left, 
 			fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
 		
 		// draw combo multiplier
-		var _x_pos = _x1 - _scale*0.5*sprite_get_width(spr_PlayerIcon) + _scale*0.5*sprite_get_width(spr_HPFrame);
+		var _x_pos = _x1 - _scale_ui*0.5*sprite_get_width(spr_PlayerIcon) + _scale_ui*0.5*sprite_get_width(spr_HPFrame);
 		_x_pos -= 0.96*sprite_get_width(spr_HPFrame);
-		DrawText3(_x_pos, gui_text_anchor_y + _scale*114, "x" + string(global.combos_multiplier), fa_left, 
+		DrawText3(_x_pos, gui_text_anchor_y + _scale_ui*114, "x" + string(global.combos_multiplier), fa_left, 
 			fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale_combo);
 		//DrawText3(_x1 - _scale*20, gui_text_anchor_y + _scale*114, "x" + string(global.combos_multiplier), fa_left, 
 		//	fa_middle, c_whi
 		
 		// Draw HP Frame
-		_x1 -= _scale*0.5*sprite_get_width(spr_PlayerIcon) + _scale*0.5*sprite_get_width(spr_HPFrame);
-		draw_sprite_ext(spr_HPFrame, 1, _x1, _y1, _scale,_scale, 0, c_white, 0.8);
+		_x1 -= _scale_ui*0.5*sprite_get_width(spr_PlayerIcon) + _scale_ui*0.5*sprite_get_width(spr_HPFrame);
+		draw_sprite_ext(spr_HPFrame, 1, _x1, _y1, _scale_ui,_scale_ui, 0, c_white, 0.8);
 		
 		// draw score below 2nd player as well
 		_x_pos += 60;
-		DrawText3(_x_pos, gui_text_anchor_y + _scale*114, 
+		DrawText3(_x_pos, gui_text_anchor_y + _scale_ui*114, 
 			round(global.score_current), fa_left, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
 		//DrawText3(_x1  + _scale*0.4*sprite_get_width(spr_HPFrame)+ 5, gui_text_anchor_y + _scale*114, 
 		//	round(global.score_current), fa_right, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
 			
 		// draw water (adjusts x1, so needs re-adjustment later for that)
-		_x1 -= _scale*0.6*sprite_get_width(spr_HPFrame);
-		draw_sprite_ext(spr_WaterCountGUI, 0, _x1, _y1, _scale,_scale, 0, c_white, 0.8);
+		_x1 -= _scale_ui*0.6*sprite_get_width(spr_HPFrame);
+		draw_sprite_ext(spr_WaterCountGUI, 0, _x1, _y1, _scale_ui,_scale_ui, 0, c_white, 0.8);
 		var _max_water = 0;
 		with _p2 _max_water = GetAmmo();
-		var _xx1 = _x1 - _scale*8;
-		var _xx2 = _xx1 + _scale*16;
-		var _yy2 = _y1 + 43*_scale;
-		var _yy1 = _y1 - 42*_scale;
+		var _xx1 = _x1 - _scale_ui*8;
+		var _xx2 = _xx1 + _scale_ui*16;
+		var _yy2 = _y1 + 43*_scale_ui;
+		var _yy1 = _y1 - 42*_scale_ui;
 		draw_healthbar(_xx1, _yy1, _xx2, _yy2, (_p2.shoot_ammo_water/_max_water)*100, c_black, c_aqua, c_aqua, 3, false, false);
 		
 		// Draw seeds
-		draw_sprite_ext(spr_SeedProjectile, 0, _x1 - 0.3*_scale*sprite_get_width(spr_WaterCountGUI), gui_text_anchor_y + _scale*114, _scale, _scale, 0, 
+		draw_sprite_ext(spr_SeedProjectile, 0, _x1 - 0.3*_scale_ui*sprite_get_width(spr_WaterCountGUI), gui_text_anchor_y + _scale_ui*114, _scale_ui, _scale_ui, 0, 
 			c_white, 0.8);
-		DrawText3(_x1, gui_text_anchor_y + _scale*114, _p2.shoot_ammo_seed, fa_left, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
+		DrawText3(_x1, gui_text_anchor_y + _scale_ui*114, _p2.shoot_ammo_seed, fa_left, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
 		
 		// HP/armor data
-		_x1 += _scale*0.28*sprite_get_width(spr_HPFrame);
-		_y1 -= _scale*0.1*sprite_get_height(spr_HPFrame);
-		var _x2 = _x1 + _scale*0.63*sprite_get_width(spr_HPFrame);
-		var _y2 = _y1 + 12*_scale;
+		_x1 += _scale_ui*0.28*sprite_get_width(spr_HPFrame);
+		_y1 -= _scale_ui*0.1*sprite_get_height(spr_HPFrame);
+		var _x2 = _x1 + _scale_ui*0.63*sprite_get_width(spr_HPFrame);
+		var _y2 = _y1 + 12*_scale_ui;
 		var _max_hp = 0;
 		var _max_armor = 0;
 		var _armor = 0;
@@ -215,8 +216,8 @@ if instance_exists(obj_PlayerPAR) {
 		draw_healthbar(_x1, _y1, _x2, _y2, (_armor/_max_armor)*100, c_black, c_ltgray, c_dkgray, 0, false, false);
 		
 		// HP bar
-		_y1 = _y2 + _scale*0.1*sprite_get_height(spr_HPFrame);
-		_y2 = _y1 + _scale*12;
+		_y1 = _y2 + _scale_ui*0.1*sprite_get_height(spr_HPFrame);
+		_y2 = _y1 + _scale_ui*12;
 		draw_healthbar(_x1, _y1, _x2, _y2, (_p2.hp/global.armor_strength)*100, c_black, c_lime, c_green, 0, false, false);
 		if (hp_flash_on2 and _armor <= 0)
 			draw_healthbar(_x1, _y1, _x2, _y2, (_p2.hp/global.armor_strength)*100, c_black, c_white, c_white, 0, false, false);

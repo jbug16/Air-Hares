@@ -229,7 +229,7 @@ if instance_exists(obj_PlayerPAR) {
 			draw_healthbar(_x1, _y1, _x2, _y2, (_p2.hp/global.armor_strength)*100, c_black, c_white, c_white, 0, false, false);
 		hp_prev2 = _p2.hp;
 		
-		// Draw target icon when toggle is on (aim_at_crops)
+		// Draw target icon when toggle is on
 		if (_p2.aim_at_crops) {
 			_x1 = 1280 - _scale_ui*0.5*sprite_get_width(spr_PlayerIcon);
 			draw_sprite_ext(spr_Targets, 1, _x1 + 2, gui_text_anchor_y + _scale_ui*114 + 35, 0.20, 0.20, 0, 

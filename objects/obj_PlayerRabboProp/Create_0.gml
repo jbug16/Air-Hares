@@ -17,6 +17,10 @@ speed_roll_multiplier = 2;
 speed_projectile_water = 12;
 speed_projectile_seed = 12;
 shoot_target = noone;
+aim_at_crops = !(instance_exists(obj_ControllerFightBoss1_3) || 
+				instance_exists(obj_ControllerFightBoss2_3) || 
+				instance_exists(obj_ControllerFightBoss3_3) || 
+				instance_exists(obj_ControllerFightBoss4_3)); // automatically off for boss levels
 shoot_target_acquisition_minimum = 128;
 shoot_target_acquisition_range = 1280;
 shoot_cooldown_seed = 0;

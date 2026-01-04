@@ -1,6 +1,6 @@
 // Get device for toggle check
 var _device = global.control_device[player];
-var _key_toggle = InputGet(INPUT.TOGGLE_AIM, false, _device);
+var _key_toggle = InputGet(INPUT.TOGGLE_AIM, true, _device);
 
 // Toggle to aim at crops or enemy
 if (!instance_exists(obj_Pause) && !instance_exists(obj_ControllerPause)) {
@@ -174,7 +174,6 @@ var _key_shift_p = InputGet(INPUT.SHIFT,,_device);
 var _key_parry_p = InputGet(INPUT.PARRY,,_device);
 var _b_ltrig = InputGet(INPUT.L2,,_device);
 var _b_rtrig = InputGet(INPUT.R2,,_device);
-var _key_toggle = InputGet(INPUT.TOGGLE_AIM, false, _device);
 
 // Check to disable input
 if !can_control 

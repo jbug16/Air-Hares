@@ -138,7 +138,7 @@ if instance_exists(obj_PlayerPAR) {
 		
 		// Draw target icon when toggle is on (aim_at_crops)
 		if (_p1.aim_at_crops) {
-			draw_sprite_ext(spr_Targets, 0, _x1 + 0.65*_scale_ui*sprite_get_width(spr_HPFrame), gui_text_anchor_y + _scale_ui*114, 0.20, 0.20, 0, 
+			draw_sprite_ext(spr_Targets, 0, gui_text_anchor_x + 23, gui_text_anchor_y + _scale_ui*114 + 35, 0.20, 0.20, 0, 
 			c_white, 1);
 		}
 	} 
@@ -231,7 +231,8 @@ if instance_exists(obj_PlayerPAR) {
 		
 		// Draw target icon when toggle is on (aim_at_crops)
 		if (_p2.aim_at_crops) {
-			draw_sprite_ext(spr_Targets, 1, _x1 + 0.65*_scale_ui*sprite_get_width(spr_HPFrame), gui_text_anchor_y + _scale_ui*114, 0.20, 0.20, 0, 
+			_x1 = 1280 - _scale_ui*0.5*sprite_get_width(spr_PlayerIcon);
+			draw_sprite_ext(spr_Targets, 1, _x1 + 2, gui_text_anchor_y + _scale_ui*114 + 35, 0.20, 0.20, 0, 
 			c_white, 1);
 		}
 		

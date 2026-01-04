@@ -52,7 +52,7 @@ state_prev = state;
 speed_prev = speed;
 dodge_dist = 0;
 direction = 90;		// not needed?
-hurt_delay = 0.5*GAMESPD; // how long after last hit can be hit again 
+hurt_delay = 1.5*GAMESPD; // how long to stay in HURT state (matches Twin Horn) 
 can_dive = true;	// boss can dive (falcons haven't hit the player)
 parry_snd = false;	// parry sound bugfix
 

@@ -6,36 +6,26 @@ if (state == BOSS.ROOST and instance_number(obj_FalconHighTop) < 4)
 	image_speed = 0;
 }
 // HURT
-else if (state == BOSS.HURT)
+// HURT state is now handled in Step event state machine to allow multiple continuous hits
+// Only handle death here when HP reaches 0
+else if (state == BOSS.HURT and hp <= 0)
 {
-	if (hp <= 0)	// Defeated
-	{	
-		array_push(obj_ControllerFightBoss1_3.hightop_death_pos, x, y);
-		state = BOSS.DYING;
-		
-		// Boss end music with fadeout
-		with(obj_ControllerFightBoss1_3)
-		{
-			audio_stop_sound(music_bg);
-			music_bg = audio_play_sound(snd_BossEnding, 1, false);
-		}
-		// Run away
-		direction = choose(45, 135);
-		image_angle = direction + 90;
-		speed = 0;
-		TweenStop();
-		TweenStart("speed", 0, fly_in_spd, GAMESPD, TWEENTYPE.CUBIC_OUT);
-		alarm[2] = hurt_delay;
-	}
-	else			// still alive, fly to the top
+	array_push(obj_ControllerFightBoss1_3.hightop_death_pos, x, y);
+	state = BOSS.DYING;
+	
+	// Boss end music with fadeout
+	with(obj_ControllerFightBoss1_3)
 	{
-		TweenStop();
-		TweenStart("speed", speed_prev, dive_spd*1.3, 0.2*GAMESPD);
-		//state = state_prev;
-		state = BOSS.INIT;
-		direction = point_direction(x, y, room_width*0.5, -720)
-		image_angle = direction + 90;
+		audio_stop_sound(music_bg);
+		music_bg = audio_play_sound(snd_BossEnding, 1, false);
 	}
+	// Run away
+	direction = choose(45, 135);
+	image_angle = direction + 90;
+	speed = 0;
+	TweenStop();
+	TweenStart("speed", 0, fly_in_spd, GAMESPD, TWEENTYPE.CUBIC_OUT);
+	alarm[2] = hurt_delay;
 }
 // DODGE
 else if (state == BOSS.DODGE)

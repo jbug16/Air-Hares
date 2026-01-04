@@ -41,14 +41,12 @@ if (state == BOSS.HURT and (_collide_seed != noone or _collide_water != noone))
 	{
 		hit_fx_seed(_collide_seed);
 		CombosAddHit(50);
-		hp--;
 		_collide_seed = noone;
 	}
 	if (_collide_water != noone)
 	{
 		_HitFXWater(_collide_water);
 		CombosAddHit(50);
-		hp--;
 		_collide_water = noone;
 	}
 	VfxShake(3, 15);
@@ -61,28 +59,17 @@ if (state == BOSS.HURT and (_collide_seed != noone or _collide_water != noone))
 //==========================================================
 // Being hit / evade
 //==========================================================
-if (state == BOSS.IDLE or state == BOSS.DIVE or state == BOSS.HURT or (state == BOSS.APPEAR and bbox_bottom > 0)
+if (state == BOSS.IDLE or state == BOSS.DIVE or (state == BOSS.APPEAR and bbox_bottom > 0)
 	or (state == BOSS.DYING and y > sprite_height))
 if (_collide_seed or _collide_water or _collide_counter)
 {
 	//----------------------------------------------------------
 	// Managed to hit him
 	//----------------------------------------------------------
-	if (state == BOSS.DIVE or state == BOSS.HURT or state == BOSS.DYING or (state == BOSS.INIT and hp_lost_during_dive))
+	if (state == BOSS.DIVE or state == BOSS.DYING or (state == BOSS.INIT and hp_lost_during_dive))
 	{
-		// VFX/SFX - water/seed splash
-		if (_collide_seed != noone)	
-		{
-			hit_fx_seed(_collide_seed);			// seed shot
-			CombosAddHit(100);
-			hp--;
-		}
-		if (_collide_water != noone) 
-		{
-			_HitFXWater(_collide_water);
-			CombosAddHit(100);
-			hp--;
-		}
+		// Check parry FIRST - if parried, only process parry and ignore seed/water in same step
+		// This matches Twin Horn behavior where parry takes priority
 		if (_collide_counter)
 		{
 			CombosAddHit(100);
@@ -91,34 +78,82 @@ if (_collide_seed or _collide_water or _collide_counter)
 				audio_play_sound(snd_PlaneParry, 1, false);	// parry hit
 				parry_snd = true;
 			}
-		}
-	
-		// stop movement and change state
-		speed = 0;
-		image_index = 0;
-		state = BOSS.HURT;
-		VfxShake(3, 15);
-		
-		// Start transition music
-		if(seq_phase == 1)
-		{
-			with(obj_ControllerFightBoss1_3)
+			_collide_counter = noone;
+			
+			// Clear seed/water collisions to prevent processing them in same step
+			_collide_seed = noone;
+			_collide_water = noone;
+			
+			// stop movement and change state
+			speed = 0;
+			image_index = 0;
+			state = BOSS.HURT;
+			hurt_delay = 1.5*GAMESPD; // Reset delay to allow multiple hits like Twin Horn
+			alarm[2] = hurt_delay;
+			VfxShake(3, 15);
+			
+			// Start transition music
+			if(seq_phase == 1)
 			{
-				audio_stop_sound(music_bg);
-				music_bg = audio_play_sound(snd_BossTransition, 1, false);
+				with(obj_ControllerFightBoss1_3)
+				{
+					audio_stop_sound(music_bg);
+					music_bg = audio_play_sound(snd_BossTransition, 1, false);
+				}
+			}
+		
+			// Tween shot back - changed to match Twin Horn behavior
+			TweenStop();
+			TweenStart("y", y, y - 128, GAMESPD, TWEENTYPE.CUBIC_OUT);
+			
+			// Damage - only decrease HP once for parry
+			if (!hp_lost_during_dive) 
+			{
+				PropsFeatherSpecialSpawn(obj_PropFeatherHighTop);
+				hp_lost_during_dive = true;
+				hp--;
 			}
 		}
-	
-		// Tween shot back - changed to match Twin Horn behavior
-		TweenStop();
-		TweenStart("y", y, y - 128, GAMESPD, TWEENTYPE.CUBIC_OUT);
-		
-		// Damage
-		if (!hp_lost_during_dive) 
+		// Only process seed/water if no parry happened
+		else
 		{
-			PropsFeatherSpecialSpawn(obj_PropFeatherHighTop);
-			hp_lost_during_dive = true;
-			hp--;
+			// VFX/SFX - water/seed splash
+			if (_collide_seed != noone)	
+			{
+				hit_fx_seed(_collide_seed);			// seed shot
+				CombosAddHit(100);
+				hp--;
+				_collide_seed = noone;
+			}
+			if (_collide_water != noone) 
+			{
+				_HitFXWater(_collide_water);
+				CombosAddHit(100);
+				hp--;
+				_collide_water = noone;
+			}
+			
+			// stop movement and change state
+			speed = 0;
+			image_index = 0;
+			state = BOSS.HURT;
+			hurt_delay = 1.5*GAMESPD; // Reset delay to allow multiple hits like Twin Horn
+			alarm[2] = hurt_delay;
+			VfxShake(3, 15);
+			
+			// Start transition music
+			if(seq_phase == 1)
+			{
+				with(obj_ControllerFightBoss1_3)
+				{
+					audio_stop_sound(music_bg);
+					music_bg = audio_play_sound(snd_BossTransition, 1, false);
+				}
+			}
+		
+			// Tween shot back - changed to match Twin Horn behavior
+			TweenStop();
+			TweenStart("y", y, y - 128, GAMESPD, TWEENTYPE.CUBIC_OUT);
 		}
 	}
 	//----------------------------------------------------------
@@ -328,6 +363,32 @@ switch (state)
 	}
 	break;
 	
+	
+	//----------------------------------------------------------
+	// Has been hurt
+	//----------------------------------------------------------
+	case BOSS.HURT:
+		// Stay in HURT state - continuous hits are handled above
+		// Only exit when delay counts down (allows multiple hits like Twin Horn)
+		if(hurt_delay-- <= 0)
+		{
+			if(hp <= 0) 
+			{
+				// Defeated - handled in Other_7
+				state = BOSS.DYING;
+			}
+			else
+			{
+				// Still alive, fly to the top
+				TweenStop();
+				TweenStart("speed", speed_prev, dive_spd*1.3, 0.2*GAMESPD);
+				state = BOSS.INIT;
+				direction = point_direction(x, y, room_width*0.5, -720);
+				image_angle = direction + 90;
+				hurt_delay = 1.5*GAMESPD; // Reset delay for next time (matches Twin Horn)
+			}
+		}
+	break;
 	
 	//----------------------------------------------------------
 	// Defeated

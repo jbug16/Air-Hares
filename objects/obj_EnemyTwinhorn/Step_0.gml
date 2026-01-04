@@ -4,8 +4,9 @@
 //==========================================================
 if(obj_ControllerFightBoss4_3.alarm[2] > 0 and state == ENEMIES.SPAWN)
 {
-	target_id = instance_nearest(x, y, obj_PlayerPAR);
-	EnemyFaceTarget(target_id);
+	// Removed these lines so boss flies upward not looking at player
+	//target_id = instance_nearest(x, y, obj_PlayerPAR);
+	//EnemyFaceTarget(target_id);
 	exit;
 }
 

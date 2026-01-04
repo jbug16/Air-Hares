@@ -35,6 +35,7 @@ fly_in_spd = 8;	// after the dive or at 2nd sequence begin
 falcon_positions[0] = [0.2*room_width, 0.5*room_width, 0.8*room_width];
 falcon_positions[1] = [0.2*room_width, 0.4*room_width, 0.6*room_width, 0.8*room_width];
 falcon_positions[2] = [0.17*room_width, 0.33*room_width, 0.5*room_width, 0.67*room_width, 0.83*room_width];
+falcon_positions[3] = [0.1*room_width, 0.3*room_width, 0.5*room_width, 0.7*room_width, 0.9*room_width];
 falcon_positions2 = [0.1*room_width, 0.3*room_width, 0.7*room_width, 0.9*room_width];	// 2nd sequence
 time[0] = [GAMESPD, GAMESPD, GAMESPD, GAMESPD, 1.5*GAMESPD];		// sequence 1
 time[1] = [0.7*GAMESPD];	// sequence 2

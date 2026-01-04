@@ -30,11 +30,27 @@ switch(state)
 //----------------------------------------------------------
 	case ENEMIES.SPAWN:
 	// After cheap shot
-		if(y < - 480)
+		//if(y < - 480)
+		//{
+		//	image_angle = 0;
+		//	speed = 0;
+		//	TweenStart("y", y, 0.2*sprite_height, GAMESPD, TWEENTYPE.LINEAR);
+		//	state = ENEMIES.INIT;
+		//}
+		if(y < -sprite_height)
 		{
-			image_angle = 0;
+			TweenStart("y", y, y_base, GAMESPD, TWEENTYPE.QUINT_OUT);
 			speed = 0;
-			TweenStart("y", y, 0.2*sprite_height, GAMESPD, TWEENTYPE.LINEAR);
+			direction = 0;
+			image_angle = 0;
+			state = ENEMIES.BETWEEN;
+			alarm[3] = GAMESPD*(4.5 - hp);
+			if (hp > 2) isangry = false;
+		}
+		else if(y == y_base)
+		{
+			TweenStop(id, "y");
+			trig_anim_end = false;
 			state = ENEMIES.INIT;
 		}
 	break;

@@ -57,7 +57,7 @@ switch(state) {
 				dirk_prop.can_control = false;
 				with(dirk_prop) PlayerAssignSprite(character);
 			}
-			instance_destroy(obj_PlayerRabbo);		
+			with(obj_PlayerRabbo) instance_destroy();	
 		}
 		break;
 	// ============================= END PHASE ===================================

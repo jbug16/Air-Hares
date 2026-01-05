@@ -13,11 +13,15 @@ else if (state == BOSS.HURT and hp <= 0)
 	array_push(obj_ControllerFightBoss1_3.hightop_death_pos, x, y);
 	state = BOSS.DYING;
 	
-	// Boss end music with fadeout
-	with(obj_ControllerFightBoss1_3)
+	// Boss end music with fadeout - only play once
+	if(!outro_music_played)
 	{
-		audio_stop_sound(music_bg);
-		music_bg = audio_play_sound(snd_BossEnding, 1, false);
+		with(obj_ControllerFightBoss1_3)
+		{
+			audio_stop_sound(music_bg);
+			music_bg = audio_play_sound(snd_BossEnding, 1, false);
+		}
+		outro_music_played = true;
 	}
 	// Run away
 	direction = choose(45, 135);

@@ -674,10 +674,14 @@ switch(state)
 			{
 				state = ENEMIES.INIT;
 				// End music with fadeout
-				with(obj_ControllerFightBoss4_3)
+				if (!outro_music_played)
 				{
-					audio_stop_sound(music_bg);
-					music_bg = audio_play_sound(snd_BossEnding, 1, false);
+					with(obj_ControllerFightBoss4_3)
+					{
+						audio_stop_sound(music_bg);
+						music_bg = audio_play_sound(snd_BossEnding, 1, false);
+					}
+					outro_music_played = true;
 				}
 				
 				image_angle = 180;

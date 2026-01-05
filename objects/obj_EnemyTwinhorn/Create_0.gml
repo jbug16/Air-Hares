@@ -68,6 +68,7 @@ isangry_blink_counter = isangry_blink_period;
 evade_direction = noone;		// Evade direction, is -1 or 1
 hit_combo_counter = 0;
 phase_4 = false;				// if in the last phase
+outro_music_played = false;		// flay to track if outro music has already been triggered
 
 // Sprite setup
 sprite = [];

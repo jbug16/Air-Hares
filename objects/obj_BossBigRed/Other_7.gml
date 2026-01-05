@@ -22,12 +22,16 @@ else if (state == BOSS.HURT)
 	if (hp <= 0)	// Defeated
 	{	
 		array_push(obj_ControllerFightBoss2_3.bigred_deathpos, x, y);
-		// End music with fadeout
-		with(obj_ControllerFightBoss2_3)
+		// End music with fadeout - only play once
+		if(!outro_music_played)
 		{
-			audio_stop_sound(music_bg);
-			music_bg = audio_play_sound(snd_BossEnding, 1, false);
-			//audio_sound_gain(music_bg, 0, 40*GAMESPD);
+			with(obj_ControllerFightBoss2_3)
+			{
+				audio_stop_sound(music_bg);
+				music_bg = audio_play_sound(snd_BossEnding, 1, false);
+				//audio_sound_gain(music_bg, 0, 40*GAMESPD);
+			}
+			outro_music_played = true;
 		}
 		state = BOSS.DYING;
 		// Run away

@@ -15,6 +15,7 @@ hurt_duration = 1.5*GAMESPD //42;		// how long is it in hurting states
 hurt_counter = hurt_duration;
 feather = 1;
 hurt_delay = 0.5*GAMESPD;
+outro_music_played = false;		// Flag to track if outro music has been played
 
 
 

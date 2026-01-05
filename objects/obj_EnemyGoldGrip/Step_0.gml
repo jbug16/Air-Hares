@@ -322,12 +322,16 @@ switch(state) {
 			TweenStop();
 			if(hp == 0) 
 			{
-				// End music with fadeout
-				with(obj_ControllerFightBoss3_3)
+				// End music with fadeout - only play once
+				if(!outro_music_played)
 				{
-					audio_stop_sound(music_bg);
-					music_bg = audio_play_sound(snd_BossEnding, 1, false);
-					//audio_sound_gain(music_bg, 0, 40*GAMESPD);
+					with(obj_ControllerFightBoss3_3)
+					{
+						audio_stop_sound(music_bg);
+						music_bg = audio_play_sound(snd_BossEnding, 1, false);
+						//audio_sound_gain(music_bg, 0, 40*GAMESPD);
+					}
+					outro_music_played = true;
 				}
 				TweenStart("y", y, -sprite_height, 1.2*GAMESPD, TWEENTYPE.SINE_INOUT);
 			}

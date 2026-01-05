@@ -56,6 +56,7 @@ direction = 90;		// not needed?
 hurt_delay = 0.5*GAMESPD; // how long after last hit can be hit again 
 can_dive = true;	// boss can dive (falcons haven't hit the player)
 parry_snd = false;	// parry sound bugfix
+outro_music_played = false;		// Flag to track if outro music has been played
 
 
 // Falcon goons

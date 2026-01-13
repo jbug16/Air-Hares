@@ -5,7 +5,11 @@ if (!_is_array) {
 }
 
 // Check skip
-var _skip_press = keyboard_check(ord("F")) || gamepad_button_check(global.gamepad_connected, gp_face1);
+var _gp_valid = (global.gamepad_connected != noone && gamepad_is_connected(global.gamepad_connected));
+var _skip_press = keyboard_check(ord("F")) || (_gp_valid && gamepad_button_check(global.gamepad_connected, gp_face1));
+if (global.gamepad_debug && _gp_valid && gamepad_button_check(global.gamepad_connected, gp_face1)) {
+	show_debug_message("[Dialogue] Skip pressed via gamepad button (gp_face1) on index " + string(global.gamepad_connected));
+}
 
 if _skip_press {
 	skip += 1;	
@@ -28,7 +32,17 @@ dialog_counter += dialog_speed;
 dialog_display = string_copy(dialog[dialog_current], 0, floor(dialog_counter));
 
 var _keypress = keyboard_check_released(vk_anykey);
-var _gppress = InputGamepadCheckAny(global.gamepad_connected);
+var _gppress = false;
+if (global.gamepad_connected != noone) {
+	_gppress = InputGamepadCheckAny(global.gamepad_connected);
+	if (global.gamepad_debug && _gppress) {
+		show_debug_message("[Dialogue] Any gamepad button pressed - advancing dialog");
+	}
+} else {
+	if (global.gamepad_debug) {
+		show_debug_message("[Dialogue] No gamepad connected, skipping gamepad check");
+	}
+}
 
 // Advance to next dialog_current
 if (dialog_counter > dialog_counter_max) {

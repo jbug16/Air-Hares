@@ -9,7 +9,8 @@
 
 // General
 global.gamepad_connected = noone;		// Gamepad
-global.dev_mode = true;					//developer mode on/off
+global.gamepad_debug = false;			// Set to false to disable debug messages after testing
+global.dev_mode = false;					//developer mode on/off
 global.demo = false;					// demo mode (only levels 1-1, 2-2, 3-B)
 global.version = "v1.0.20251102.01";
 global.mouse_disable = false;

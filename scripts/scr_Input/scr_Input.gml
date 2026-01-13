@@ -230,9 +230,36 @@ function InputGet(_key = noone, _pressed = true, _device = all){
 // @func InputGamepadCheckAny()
 // Return true if any button on gamepad is pressed
 function InputGamepadCheckAny(_device){ 
-	for ( var _gp = gp_face1; _gp < gp_axisrv; _gp++ ) {
-		if ( gamepad_button_check_pressed( _device, _gp ) ) return true;
+	// Validate device is a valid gamepad index
+	if (_device == noone) {
+		if (global.gamepad_debug) {
+			show_debug_message("[InputGamepadCheckAny] FAIL: _device parameter is noone");
+		}
+		return false;
 	}
+	if (!gamepad_is_connected(_device)) {
+		if (global.gamepad_debug) {
+			show_debug_message("[InputGamepadCheckAny] FAIL: Gamepad index " + string(_device) + " not connected");
+		}
+		if (global.gamepad_connected == _device) {
+			if (global.gamepad_debug) {
+				show_debug_message("[InputGamepadCheckAny] WARNING: Resetting global.gamepad_connected from " + string(_device) + " to noone");
+			}
+			global.gamepad_connected = noone;
+		}
+		return false;
+	}
+	
+	// Validation successful, check buttons
+	for ( var _gp = gp_face1; _gp < gp_axisrv; _gp++ ) {
+		if ( gamepad_button_check_pressed( _device, _gp ) ) {
+			if (global.gamepad_debug) {
+				show_debug_message("[InputGamepadCheckAny] SUCCESS: Button " + string(_gp) + " pressed on gamepad " + string(_device));
+			}
+			return true;
+		}
+	}
+	
 	return false;	
 }
 
@@ -261,11 +288,32 @@ function InputGamepadGetJoinRequest(){
 // @func InputGamepadButton();
 // Return gamepad button which is being pressed
 function InputGamepadButton(_key = noone){
+	// Validate gamepad is connected
+	if (global.gamepad_connected == noone) {
+		if (global.gamepad_debug) {
+			show_debug_message("[InputGamepadButton] FAIL: global.gamepad_connected is noone");
+		}
+		return -1;
+	}
+	if (!gamepad_is_connected(global.gamepad_connected)) {
+		if (global.gamepad_debug) {
+			show_debug_message("[InputGamepadButton] FAIL: Gamepad index " + string(global.gamepad_connected) + " not connected (disconnected?)");
+		}
+		global.gamepad_connected = noone;
+		return -1;
+	}
+	
+	// Validation successful
 	var _btns = [gp_face1, gp_face2, gp_face3, gp_face4, gp_padu, gp_padd, gp_padl, gp_padr, gp_start, gp_shoulderl, gp_shoulderlb, gp_shoulderr, gp_shoulderrb, gp_stickl, gp_stickr];
 	
 	for(var i = 0; i < array_length(_btns); i++)
 	{
-		if(gamepad_button_check(global.gamepad_connected, _btns[i]) and _btns[i] != _key) return _btns[i];
+		if(gamepad_button_check(global.gamepad_connected, _btns[i]) and _btns[i] != _key) {
+			if (global.gamepad_debug) {
+				show_debug_message("[InputGamepadButton] SUCCESS: Button " + string(_btns[i]) + " pressed on gamepad " + string(global.gamepad_connected));
+			}
+			return _btns[i];
+		}
 	}
 	
 	return -1;
@@ -274,11 +322,32 @@ function InputGamepadButton(_key = noone){
 // @func InputGamepadButtonReleased();
 // Return gamepad button which is being released
 function InputGamepadButtonReleased(_key = noone){
+	// Validate gamepad is connected
+	if (global.gamepad_connected == noone) {
+		if (global.gamepad_debug) {
+			show_debug_message("[InputGamepadButtonReleased] FAIL: global.gamepad_connected is noone");
+		}
+		return -1;
+	}
+	if (!gamepad_is_connected(global.gamepad_connected)) {
+		if (global.gamepad_debug) {
+			show_debug_message("[InputGamepadButtonReleased] FAIL: Gamepad index " + string(global.gamepad_connected) + " not connected (disconnected?)");
+		}
+		global.gamepad_connected = noone;
+		return -1;
+	}
+	
+	// Validation successful
 	var _btns = [gp_face1, gp_face2, gp_face3, gp_face4, gp_padu, gp_padd, gp_padl, gp_padr, gp_start, gp_shoulderl, gp_shoulderlb, gp_shoulderr, gp_shoulderrb];
 	
 	for(var i = 0; i < array_length(_btns); i++)
 	{
-		if(gamepad_button_check(global.gamepad_connected, _btns[i]) and _btns[i] != _key) return _btns[i];
+		if(gamepad_button_check(global.gamepad_connected, _btns[i]) and _btns[i] != _key) {
+			if (global.gamepad_debug) {
+				show_debug_message("[InputGamepadButtonReleased] SUCCESS: Button " + string(_btns[i]) + " released on gamepad " + string(global.gamepad_connected));
+			}
+			return _btns[i];
+		}
 	}
 	
 	return -1;

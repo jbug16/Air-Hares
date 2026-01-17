@@ -15,7 +15,7 @@
 function drm_validator() {
 
 	// Configuration
-	global.drm_validation_url = "https://api.indiepass.gg/api/testing/verification/hasActiveSubscription/active";
+	global.drm_validation_url = "https://api.indiepass.gg/api/auth/verification/hasActiveSubscription";
 	global.drm_validation_success_status = "active";
 
 	// Parse token from command-line arguments

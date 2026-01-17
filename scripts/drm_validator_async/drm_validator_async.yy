@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"drm_validator_async",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"drm_validator_async",
+  "parent":{
+    "name":"Init",
+    "path":"folders/Scripts/Init.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

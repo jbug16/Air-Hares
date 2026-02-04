@@ -17,6 +17,10 @@ switch(menu_selected)
 			if global.options_scanline menu_status[0] = "ON";
 			else menu_status[0] = "OFF";
 		}
+		else if(menu[0] == "Back" and in_leaderboards)
+		{
+			event_user(2);
+		}
 		break;
 		
 	case 1:
@@ -128,7 +132,16 @@ switch(menu_selected)
 		break;
 	
 	case 7:
-		if(menu[7] == "Credits")
+		if(menu[7] == "Leaderboards")
+		{
+			in_leaderboards = true;
+			menu_selected = 1;
+			event_user(1);
+		}
+		break;
+	
+	case 8:
+		if(menu[8] == "Credits")
 		{
 			with(instance_create_depth(0.5*room_width, 0.5*room_height, depth - 100, obj_Credits)) 
 			{
@@ -141,11 +154,11 @@ switch(menu_selected)
 		if(menu[7] == "Back" or menu[7] == "Back") event_user(2);
 		break;
 		
-	case 8:
-		if(menu[8] == "Back" or menu[8] == "Back") event_user(2);
+	case 9:
+		if(menu[9] == "Back" or menu[9] == "Back") event_user(2);
 		break;
 	
-	case 9:
+	case 10:
 		event_user(2);
 		break;
 	

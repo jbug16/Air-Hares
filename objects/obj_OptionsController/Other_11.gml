@@ -118,3 +118,18 @@ else if(in_saves)
 	
 	menu_count = 2;
 }
+// Create leaderboards
+else if(in_leaderboards)
+{
+	menu[0] = "Back";
+	
+	menu_status[0] = "";
+	
+	for(var i = 1; i <= 8; i++)
+	{
+		menu[i] = "";
+		menu_status[i] = "";
+	}
+	
+	menu_count = 1;
+}

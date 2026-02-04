@@ -10,8 +10,8 @@ var _left = InputGet(INPUT.MENU_LEFT);
 var _right = InputGet(INPUT.MENU_RIGHT);
 var _select = InputGet(INPUT.MENU_SELECT);
 
-// If in achievements or in saves - cannot do anything but select back
-if(in_achievements or in_saves)
+// If in achievements, saves, or leaderboards - cannot do anything but select back
+if(in_achievements or in_saves or in_leaderboards)
 {
 	_up = false;
 	_down = false;

@@ -16,6 +16,7 @@ in_controls = false;
 in_graphics = false;
 in_achievements = false;
 in_saves = false;
+in_leaderboards = false;
 alarm[0] = 30;
 control_alpha = 1;
 blink_dur = 0.5*GAMESPD;
@@ -27,8 +28,9 @@ menu[3] = "Graphics";
 menu[4] = "Tutorial";
 menu[5] = "Achievements";
 menu[6] = "Saves";
-menu[7] = "Credits";
-menu[8] = "Back";
+menu[7] = "Leaderboards";
+menu[8] = "Credits";
+menu[9] = "Back";
 
 menu_status[0] = "";
 menu_status[1] = string(round(global.options_music * 100));
@@ -39,6 +41,7 @@ menu_status[5] = "";
 menu_status[6] = "";
 menu_status[7] = "";
 menu_status[8] = "";
+menu_status[9] = "";
 
 menu_count = array_length(menu);
 

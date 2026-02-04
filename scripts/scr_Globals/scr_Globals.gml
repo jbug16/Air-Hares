@@ -102,6 +102,28 @@ for(var i=0; i<=15; i+=1){
 }
 ini_close();
 
+// Leaderboards (dummy data for now)
+global.leaderboard_singleplayer = [];
+global.leaderboard_coop = [];
+// Create dummy singleplayer leaderboard entries
+for(var i = 0; i < 10; i++) {
+	var _entry = {
+		rank: i + 1,
+		name: "Player" + string(i + 1),
+		score: 50000 - (i * 3000)
+	};
+	array_push(global.leaderboard_singleplayer, _entry);
+}
+// Create dummy co-op leaderboard entries
+for(var i = 0; i < 10; i++) {
+	var _entry = {
+		rank: i + 1,
+		name: "Team" + string(i + 1),
+		score: 60000 - (i * 3500)
+	};
+	array_push(global.leaderboard_coop, _entry);
+}
+
 // Load story mode progress
 ini_open("save.sav");
 global.story_mode_progress = ini_read_real("story", "progress", global.story_mode_progress);

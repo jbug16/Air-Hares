@@ -262,6 +262,7 @@
     {"name":"scr_General","order":4,"path":"scripts/scr_General/scr_General.yy",},
     {"name":"scr_Globals","order":1,"path":"scripts/scr_Globals/scr_Globals.yy",},
     {"name":"scr_Input","order":2,"path":"scripts/scr_Input/scr_Input.yy",},
+    {"name":"scr_Leaderboard","order":6,"path":"scripts/scr_Leaderboard/scr_Leaderboard.yy",},
     {"name":"scr_Macros","order":2,"path":"scripts/scr_Macros/scr_Macros.yy",},
     {"name":"scr_Player","order":2,"path":"scripts/scr_Player/scr_Player.yy",},
     {"name":"scr_Tween","order":5,"path":"scripts/scr_Tween/scr_Tween.yy",},

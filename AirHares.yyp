@@ -318,6 +318,7 @@
     {"id":{"name":"scr_General","path":"scripts/scr_General/scr_General.yy",},},
     {"id":{"name":"scr_Globals","path":"scripts/scr_Globals/scr_Globals.yy",},},
     {"id":{"name":"scr_Input","path":"scripts/scr_Input/scr_Input.yy",},},
+    {"id":{"name":"scr_Leaderboard","path":"scripts/scr_Leaderboard/scr_Leaderboard.yy",},},
     {"id":{"name":"scr_Macros","path":"scripts/scr_Macros/scr_Macros.yy",},},
     {"id":{"name":"scr_Player","path":"scripts/scr_Player/scr_Player.yy",},},
     {"id":{"name":"scr_TextAndDialogue","path":"scripts/scr_TextAndDialogue/scr_TextAndDialogue.yy",},},

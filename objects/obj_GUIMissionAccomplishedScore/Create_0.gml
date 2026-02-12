@@ -25,6 +25,12 @@ if (score_total > global.highscore[global.level_highscore]) {
 }
 score_highscore = global.highscore[global.level_highscore];
 
+// Upload score to Steam leaderboard
+if (steam_initialised()) {
+	var _is_coop = obj_ControllerPAR.multiplayer_status[1][MPPROP.JOINED];
+	LeaderboardUploadScore(score_total, _is_coop);
+}
+
 display_score = 0;
 display_score_time = 0;
 display_score_total = 0;

@@ -132,4 +132,9 @@ else if(in_leaderboards)
 	}
 	
 	menu_count = 1;
+	
+	// Download leaderboard scores when opening
+	if (global.dev_mode || steam_initialised()) {
+		LeaderboardDownloadTopScores();
+	}
 }

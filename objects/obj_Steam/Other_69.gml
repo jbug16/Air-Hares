@@ -1,3 +1,10 @@
+// Handle leaderboard callbacks first
+if (LeaderboardProcessUploadCallback(async_load)) {
+	exit; // Callback was handled, exit early
+}
+if (LeaderboardProcessDownloadCallback(async_load)) {
+	exit; // Callback was handled, exit early
+}
 
 // This function call is purely for debugging purposes
 // It will log all the messages from the steam callbacks

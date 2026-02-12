@@ -10,7 +10,7 @@
 // General
 global.gamepad_connected = noone;		// Gamepad
 global.gamepad_debug = false;			// Set to false to disable debug messages after testing
-global.dev_mode = false;					//developer mode on/off
+global.dev_mode = false;					// developer mode on/off
 global.demo = false;					// demo mode (only levels 1-1, 2-2, 3-B)
 global.version = "v1.0.20251102.01";
 global.mouse_disable = false;
@@ -102,27 +102,17 @@ for(var i=0; i<=15; i+=1){
 }
 ini_close();
 
-// Leaderboards (dummy data for now)
+// Leaderboards
 global.leaderboard_singleplayer = [];
 global.leaderboard_coop = [];
-// Create dummy singleplayer leaderboard entries
-for(var i = 0; i < 10; i++) {
-	var _entry = {
-		rank: i + 1,
-		name: "Player" + string(i + 1),
-		score: 50000 - (i * 3000)
-	};
-	array_push(global.leaderboard_singleplayer, _entry);
-}
-// Create dummy co-op leaderboard entries
-for(var i = 0; i < 10; i++) {
-	var _entry = {
-		rank: i + 1,
-		name: "Team" + string(i + 1),
-		score: 60000 - (i * 3500)
-	};
-	array_push(global.leaderboard_coop, _entry);
-}
+
+global.leaderboard_name_singleplayer = "AirHares_Singleplayer";
+global.leaderboard_name_coop = "AirHares_Coop";
+
+global.leaderboard_upload_id_singleplayer = -1;
+global.leaderboard_upload_id_coop = -1;
+global.leaderboard_download_id_singleplayer = -1;
+global.leaderboard_download_id_coop = -1;
 
 // Load story mode progress
 ini_open("save.sav");

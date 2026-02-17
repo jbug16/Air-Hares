@@ -6,7 +6,7 @@ TweenStart("image_yscale", 0, 0.45, 0.5*GAMESPD, TWEENTYPE.QUAD_OUT);
 
 // Fade out/in audio
 AudioBgmChange(noone);
-sound = audio_play_sound(snd_MissionAccomplished, 1, false);
+sound = audio_play_sound(snd_MissionFailed, 1, false);
 text = "";
 text_time = "";
 text_total= "";

@@ -358,6 +358,7 @@
     {"id":{"name":"snd_Gates","path":"sounds/snd_Gates/snd_Gates.yy",},},
     {"id":{"name":"snd_GatesCarrot","path":"sounds/snd_GatesCarrot/snd_GatesCarrot.yy",},},
     {"id":{"name":"snd_MissionAccomplished","path":"sounds/snd_MissionAccomplished/snd_MissionAccomplished.yy",},},
+    {"id":{"name":"snd_MissionFailed","path":"sounds/snd_MissionFailed/snd_MissionFailed.yy",},},
     {"id":{"name":"snd_MusicStage1_1","path":"sounds/snd_MusicStage1_1/snd_MusicStage1_1.yy",},},
     {"id":{"name":"snd_MusicStage1_1Loop","path":"sounds/snd_MusicStage1_1Loop/snd_MusicStage1_1Loop.yy",},},
     {"id":{"name":"snd_MusicStage1_2","path":"sounds/snd_MusicStage1_2/snd_MusicStage1_2.yy",},},

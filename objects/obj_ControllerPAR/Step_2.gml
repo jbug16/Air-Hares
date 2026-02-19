@@ -1,4 +1,5 @@
 /// @desc
+if (instance_exists(obj_TipsAndTricks)) exit;
 
 // Count elapsed time
 time_elapsed += 1;
@@ -27,39 +28,19 @@ if (view_shake_duration > 0) {
 	camera_set_view_pos(view_camera[0], random_range(-view_shake_range, view_shake_range), random_range(-view_shake_range, view_shake_range));
 }
 
-// When no player alive, restart the room
+// When no player alive, show tips then restart or go to stage
 var _player_alive = instance_number(obj_PlayerPAR) + instance_number(obj_PlayerRabboSpawner);
 if _player_alive == 0 {
 		if (!level_completed) 
 		{
 			if (global.game_mode == GAMEMODE.STORY)
 			{
+				// Show tips screen first; it will do room_restart or room_goto when player continues
+				if (instance_exists(obj_TipsAndTricks))
+					exit;
 				global.lives--;
-				if (global.lives == 0) //room_goto(rm_MainMenu);
-				{
-					// Reset story progress and start from beginning
-					//global.current_level = 0;
-					//global.story_mode_progress = 0;	
-					//global.lives = 4;
-					
-					//global.overworld_progress = global.story_mode_level[global.current_level][STORYPROP.OVERWORLD];
-					//global.weather = global.story_mode_level[global.current_level][STORYPROP.WEATHER];
-					//global.level_highscore = global.current_level;
-					
-					//room_goto(rm_LevelX1Farm);
-					
-					var _stage_start = (global.current_level div 4) * 4;  // Calculate stage start (0, 4, 8, or 12)
-				    global.current_level = _stage_start;
-				    global.story_mode_progress = _stage_start;	
-				    global.lives = 4;
-    
-				    global.overworld_progress = global.story_mode_level[global.current_level][STORYPROP.OVERWORLD];
-				    global.weather = global.story_mode_level[global.current_level][STORYPROP.WEATHER];
-				    global.level_highscore = global.current_level;
-    
-				    room_goto(global.story_mode_level[global.current_level][STORYPROP.ROOM]);
-				}
-				else room_restart();
+				instance_create_layer(room_width/2, room_height/2, "GUI_Top", obj_TipsAndTricks);
+				exit;
 			}
 			else room_restart();
 		}

@@ -1,4 +1,5 @@
 ///@desc
+if (instance_exists(obj_TipsAndTricks)) exit;
 //==========================================================
 // Boss card is showing - pause state machine
 //==========================================================

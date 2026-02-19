@@ -3,7 +3,7 @@ var _device = global.control_device[player];
 var _key_toggle = InputGet(INPUT.TOGGLE_AIM, true, _device);
 
 // Toggle to aim at crops or enemy
-if (!instance_exists(obj_Pause) && !instance_exists(obj_ControllerPause)) {
+if (!instance_exists(obj_Pause) && !instance_exists(obj_ControllerPause) && !instance_exists(obj_TipsAndTricks)) {
 	if (_key_toggle) {
 		aim_at_crops = !aim_at_crops;
 		audio_play_sound(snd_ToggleSwitch, 1, false);

@@ -1,3 +1,5 @@
+if (instance_exists(obj_TipsAndTricks)) exit;
+
 // instance id of bullet hit
 var _collide_bullet = instance_place(x, y, obj_PlayerProjectileSeed);	
 if (_collide_bullet == noone) _collide_bullet = instance_place(x, y, obj_PlayerProjectileWater);

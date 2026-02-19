@@ -1,4 +1,5 @@
 ///@desc Statemachine, tiles...
+if (instance_exists(obj_TipsAndTricks)) exit;
 
 //==========================================================
 // Spawning tiles

@@ -1,4 +1,5 @@
 /// @desc
+if (instance_exists(obj_TipsAndTricks)) exit;
 
 //==========================================================
 // Preparation - being hit

@@ -1,4 +1,5 @@
 ///@desc Next phase & hit
+if (instance_exists(obj_TipsAndTricks)) exit;
 
 event_inherited();
 

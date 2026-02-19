@@ -1,4 +1,5 @@
 /// @desc
+if (instance_exists(obj_TipsAndTricks)) exit;
 // Tutorial control
 switch(state) {
 		// ========================= START PHASE =====================================

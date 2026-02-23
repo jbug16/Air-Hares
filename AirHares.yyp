@@ -309,6 +309,7 @@
     {"id":{"name":"rm_StageClear1","path":"rooms/rm_StageClear1/rm_StageClear1.yy",},},
     {"id":{"name":"rm_StageClear2","path":"rooms/rm_StageClear2/rm_StageClear2.yy",},},
     {"id":{"name":"rm_StageClear3","path":"rooms/rm_StageClear3/rm_StageClear3.yy",},},
+    {"id":{"name":"rm_StageFail","path":"rooms/rm_StageFail/rm_StageFail.yy",},},
     {"id":{"name":"drm_validator_async","path":"scripts/drm_validator_async/drm_validator_async.yy",},},
     {"id":{"name":"drm_validator","path":"scripts/drm_validator/drm_validator.yy",},},
     {"id":{"name":"scr_Depth","path":"scripts/scr_Depth/scr_Depth.yy",},},
@@ -604,6 +605,7 @@
     {"roomId":{"name":"rm_StageClear1","path":"rooms/rm_StageClear1/rm_StageClear1.yy",},},
     {"roomId":{"name":"rm_StageClear2","path":"rooms/rm_StageClear2/rm_StageClear2.yy",},},
     {"roomId":{"name":"rm_StageClear3","path":"rooms/rm_StageClear3/rm_StageClear3.yy",},},
+    {"roomId":{"name":"rm_StageFail","path":"rooms/rm_StageFail/rm_StageFail.yy",},},
   ],
   "templateType":null,
   "TextureGroups":[

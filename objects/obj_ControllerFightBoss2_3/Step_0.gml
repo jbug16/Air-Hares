@@ -1,5 +1,4 @@
 /// @desc
-if (instance_exists(obj_TipsAndTricks)) exit;
 
 if(obj_ControllerFightBoss2_3.alarm[2] > 0 and direction == 270)
 {

@@ -254,6 +254,7 @@
     {"name":"rm_StageClear1","order":3,"path":"rooms/rm_StageClear1/rm_StageClear1.yy",},
     {"name":"rm_StageClear2","order":4,"path":"rooms/rm_StageClear2/rm_StageClear2.yy",},
     {"name":"rm_StageClear3","order":5,"path":"rooms/rm_StageClear3/rm_StageClear3.yy",},
+    {"name":"rm_StageFail","order":6,"path":"rooms/rm_StageFail/rm_StageFail.yy",},
     {"name":"drm_validator_async","order":4,"path":"scripts/drm_validator_async/drm_validator_async.yy",},
     {"name":"drm_validator","order":3,"path":"scripts/drm_validator/drm_validator.yy",},
     {"name":"scr_Depth","order":4,"path":"scripts/scr_Depth/scr_Depth.yy",},

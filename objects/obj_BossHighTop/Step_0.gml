@@ -1,5 +1,4 @@
 ///@desc
-if (instance_exists(obj_TipsAndTricks)) exit;
 
 // Boss card - wait
 if(obj_ControllerFightBoss1_3.alarm[2] > 0 and state == BOSS.APPEAR)

@@ -20,7 +20,10 @@ global.menu = false;
 global.game_mode = GAMEMODE.STORY;
 global.current_level = 0;		// Current story mode level being played. (0-15)
 global.story_mode_progress = 0;	// Current progress in story mode
-global.arcade_max_unlocked = 0;	// Max level  ever unlocked for arcade (never decreases)	
+global.arcade_max_unlocked = 0;	// Max level  ever unlocked for arcade (never decreases)
+
+// Tips screen
+global.tips_return_room = noone;
 	
 // Gameplay & movement
 global.armor_strength = 3;	// Hit points. When 0, will return for repair

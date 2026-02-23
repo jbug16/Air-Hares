@@ -1,7 +1,7 @@
 ///@desc Pause
 
-// pause menu / tips screen
-if(instance_exists(obj_Pause) || instance_exists(obj_TipsAndTricks))
+// pause menu
+if(instance_exists(obj_Pause))
 {
 	part_system_automatic_update(particle_system, false); //Pause particles 
 	audio_pause_sound(snd_DesertWind); //Pause wind sfx

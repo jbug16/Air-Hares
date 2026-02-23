@@ -1,6 +1,4 @@
 /// @desc
-if (instance_exists(obj_TipsAndTricks)) exit;
-
 // If collision happened
 collide_seed = instance_place(x, y, obj_PlayerProjectileSeed);
 collide_water = instance_place(x, y, obj_PlayerProjectileWater);

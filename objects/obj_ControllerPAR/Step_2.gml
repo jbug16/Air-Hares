@@ -1,6 +1,4 @@
 /// @desc
-if (instance_exists(obj_TipsAndTricks)) exit;
-
 // Count elapsed time
 time_elapsed += 1;
 
@@ -34,15 +32,11 @@ if _player_alive == 0 {
 		if (!level_completed) 
 		{
 			if (global.game_mode == GAMEMODE.STORY)
-			{
-				// Show tips screen first; it will do room_restart or room_goto when player continues
-				if (instance_exists(obj_TipsAndTricks))
-					exit;
 				global.lives--;
-				instance_create_layer(room_width/2, room_height/2, "GUI_Top", obj_TipsAndTricks);
-				exit;
-			}
-			else room_restart();
+			global.tips_return_room = room;
+			global.tips_skip_music = false;  // Death - music should play
+			room_goto(rm_StageFail);
+			exit;
 		}
 	exit;
 } else if (_player_alive == 1) { // Check join request

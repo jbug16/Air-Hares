@@ -17,6 +17,7 @@ switch(trans_state){
 		if(trans_target == noone) break;
 		room_goto(trans_target);
 		trans_target = noone;
+		trans_trigger = false;
 		trans_state = TRANSITION_STATE.FADE_IN;
 		break;
 	case TRANSITION_STATE.FADE_IN:

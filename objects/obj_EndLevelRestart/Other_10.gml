@@ -5,7 +5,7 @@ event_inherited();
 if (instance_exists(obj_GUIMissionFailed)) {
 	global.tips_return_room = room;
 	global.tips_skip_music = true;  // Music already playing from mission failed screen
-	room_goto(rm_StageFail);
+	TransitionGoto(rm_StageFail);
 	return;
 }
 if (global.game_mode == GAMEMODE.STORY) global.current_level = global.story_mode_progress - 1;

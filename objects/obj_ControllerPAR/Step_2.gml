@@ -35,7 +35,7 @@ if _player_alive == 0 {
 				global.lives--;
 			global.tips_return_room = room;
 			global.tips_skip_music = false;  // Death - music should play
-			room_goto(rm_StageFail);
+			TransitionGoto(rm_StageFail);
 			exit;
 		}
 	exit;

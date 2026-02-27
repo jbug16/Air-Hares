@@ -31,11 +31,23 @@ var _player_alive = instance_number(obj_PlayerPAR) + instance_number(obj_PlayerR
 if _player_alive == 0 {
 		if (!level_completed) 
 		{
-			if (global.game_mode == GAMEMODE.STORY)
-				global.lives--;
-			global.tips_return_room = room;
-			global.tips_skip_music = false;  // Death - music should play
-			TransitionGoto(rm_StageFail);
+			// Only decrement and transition once per death (transition is async; this Step runs every frame until room changes)
+			if (!global.death_transition_triggered) {
+				global.death_transition_triggered = true;
+				if (global.game_mode == GAMEMODE.STORY)
+					global.lives--;
+				global.tips_return_room = room;
+				global.tips_skip_music = false;  // Death - music should play
+				// Reset combo state so multiplier is clean when we return to the level
+				global.combos_count = 0;
+				global.combos_multiplier = 1;
+				// Game over (0 lives): restart level at 4 lives (old game lose method). Otherwise show Tips then retry level.
+				if (global.game_mode == GAMEMODE.STORY && global.lives <= 0) {
+					global.lives = 4;
+					TransitionGoto(global.tips_return_room);
+				} else
+					TransitionGoto(rm_StageFail);
+			}
 			exit;
 		}
 	exit;

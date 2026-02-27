@@ -3,9 +3,13 @@
 // Record time elapsed
 time_elapsed = 0;
 
-// Lives
-if(global.game_mode == GAMEMODE.STORY) p1_lives = global.lives;
-else p1_lives = 1;
+// Lives (clear death flag so next death can trigger transition)
+if(global.game_mode == GAMEMODE.STORY) {
+	p1_lives = global.lives;
+	global.death_transition_triggered = false;
+} else {
+	p1_lives = 1;
+}
 
 
 // Set the speed of the parallax for grass, game object, etc

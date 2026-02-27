@@ -44,7 +44,7 @@ if (global.game_mode == GAMEMODE.STORY)
 {
 	draw_sprite_ext(spr_PlayerIcon, 0, x - sprite_get_width(spr_PlayerIcon), y, 0.6,0.6,0,c_white, image_alpha);
 	draw_text(x, y, "X");
-	draw_sprite_ext(spr_LevelNumbers, global.lives - 1, x + sprite_get_width(spr_PlayerIcon), y, scale_num,scale_num,
+	draw_sprite_ext(spr_LevelNumbers, max(0, global.lives - 1), x + sprite_get_width(spr_PlayerIcon), y, scale_num,scale_num,
 		0, c_white, image_alpha);
 }
 

@@ -24,6 +24,7 @@ global.arcade_max_unlocked = 0;	// Max level  ever unlocked for arcade (never de
 
 // Tips screen
 global.tips_return_room = noone;
+global.death_transition_triggered = false;	// Prevents multiple lives decrements while fade runs
 	
 // Gameplay & movement
 global.armor_strength = 3;	// Hit points. When 0, will return for repair

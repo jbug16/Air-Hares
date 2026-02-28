@@ -19,8 +19,8 @@ function EnemyFaceTarget(_target_id){
 		image_angle = point_direction(x, y, _target_id.x, _target_id.y) + 90;
 		return;
 	}
-	// Default facing
-	image_angle = 270;
+	// No valid target (e.g. player dead, tips screen): keep current facing so falcons don't snap sideways
+	// image_angle = 270;
 }
 
 //@func EnemyHomingTarget()

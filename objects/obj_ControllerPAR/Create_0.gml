@@ -9,6 +9,7 @@ if(global.game_mode == GAMEMODE.STORY) {
 	global.death_transition_triggered = false;
 } else {
 	p1_lives = 1;
+	global.death_transition_triggered = false;  // Arcade/free: allow tips transition on every death
 }
 
 

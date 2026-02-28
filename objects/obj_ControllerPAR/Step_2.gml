@@ -20,10 +20,10 @@ if global.combos_multiplier_increase
 // Check frame skip
 if frame_skip_duration > 0 frame_skip_duration -= 1;
 
-// Apply _screen shake
+// Apply _screen shake (rounded to whole pixels so pixel-art UI doesn't look thinned)
 if (view_shake_duration > 0) {
 	view_shake_duration -= 1;
-	camera_set_view_pos(view_camera[0], random_range(-view_shake_range, view_shake_range), random_range(-view_shake_range, view_shake_range));
+	camera_set_view_pos(view_camera[0], round(random_range(-view_shake_range, view_shake_range)), round(random_range(-view_shake_range, view_shake_range)));
 }
 
 // When no player alive, show tips then restart or go to stage

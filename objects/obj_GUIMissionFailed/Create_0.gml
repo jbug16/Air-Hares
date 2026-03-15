@@ -24,6 +24,9 @@ score_time = 14000 - obj_ControllerPAR.time_elapsed;
 score_total = score_base + score_time;
 crops_filled = 0;
 
+// Track if this run set a new highscore
+new_highscore = false;
+
 
 // Update highscore
 if (score_total > global.highscore[global.level_highscore]) {
@@ -32,6 +35,9 @@ if (score_total > global.highscore[global.level_highscore]) {
 	ini_open("save.sav");
 	ini_write_real("highscore", string(global.level_highscore), global.highscore[global.level_highscore]);
 	ini_close();
+	
+	// Mark this as a new highscore so we can show text in the UI
+	new_highscore = true;
 }
 score_highscore = global.highscore[global.level_highscore];
 

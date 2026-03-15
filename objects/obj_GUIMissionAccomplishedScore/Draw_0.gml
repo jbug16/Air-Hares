@@ -15,3 +15,9 @@ draw_text_ext_transformed(x + 196, y + 48, text_time, sep, w, image_xscale, imag
 draw_text_ext_transformed(x + 196, y + 96, text_total, sep, w, image_xscale, image_yscale, image_angle);
 draw_text_ext_transformed(x + 196, y + 144, text_highscore, sep, w, image_xscale, image_yscale, image_angle);
 if(room == rm_LevelX1Farm) draw_text_ext_transformed(x + 196, y + 192, crops_filled + "%", sep, w, image_xscale, image_yscale, image_angle);
+
+// Show simple text if this run set a new highscore
+if (new_highscore) {
+	draw_set_halign(fa_left);
+	draw_text_ext_transformed(x + 210, y + 144, "New!", sep, w, image_xscale, image_yscale, image_angle);
+}

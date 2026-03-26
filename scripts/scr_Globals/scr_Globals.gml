@@ -106,17 +106,19 @@ for(var i=0; i<=15; i+=1){
 }
 ini_close();
 
-// Leaderboards
+// Reset all highscores to 0 at start (dev/testing)
+ini_open("save.sav");
+for (var i = 0; i <= 15; i += 1) {
+	global.highscore[i] = 0;
+	ini_write_real("highscore", string(i), 0);
+}
+ini_close();
+
+// Leaderboards (local JSON: rank + score entries for UI)
 global.leaderboard_singleplayer = [];
 global.leaderboard_coop = [];
-
-global.leaderboard_name_singleplayer = "AirHares_Singleplayer";
-global.leaderboard_name_coop = "AirHares_Coop";
-
-global.leaderboard_upload_id_singleplayer = -1;
-global.leaderboard_upload_id_coop = -1;
-global.leaderboard_download_id_singleplayer = -1;
-global.leaderboard_download_id_coop = -1;
+global.leaderboard_json_filename = "local_leaderboard.json";
+global.leaderboard_max_entries = 10;
 
 // Load story mode progress
 ini_open("save.sav");

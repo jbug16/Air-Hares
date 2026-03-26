@@ -100,20 +100,18 @@ else if(menu_draw and in_leaderboards)
 	draw_set_font(fnt_Federo16);
 	draw_set_halign(fa_left);
 	
-	// Singleplayer headers
-	var _sp_x = room_width * 0.1;
+	// Singleplayer headers (rank + score only)
+	var _sp_x = room_width * 0.12;
 	draw_text_transformed(_sp_x, _header_y, "Rank", image_xscale, image_yscale, image_angle);
-	draw_text_transformed(_sp_x + 80, _header_y, "Player", image_xscale, image_yscale, image_angle);
 	draw_set_halign(fa_right);
-	draw_text_transformed(room_width * 0.4, _header_y, "Score", image_xscale, image_yscale, image_angle);
+	draw_text_transformed(room_width * 0.38, _header_y, "Score", image_xscale, image_yscale, image_angle);
 	
 	// Co-op headers
-	var _coop_x = room_width * 0.6;
+	var _coop_x = room_width * 0.62;
 	draw_set_halign(fa_left);
 	draw_text_transformed(_coop_x, _header_y, "Rank", image_xscale, image_yscale, image_angle);
-	draw_text_transformed(_coop_x + 80, _header_y, "Team", image_xscale, image_yscale, image_angle);
 	draw_set_halign(fa_right);
-	draw_text_transformed(room_width * 0.9, _header_y, "Score", image_xscale, image_yscale, image_angle);
+	draw_text_transformed(room_width * 0.88, _header_y, "Score", image_xscale, image_yscale, image_angle);
 	
 	// Draw entries
 	var _entry_start_y = room_height * 0.28;
@@ -126,13 +124,9 @@ else if(menu_draw and in_leaderboards)
 		var _y = _entry_start_y + (i * _entry_spacing);
 		
 		draw_set_color(c_white);
-		// Rank
 		draw_text_transformed(_sp_x, _y, string(_entry.rank) + ".", image_xscale, image_yscale, image_angle);
-		// Name
-		draw_text_transformed(_sp_x + 80, _y, _entry.name, image_xscale, image_yscale, image_angle);
-		// Score
 		draw_set_halign(fa_right);
-		draw_text_transformed(room_width * 0.4, _y, string(_entry.score), image_xscale, image_yscale, image_angle);
+		draw_text_transformed(room_width * 0.38, _y, string(_entry.score), image_xscale, image_yscale, image_angle);
 		draw_set_halign(fa_left);
 	}
 	
@@ -142,13 +136,9 @@ else if(menu_draw and in_leaderboards)
 		var _y = _entry_start_y + (i * _entry_spacing);
 		
 		draw_set_color(c_white);
-		// Rank
 		draw_text_transformed(_coop_x, _y, string(_entry.rank) + ".", image_xscale, image_yscale, image_angle);
-		// Name
-		draw_text_transformed(_coop_x + 80, _y, _entry.name, image_xscale, image_yscale, image_angle);
-		// Score
 		draw_set_halign(fa_right);
-		draw_text_transformed(room_width * 0.9, _y, string(_entry.score), image_xscale, image_yscale, image_angle);
+		draw_text_transformed(room_width * 0.88, _y, string(_entry.score), image_xscale, image_yscale, image_angle);
 		draw_set_halign(fa_left);
 	}
 	

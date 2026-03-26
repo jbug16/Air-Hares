@@ -1,302 +1,150 @@
-/// @desc Leaderboard Management Script
-/// Centralized functions for managing Steam leaderboards
+/// @desc Local leaderboard (JSON file next to save.sav)
 
-/// @desc Get the current player's Steam username
-/// @returns {String} The Steam persona name, or "Player" if Steam is not available
-function LeaderboardGetPlayerName() {
-	if (steam_initialised()) {
-		return steam_get_persona_name();
+/// @param {Array<Real>} arr
+function LeaderboardSortScoresDesc(arr) {
+	var n = array_length(arr);
+	for (var i = 0; i < n; i++) {
+		for (var j = i + 1; j < n; j++) {
+			if (arr[j] > arr[i]) {
+				var t = arr[i];
+				arr[i] = arr[j];
+				arr[j] = t;
+			}
+		}
 	}
-	return "Player";
 }
 
-/// @desc Upload a score to the appropriate leaderboard based on game mode
-/// @param {Real} score The score to upload
-/// @param {Bool} is_coop Whether this is a co-op game (true) or singleplayer (false)
-/// @returns {Real} The async request ID, or -1 if Steam is not initialized
-function LeaderboardUploadScore(score, is_coop) {
-	// Test mode: simulate upload
-	if (global.dev_mode && !steam_initialised()) {
-		show_debug_message("Leaderboard [DEV MODE]: Simulating upload of score " + string(round(score)) + " to " + (is_coop ? "co-op" : "singleplayer"));
-		
-		// Simulate async callback with mock data as ds_map
-		var _mock_post_id = 9999 + irandom(1000);
-		var _mock_async = ds_map_create();
-		ds_map_add(_mock_async, "event_type", "leaderboard_upload");
-		ds_map_add(_mock_async, "post_id", _mock_post_id);
-		ds_map_add(_mock_async, "lb_name", is_coop ? global.leaderboard_name_coop : global.leaderboard_name_singleplayer);
-		ds_map_add(_mock_async, "success", true);
-		ds_map_add(_mock_async, "updated", true);
-		ds_map_add(_mock_async, "score", round(score));
-		
-		// Store mock upload ID for tracking
-		if (is_coop) {
-			global.leaderboard_upload_id_coop = _mock_post_id;
-		} else {
-			global.leaderboard_upload_id_singleplayer = _mock_post_id;
+/// @param {Array} raw
+/// @returns {Array<Real>}
+function LeaderboardValidateScoreArray(raw) {
+	if (!is_array(raw)) return [];
+	var out = [];
+	for (var i = 0; i < array_length(raw); i++) {
+		var v = raw[i];
+		// json_parse often yields int types; is_real alone drops valid scores on reload
+		if (is_numeric(v)) {
+			array_push(out, real(v));
 		}
-		
-		// Process the mock callback immediately
-		LeaderboardProcessUploadCallback(_mock_async);
-		
-		// Clean up the ds_map
-		ds_map_destroy(_mock_async);
-		
-		return _mock_post_id;
 	}
-	
-	// Real Steam mode: check if initialized
-	if (!steam_initialised()) {
-		show_debug_message("Leaderboard: Steam not initialized, cannot upload score");
-		return -1;
-	}
-	
-	var _lb_name = is_coop ? global.leaderboard_name_coop : global.leaderboard_name_singleplayer;
-	var _score_int = round(score);
-	
-	show_debug_message("Leaderboard: Uploading score " + string(_score_int) + " to " + _lb_name);
-	
-	var _upload_id = steam_upload_score(_lb_name, _score_int);
-	
-	// Store the upload ID for tracking
-	if (is_coop) {
-		global.leaderboard_upload_id_coop = _upload_id;
-	} else {
-		global.leaderboard_upload_id_singleplayer = _upload_id;
-	}
-	
-	return _upload_id;
+	return out;
 }
 
-/// @desc Download scores from a leaderboard
-/// @param {String} leaderboard_name The name of the leaderboard to download from
-/// @param {Real} start_idx The starting rank (1-based)
-/// @param {Real} end_idx The ending rank (1-based)
-/// @returns {Real} The async request ID, or -1 if Steam is not initialized
-function LeaderboardDownloadScores(leaderboard_name, start_idx, end_idx) {
-	// Test mode: return mock data
-	if (global.dev_mode && !steam_initialised()) {
-		show_debug_message("Leaderboard [DEV MODE]: Simulating download from " + leaderboard_name);
-		
-		// Generate mock entries
-		var _mock_entries = [];
-		var _base_score = leaderboard_name == global.leaderboard_name_coop ? 60000 : 50000;
-		var _score_decrement = leaderboard_name == global.leaderboard_name_coop ? 3500 : 3000;
-		
-		for (var i = start_idx; i <= end_idx && i <= 10; i++) {
-			var _entry = {
-				rank: i,
-				user: "TestPlayer" + string(i),
-				score: _base_score - ((i - 1) * _score_decrement)
-			};
-			array_push(_mock_entries, _entry);
-		}
-		
-		// Create mock async response as ds_map
-		var _mock_id = 8888 + irandom(1000);
-		var _mock_async = ds_map_create();
-		ds_map_add(_mock_async, "event_type", "leaderboard_download");
-		ds_map_add(_mock_async, "id", _mock_id);
-		ds_map_add(_mock_async, "status", 1); // Success
-		ds_map_add(_mock_async, "entries", json_stringify({entries: _mock_entries}));
-		
-		// Store mock download ID for tracking
-		if (leaderboard_name == global.leaderboard_name_singleplayer) {
-			global.leaderboard_download_id_singleplayer = _mock_id;
-		} else if (leaderboard_name == global.leaderboard_name_coop) {
-			global.leaderboard_download_id_coop = _mock_id;
-		}
-		
-		// Process immediately
-		LeaderboardProcessDownloadCallback(_mock_async);
-		
-		// Clean up the ds_map
-		ds_map_destroy(_mock_async);
-		
-		return _mock_id;
+/// @param {Array<Real>} scores_sorted_any_order
+/// @returns {Array<Real>} sorted descending, length <= max
+function LeaderboardCapSortedScores(scores_sorted_any_order, max_entries) {
+	var arr = [];
+	for (var i = 0; i < array_length(scores_sorted_any_order); i++) {
+		array_push(arr, scores_sorted_any_order[i]);
 	}
-	
-	// Real Steam mode: check if initialized
-	if (!steam_initialised()) {
-		show_debug_message("Leaderboard: Steam not initialized, cannot download scores");
-		return -1;
+	LeaderboardSortScoresDesc(arr);
+	var n = min(max_entries, array_length(arr));
+	var out = [];
+	for (var i = 0; i < n; i++) {
+		array_push(out, arr[i]);
 	}
-	
-	show_debug_message("Leaderboard: Downloading scores from " + leaderboard_name + " (ranks " + string(start_idx) + "-" + string(end_idx) + ")");
-	
-	var _download_id = steam_download_scores(leaderboard_name, start_idx, end_idx);
-	
-	// Store the download ID for tracking
-	if (leaderboard_name == global.leaderboard_name_singleplayer) {
-		global.leaderboard_download_id_singleplayer = _download_id;
-	} else if (leaderboard_name == global.leaderboard_name_coop) {
-		global.leaderboard_download_id_coop = _download_id;
-	}
-	
-	return _download_id;
+	return out;
 }
 
-/// @desc Download top scores for both leaderboards
-/// Downloads top 10 entries from both singleplayer and co-op leaderboards
+/// @param {Array<Real>} capped_sorted
+/// @returns {Array<Struct>}
+function LeaderboardScoresToDisplayEntries(capped_sorted) {
+	var out = [];
+	for (var i = 0; i < array_length(capped_sorted); i++) {
+		array_push(out, { rank: i + 1, score: capped_sorted[i] });
+	}
+	return out;
+}
+
+/// @returns {Struct} { singleplayer: Array<Real>, coop: Array<Real> }
+function LeaderboardReadRawData() {
+	var empty_sp = [];
+	var empty_co = [];
+	var fn = global.leaderboard_json_filename;
+	if (!file_exists(fn)) {
+		return { singleplayer: empty_sp, coop: empty_co };
+	}
+	var f = file_text_open_read(fn);
+	if (f == -1) {
+		return { singleplayer: empty_sp, coop: empty_co };
+	}
+	var s = "";
+	while (!file_text_eof(f)) {
+		s += file_text_read_string(f);
+		file_text_readln(f);
+	}
+	file_text_close(f);
+	if (string_length(s) == 0) {
+		return { singleplayer: empty_sp, coop: empty_co };
+	}
+	var root = undefined;
+	try {
+		root = json_parse(s);
+	} catch (_e) {
+		root = undefined;
+	}
+	if (!is_struct(root)) {
+		return { singleplayer: empty_sp, coop: empty_co };
+	}
+	var sp = [];
+	var co = [];
+	if (variable_struct_exists(root, "singleplayer")) {
+		sp = LeaderboardValidateScoreArray(root.singleplayer);
+	}
+	if (variable_struct_exists(root, "coop")) {
+		co = LeaderboardValidateScoreArray(root.coop);
+	}
+	return { singleplayer: sp, coop: co };
+}
+
+/// @param {Struct} data { singleplayer, coop } arrays of real
+function LeaderboardWriteRawData(data) {
+	var fn = global.leaderboard_json_filename;
+	var payload = {
+		singleplayer: data.singleplayer,
+		coop: data.coop
+	};
+	var j = json_stringify(payload);
+	var fw = file_text_open_write(fn);
+	if (fw == -1) {
+		show_debug_message("Leaderboard: could not open " + fn + " for write");
+		return;
+	}
+	file_text_write_string(fw, j);
+	file_text_close(fw);
+}
+
+/// @desc Load from disk into global display arrays (rank + score)
 function LeaderboardDownloadTopScores() {
-	LeaderboardDownloadScores(global.leaderboard_name_singleplayer, 1, 10);
-	LeaderboardDownloadScores(global.leaderboard_name_coop, 1, 10);
+	var data = LeaderboardReadRawData();
+	var max_n = global.leaderboard_max_entries;
+	var sp = LeaderboardCapSortedScores(data.singleplayer, max_n);
+	var co = LeaderboardCapSortedScores(data.coop, max_n);
+	global.leaderboard_singleplayer = LeaderboardScoresToDisplayEntries(sp);
+	global.leaderboard_coop = LeaderboardScoresToDisplayEntries(co);
 }
 
-/// @desc Process leaderboard upload callback from Steam async event
-/// @param {Struct} async_data The async_load map from Steam async event
-/// @returns {Bool} True if this callback was handled, false otherwise
-function LeaderboardProcessUploadCallback(async_data) {
-	var _event_type = async_data[? "event_type"];
-	if (_event_type != "leaderboard_upload") {
-		return false;
-	}
-	
-	var _post_id = async_data[? "post_id"];
-	var _lb_name = async_data[? "lb_name"];
-	var _success = async_data[? "success"];
-	var _updated = async_data[? "updated"];
-	var _score = async_data[? "score"];
-	
-	// Check if this is one of our tracked uploads
-	var _is_our_upload = false;
-	var _is_coop = false;
-	
-	if (_post_id == global.leaderboard_upload_id_singleplayer && _lb_name == global.leaderboard_name_singleplayer) {
-		_is_our_upload = true;
-		_is_coop = false;
-		global.leaderboard_upload_id_singleplayer = -1; // Clear the ID
-	} else if (_post_id == global.leaderboard_upload_id_coop && _lb_name == global.leaderboard_name_coop) {
-		_is_our_upload = true;
-		_is_coop = true;
-		global.leaderboard_upload_id_coop = -1; // Clear the ID
-	}
-	
-	if (!_is_our_upload) {
-		return false;
-	}
-	
-	// Handle the upload result
-	if (_success) {
-		if (_updated) {
-			show_debug_message("Leaderboard: Score " + string(_score) + " uploaded successfully to " + _lb_name + " (updated leaderboard)");
-		} else {
-			show_debug_message("Leaderboard: Score " + string(_score) + " uploaded to " + _lb_name + " (not better than previous)");
-		}
+/// @desc Append a run score, persist, refresh globals
+/// @param {Real} score
+/// @param {Bool} is_coop
+function LeaderboardUploadScore(score, is_coop) {
+	var data = LeaderboardReadRawData();
+	var max_n = global.leaderboard_max_entries;
+	var v = round(score);
+	if (is_coop) {
+		array_push(data.coop, v);
+		data.coop = LeaderboardCapSortedScores(data.coop, max_n);
 	} else {
-		show_debug_message("Leaderboard: Failed to upload score to " + _lb_name);
+		array_push(data.singleplayer, v);
+		data.singleplayer = LeaderboardCapSortedScores(data.singleplayer, max_n);
 	}
-	
-	return true;
+	LeaderboardWriteRawData(data);
+	global.leaderboard_singleplayer = LeaderboardScoresToDisplayEntries(data.singleplayer);
+	global.leaderboard_coop = LeaderboardScoresToDisplayEntries(data.coop);
 }
 
-/// @desc Process leaderboard download callback from Steam async event
-/// @param {Struct} async_data The async_load map from Steam async event
-/// @returns {Bool} True if this callback was handled, false otherwise
-function LeaderboardProcessDownloadCallback(async_data) {
-	var _event_type = async_data[? "event_type"];
-	if (_event_type != "leaderboard_download") {
-		return false;
-	}
-	
-	var _async_id = async_data[? "id"];
-	var _status = async_data[? "status"];
-	
-	// Check if this is one of our tracked downloads
-	var _is_our_download = false;
-	var _is_coop = false;
-	
-	if (_async_id == global.leaderboard_download_id_singleplayer) {
-		_is_our_download = true;
-		_is_coop = false;
-		global.leaderboard_download_id_singleplayer = -1; // Clear the ID
-	} else if (_async_id == global.leaderboard_download_id_coop) {
-		_is_our_download = true;
-		_is_coop = true;
-		global.leaderboard_download_id_coop = -1; // Clear the ID
-	}
-	
-	if (!_is_our_download) {
-		return false;
-	}
-	
-	// Check if download was successful
-	if (_status == 0) {
-		show_debug_message("Leaderboard: Failed to download scores");
-		// Clear the leaderboard array
-		if (_is_coop) {
-			global.leaderboard_coop = [];
-		} else {
-			global.leaderboard_singleplayer = [];
-		}
-		return true;
-	}
-	
-	// Parse the entries
-	var _entries_json = async_data[? "entries"];
-	if (is_undefined(_entries_json)) {
-		show_debug_message("Leaderboard: No entries in download response");
-		if (_is_coop) {
-			global.leaderboard_coop = [];
-		} else {
-			global.leaderboard_singleplayer = [];
-		}
-		return true;
-	}
-	
-	var _entries_struct = json_parse(_entries_json);
-	var _entries_array = _entries_struct.entries;
-	
-	// Process entries into our format
-	var _processed_entries = [];
-	for (var i = 0; i < array_length(_entries_array); i++) {
-		var _entry = _entries_array[i];
-		var _processed_entry = {
-			rank: _entry.rank,
-			name: _entry.user, // Steam username
-			score: _entry.score
-		};
-		array_push(_processed_entries, _processed_entry);
-	}
-	
-	// Store in appropriate global array
-	if (_is_coop) {
-		global.leaderboard_coop = _processed_entries;
-		show_debug_message("Leaderboard: Downloaded " + string(array_length(_processed_entries)) + " co-op entries");
-	} else {
-		global.leaderboard_singleplayer = _processed_entries;
-		show_debug_message("Leaderboard: Downloaded " + string(array_length(_processed_entries)) + " singleplayer entries");
-	}
-	
-	return true;
-}
-
-/// @desc Initialize leaderboards (create if they don't exist)
-/// This should be called once when Steam is initialized
-function LeaderboardInitialize() {
-	// Skip initialization in dev mode if Steam is not initialized
-	if (global.dev_mode && !steam_initialised()) {
-		show_debug_message("Leaderboard [DEV MODE]: Skipping initialization (test mode active)");
-		return;
-	}
-	
-	if (!steam_initialised()) {
-		show_debug_message("Leaderboard: Cannot initialize - Steam not initialized");
-		return;
-	}
-	
-	// Create leaderboards if they don't exist
-	// Note: If they already exist, Steam will just return the existing ones
-	steam_create_leaderboard(global.leaderboard_name_singleplayer, lb_sort_descending, lb_disp_numeric);
-	steam_create_leaderboard(global.leaderboard_name_coop, lb_sort_descending, lb_disp_numeric);
-	
-	show_debug_message("Leaderboard: Initialized leaderboards");
-}
-
-/// @desc Check if leaderboard data is available
-/// @param {Bool} is_coop Whether to check co-op (true) or singleplayer (false)
-/// @returns {Bool} True if leaderboard data exists and has entries
+/// @param {Bool} is_coop
+/// @returns {Bool}
 function LeaderboardHasData(is_coop) {
-	var _entries = is_coop ? global.leaderboard_coop : global.leaderboard_singleplayer;
-	return array_length(_entries) > 0;
+	var entries = is_coop ? global.leaderboard_coop : global.leaderboard_singleplayer;
+	return array_length(entries) > 0;
 }

@@ -113,11 +113,9 @@ if (room == rm_LevelX1Farm) switch (state)
 	
 	case LVLFARM.SAVING:
 		if (obj_GUIScreenCloseLeft.x != 640) break;
-		// Save progress
+		// Save progress (only after success — END branch uses same crop threshold for fail UI)
 		state++;
-		if (global.game_mode == GAMEMODE.STORY)
-		{
-			// Advance level, save progress
+		if (global.game_mode == GAMEMODE.STORY && crops_filled >= 0.6 * crops_available) {
 			AdvanceLevel();
 		}
 	break;

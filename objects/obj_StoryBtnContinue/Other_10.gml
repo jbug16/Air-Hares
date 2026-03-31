@@ -20,7 +20,7 @@ if (global.story_popup_screen == 1) {
 	
 	audio_play_sound(snd_PlaneRabboRoll, 10, false);
 	
-	var _name = string_copy(global.story_new_initials, 0, min(3, string_length(global.story_new_initials)));
+	var _name = string_copy(global.story_new_initials, 1, min(3, string_length(global.story_new_initials)));
 	global.player_initials = _name;
 	global.story_run_initials = _name;
 	
@@ -41,8 +41,7 @@ if (global.story_popup_screen == 1) {
 	with (obj_StoryBtnPlay) instance_destroy();
 	with (obj_StoryBtnBack) instance_destroy();
 	
-	with(obj_TitlebBtnGeneralPAR){
-	var _name = string_copy(global.story_new_initials, 1, min(3, string_length(global.story_new_initials)));
+	with(obj_TitlebBtnGeneralPAR) {
 		mode_on = false;
 		
 		if (button_id == 1) event_user(1);

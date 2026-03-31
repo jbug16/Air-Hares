@@ -36,7 +36,20 @@ function StoryProgressSave(){
 }
 
 // Story Mode run tracking (cumulative full-run score for leaderboards)
+
+/// @desc cumulative must equal sum of per-level scores in this run (fixes orphaned values in old saves)
+function StoryRunReconcileCumulative() {
+	var _sum = 0;
+	for (var _i = 0; _i <= 15; _i++) {
+		if (global.story_run_level_scores_set[_i]) {
+			_sum += global.story_run_level_scores[_i];
+		}
+	}
+	global.story_run_score_cumulative = _sum;
+}
+
 function StoryRunSave(){
+	StoryRunReconcileCumulative();
 	ini_open("save.sav");
 	ini_write_real("story_run", "active", global.story_run_active ? 1 : 0);
 	ini_write_real("story_run", "cumulative", global.story_run_score_cumulative);

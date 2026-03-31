@@ -137,6 +137,7 @@ global.player_initials = ini_read_string("leaderboard", "initials", "---");
 // Load story run tracking (if a run was mid-way when the game was last closed)
 global.story_run_active = bool(ini_read_real("story_run", "active", 0));
 global.story_run_score_cumulative = ini_read_real("story_run", "cumulative", 0);
+var _story_run_cumulative_ini = global.story_run_score_cumulative;
 for (var i = 0; i <= 15; i += 1) {
 	global.story_run_level_scores[i] = ini_read_real("story_run", "level_score_" + string(i), 0);
 	global.story_run_level_scores_set[i] = bool(ini_read_real("story_run", "level_score_set_" + string(i), 0));
@@ -150,6 +151,11 @@ if (string_length(global.story_run_initials) <= 0 && global.story_run_active) {
 //global.story_mode_progress = 16;
 global.arcade_max_unlocked = 16;
 ini_close();
+
+StoryRunReconcileCumulative();
+if (global.story_run_score_cumulative != _story_run_cumulative_ini) {
+	StoryRunSave();
+}
 	
 // Options
 // Load saved options value

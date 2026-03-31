@@ -42,7 +42,11 @@ if (arcade_popup_level >= 0 && arcade_popup_level <= 15) {
 	_hname = global.highscore_initials[arcade_popup_level];
 }
 var _hs_line = "HIGH SCORE: " + string(round(_hs));
-if (round(_hs) > 0 && is_string(_hname) && string_length(_hname) > 0) {
-	_hs_line += " (" + string_upper(string_copy(_hname, 1, min(3, string_length(_hname)))) + ")";
+if (arcade_popup_level >= 0 && arcade_popup_level <= 15) {
+	var _hs_initials = "---";
+	if (is_string(_hname) && string_length(_hname) > 0) {
+		_hs_initials = string_upper(string_copy(_hname, 1, min(3, string_length(_hname))));
+	}
+	_hs_line += " (" + _hs_initials + ")";
 }
 draw_text_transformed(x, y + 20 * image_yscale, _hs_line, _scale_x, _scale_y, 0);

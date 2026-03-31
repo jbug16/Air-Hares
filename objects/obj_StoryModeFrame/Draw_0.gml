@@ -35,4 +35,12 @@ var _progress_display = min(global.story_mode_progress, 15);
 var _txt = global.story_mode_progress >= 16 ? "GAME COMPLETE!" : global.story_mode_level[_progress_display][STORYPROP.NAME];
 draw_text_transformed(x , y - 20*image_yscale, _txt, _scale_x, _scale_y, 0);
 draw_text_transformed(x , y, "LIVES: " + string(global.lives), _scale_x, _scale_y, 0);
-draw_text_transformed(x , y + 15*image_yscale, "SCORE", _scale_x, _scale_y, 0);
+var _run_sc = global.story_run_score_cumulative;
+var _rname = global.story_run_initials;
+var _run_line = "SCORE: " + string(round(_run_sc));
+var _run_initials = "---";
+if (is_string(_rname) && string_length(_rname) > 0) {
+	_run_initials = string_upper(string_copy(_rname, 1, min(3, string_length(_rname))));
+}
+_run_line += " (" + _run_initials + ")";
+draw_text_transformed(x , y + 15*image_yscale, _run_line, _scale_x, _scale_y, 0);

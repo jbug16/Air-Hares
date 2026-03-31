@@ -33,6 +33,13 @@ DrawText3(640, gui_text_anchor_y /*+ (80 * 3)*/, _time, fa_center, fa_middle, c_
 var _throttle = round(global.speed_parallax * 100);
 DrawText3(640,  gui_text_anchor_y + 40*_scale, string(_throttle) + " kts", fa_center, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
 
+// Story: level score · cumulative run (this level + prior clears); arcade: level score only
+var _sc_round = round(global.score_current);
+var _score_hud = string(_sc_round);
+if (global.game_mode == GAMEMODE.STORY) {
+	_score_hud = string(_sc_round) + " · " + string(global.story_run_score_cumulative + _sc_round);
+}
+
 // Draw ammo and speed
 if instance_exists(obj_PlayerPAR) {
 	draw_set_color(c_white);
@@ -86,7 +93,7 @@ if instance_exists(obj_PlayerPAR) {
 		// Draw the score (below 1st player)
 		_x_pos += 60; //_scale*0.5*sprite_get_width(spr_PlayerIcon) + _scale*0.5*sprite_get_width(spr_HPFrame);
 		DrawText3(_x_pos, gui_text_anchor_y + _scale_ui*114,
-			round(global.score_current), fa_left, fa_middle, c_white,fnt_Federo24, -1, 5000, 0, _scale);
+			_score_hud, fa_left, fa_middle, c_white,fnt_Federo24, -1, 5000, 0, _scale);
 		//DrawText3(_x1 - _scale*0.4*sprite_get_width(spr_HPFrame)+ 5, gui_text_anchor_y + _scale*114, 
 		//	round(global.score_current), fa_left, fa_middle, c_white,fnt_Federo24, -1, 5000, 0, _scale)
 		
@@ -178,8 +185,8 @@ if instance_exists(obj_PlayerPAR) {
 		
 		// draw score below 2nd player as well
 		_x_pos += 60;
-		DrawText3(_x_pos, gui_text_anchor_y + _scale_ui*114, 
-			round(global.score_current), fa_left, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
+		DrawText3(_x_pos, gui_text_anchor_y + _scale_ui*114,
+			_score_hud, fa_left, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
 		//DrawText3(_x1  + _scale*0.4*sprite_get_width(spr_HPFrame)+ 5, gui_text_anchor_y + _scale*114, 
 		//	round(global.score_current), fa_right, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
 			

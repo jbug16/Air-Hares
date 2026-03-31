@@ -21,6 +21,12 @@ global.game_mode = GAMEMODE.STORY;
 global.current_level = 0;		// Current story mode level being played. (0-15)
 global.story_mode_progress = 0;	// Current progress in story mode
 global.arcade_max_unlocked = 0;	// Max level  ever unlocked for arcade (never decreases)
+// Main-menu Story popup: 0 = Continue/New/Back, 1 = New Story Game (initials + Continue/Back)
+global.story_popup_screen = 0;
+global.story_new_initials = "";
+// Arcade level popup: 0 = level + Play/Back, 1 = initials + Continue/Back
+global.arcade_popup_screen = 0;
+global.arcade_new_initials = "";
 
 // Tips screen
 global.tips_return_room = noone;
@@ -99,31 +105,47 @@ global.currency_feather_goldgrip = ini_read_real("currency", "goldgrip", 0);
 global.currency_feather_twinhorn = ini_read_real("currency", "twinhorn", 0);
 ini_close();
 	
-// Highscore
-ini_open("save.sav");
-for(var i=0; i<=15; i+=1){
-	global.highscore[i] = ini_read_real("highscore", i, 0);	
-}
-ini_close();
-
-// Reset all highscores to 0 at start (dev/testing)
+// Highscore (arcade per-level) + initials for who set the record
+global.highscore_initials = array_create(16, "");
 ini_open("save.sav");
 for (var i = 0; i <= 15; i += 1) {
-	global.highscore[i] = 0;
-	ini_write_real("highscore", string(i), 0);
+	global.highscore[i] = ini_read_real("highscore", i, 0);
+	global.highscore_initials[i] = ini_read_string("highscore_initials", string(i), "");
 }
 ini_close();
 
 // Leaderboards (local JSON: rank + score entries for UI)
 global.leaderboard_singleplayer = [];
 global.leaderboard_coop = [];
-global.leaderboard_json_filename = "local_leaderboard.json";
+// Use a dedicated file so old per-mission entries don't mix with cumulative story-run scores.
+global.leaderboard_json_filename = "local_leaderboard_story_run.json";
 global.leaderboard_max_entries = 10;
+
+// Story Mode run tracking (cumulative full-run score for leaderboards)
+global.story_run_active = false;
+global.story_run_score_cumulative = 0;
+global.story_run_level_scores = array_create(16, 0);
+global.story_run_level_scores_set = array_create(16, false);
+global.story_run_initials = "";
 
 // Load story mode progress
 ini_open("save.sav");
 global.story_mode_progress = ini_read_real("story", "progress", global.story_mode_progress);
 global.arcade_max_unlocked = ini_read_real("arcade", "max_unlocked", global.arcade_max_unlocked);
+global.player_initials = ini_read_string("leaderboard", "initials", "---");
+
+// Load story run tracking (if a run was mid-way when the game was last closed)
+global.story_run_active = bool(ini_read_real("story_run", "active", 0));
+global.story_run_score_cumulative = ini_read_real("story_run", "cumulative", 0);
+for (var i = 0; i <= 15; i += 1) {
+	global.story_run_level_scores[i] = ini_read_real("story_run", "level_score_" + string(i), 0);
+	global.story_run_level_scores_set[i] = bool(ini_read_real("story_run", "level_score_set_" + string(i), 0));
+}
+global.story_run_initials = ini_read_string("story_run", "initials", global.story_run_initials);
+if (string_length(global.story_run_initials) <= 0 && global.story_run_active) {
+	global.story_run_initials = global.player_initials;
+}
+
 // Test
 //global.story_mode_progress = 16;
 global.arcade_max_unlocked = 16;

@@ -35,6 +35,131 @@ function StoryProgressSave(){
 	ini_close();
 }
 
+// Story Mode run tracking (cumulative full-run score for leaderboards)
+function StoryRunSave(){
+	ini_open("save.sav");
+	ini_write_real("story_run", "active", global.story_run_active ? 1 : 0);
+	ini_write_real("story_run", "cumulative", global.story_run_score_cumulative);
+	if (!is_string(global.story_run_initials)) global.story_run_initials = "";
+	ini_write_string("story_run", "initials", global.story_run_initials);
+	for (var i = 0; i <= 15; i += 1) {
+		ini_write_real("story_run", "level_score_" + string(i), global.story_run_level_scores[i]);
+		ini_write_real("story_run", "level_score_set_" + string(i), global.story_run_level_scores_set[i] ? 1 : 0);
+	}
+	ini_close();
+}
+
+function StoryRunReset(){
+	global.story_run_active = false;
+	global.story_run_score_cumulative = 0;
+	global.story_run_initials = "";
+	for (var i = 0; i <= 15; i += 1) {
+		global.story_run_level_scores[i] = 0;
+		global.story_run_level_scores_set[i] = false;
+	}
+	StoryRunSave();
+}
+
+function StoryRunStartNew(){
+	global.story_run_active = true;
+	global.story_run_score_cumulative = 0;
+	for (var i = 0; i <= 15; i += 1) {
+		global.story_run_level_scores[i] = 0;
+		global.story_run_level_scores_set[i] = false;
+	}
+	StoryRunSave();
+}
+
+/// @desc Leave "New Story Game" initials screen; return to Continue/New/Back popup
+function StoryPopupExitNewGameScreen() {
+	global.story_popup_screen = 0;
+	global.story_new_initials = "";
+	with (obj_StoryBtnPlay) visible = true;
+}
+
+function ArcadePopupUnfocusButtons() {
+	with (obj_FreeModeBtnPlay) {
+		if (focus) event_user(2);
+	}
+	with (obj_FreeModeBtnBack) {
+		if (focus) event_user(2);
+	}
+}
+
+/// @desc True when Play/Back have menu focus (blocks initials typing on arcade screen 1)
+function ArcadePopupAnyButtonFocused() {
+	if (global.arcade_popup_screen != 1) return false;
+	var _f = false;
+	with (obj_FreeModeBtnPlay) {
+		if (focus) _f = true;
+	}
+	with (obj_FreeModeBtnBack) {
+		if (focus) _f = true;
+	}
+	return _f;
+}
+
+function ArcadePopupFocusPlayButton() {
+	ArcadePopupUnfocusButtons();
+	with (obj_FreeModeBtnPlay) {
+		event_user(1);
+		parent_index.alarm[2] = 1;
+	}
+}
+
+function ArcadePopupFocusBackButton() {
+	ArcadePopupUnfocusButtons();
+	with (obj_FreeModeBtnBack) {
+		event_user(1);
+		parent_index.alarm[2] = 1;
+	}
+}
+
+function StoryNewGameUnfocusButtons() {
+	with (obj_StoryBtnContinue) {
+		if (focus) event_user(2);
+	}
+	with (obj_StoryBtnBack) {
+		if (focus) event_user(2);
+	}
+}
+
+function StoryNewGameAnyButtonFocused() {
+	if (global.story_popup_screen != 1) return false;
+	var _f = false;
+	with (obj_StoryBtnContinue) {
+		if (focus) _f = true;
+	}
+	with (obj_StoryBtnBack) {
+		if (focus) _f = true;
+	}
+	return _f;
+}
+
+function StoryNewGameFocusContinue() {
+	StoryNewGameUnfocusButtons();
+	with (obj_StoryBtnContinue) {
+		event_user(1);
+		parent_index.alarm[2] = 1;
+	}
+}
+
+function StoryNewGameFocusBack() {
+	StoryNewGameUnfocusButtons();
+	with (obj_StoryBtnBack) {
+		event_user(1);
+		parent_index.alarm[2] = 1;
+	}
+}
+
+/// @desc Leave arcade initials step; return to level summary + Play/Back
+function ArcadePopupExitInitialsScreen() {
+	global.arcade_popup_screen = 0;
+	global.arcade_new_initials = "";
+	with (obj_FreeModeBtnPlay) text = "PLAY";
+	ArcadePopupFocusPlayButton();
+}
+
 // Advance level, save progress.
 function AdvanceLevel() {
 	// Increment current level

@@ -19,43 +19,36 @@ if (!global.mouse_disable and !focus and (mouse_prev_x != mouse_x or mouse_prev_
 
 
 // KEYBOARD
-if(alarm[2] < 0 and focus)
-{
-	//get input
-	var _movement = InputGet(INPUT.MENU_RIGHT) - InputGet(INPUT.MENU_LEFT);
-	
-	if (InputGet(INPUT.MENU_SELECT)) event_user(0);	// button press
-	else if (_movement != 0)	
-	{
-		// move selection
-		var _sel = button_id + _movement;
-		//loop buttons selection
-		if(global.demo)
-		{
-			// Story mode disabled
-			if(button_id == 2 and _movement == -1) _sel = 4;
-			else if(button_id == 4 and _movement == 1) _sel = 2;
-		}
-		else
-		{
-			if (_sel < 1) _sel = instance_number(parent_index);
-			else if(_sel > instance_number(parent_index)) _sel = 1;
-		}
-		if (button_id != _sel) 
-		{
-			event_user(2);		// unselect
-			
-			with (parent_index)	// select another
-			{
-				if (id == other.id) continue;
-				if (button_id == _sel) 
-				{
-					event_user(1);
-					break;
+if (alarm[2] < 0 and focus) {
+	// Initials sub-screen: obj_StoryModeFrame / obj_FreeModeFrame Step owns MENU_LEFT/RIGHT (center field + wrap).
+	// Letting this block run too fights that logic and breaks instance_number(parent_index) with hidden siblings (e.g. NEW).
+	if (global.story_popup_screen == 1 || global.arcade_popup_screen == 1) {
+		if (InputGet(INPUT.MENU_SELECT)) event_user(0);
+	} else {
+		var _movement = InputGet(INPUT.MENU_RIGHT) - InputGet(INPUT.MENU_LEFT);
+		
+		if (InputGet(INPUT.MENU_SELECT)) event_user(0);
+		else if (_movement != 0) {
+			var _sel = button_id + _movement;
+			if (global.demo) {
+				if (button_id == 2 and _movement == -1) _sel = 4;
+				else if (button_id == 4 and _movement == 1) _sel = 2;
+			} else {
+				if (_sel < 1) _sel = instance_number(parent_index);
+				else if (_sel > instance_number(parent_index)) _sel = 1;
+			}
+			if (button_id != _sel) {
+				event_user(2);
+				with (parent_index) {
+					if (id == other.id) continue;
+					if (button_id == _sel) {
+						event_user(1);
+						break;
+					}
 				}
 			}
+			parent_index.alarm[2] = 1;
 		}
-		parent_index.alarm[2] = 1;	// delay the unintentional selection
 	}
 }
 

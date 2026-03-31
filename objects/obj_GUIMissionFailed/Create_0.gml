@@ -28,21 +28,22 @@ crops_filled = 0;
 new_highscore = false;
 
 
-// Update highscore
-if (score_total > global.highscore[global.level_highscore]) {
-	// Update highscore	
-	global.highscore[global.level_highscore] = score_total;
+// Update per-level highscore only in Arcade mode (Story uses cumulative run leaderboard)
+if (global.game_mode == GAMEMODE.FREE && score_total > global.highscore[global.level_highscore]) {
+	var _lv = global.level_highscore;
+	global.highscore[_lv] = score_total;
+	var _nm = global.player_initials;
+	if (!is_string(_nm) || string_length(_nm) <= 0) _nm = "---";
+	_nm = string_upper(_nm);
+	if (string_length(_nm) > 3) _nm = string_copy(_nm, 1, 3);
+	global.highscore_initials[_lv] = _nm;
 	ini_open("save.sav");
-	ini_write_real("highscore", string(global.level_highscore), global.highscore[global.level_highscore]);
+	ini_write_real("highscore", string(_lv), global.highscore[_lv]);
+	ini_write_string("highscore_initials", string(_lv), _nm);
 	ini_close();
-	
-	// Mark this as a new highscore so we can show text in the UI
 	new_highscore = true;
 }
 score_highscore = global.highscore[global.level_highscore];
-
-var _is_coop = obj_ControllerPAR.multiplayer_status[1][MPPROP.JOINED];
-LeaderboardUploadScore(score_total, _is_coop);
 
 display_score = 0;
 display_score_time = 0;

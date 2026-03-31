@@ -11,11 +11,28 @@ var _scale_y = image_yscale/2;
 
 // Icon
 draw_sprite_ext(spr_PlayerIcon, 0, x - 130*image_xscale, y - 5*image_yscale, _scale_x, _scale_y, 0, c_white, 1);
-// Level
+
+if (global.story_popup_screen == 1) {
+	// New Story Game: same frame, different body (initials instead of stage/lives block)
+	draw_text_transformed(x, y - 20*image_yscale, "New Story Game", _scale_x, _scale_y, 0);
+	draw_set_font(fnt_Federo24);
+	draw_set_color(c_orange);
+
+	// Three slots: typed letters + underscores for empty slots (e.g. A__, AB_, ABC)
+	var _s = global.story_new_initials;
+	var _n = string_length(_s);
+	var _initials_text = "";
+	for (var _slot = 0; _slot < 3; _slot++) {
+		if (_slot < _n) _initials_text += string_copy(_s, _slot + 1, 1);
+		else _initials_text += "_";
+	}
+	draw_text_transformed(x, y + 8*image_yscale, _initials_text, _scale_x, _scale_y, 0);
+	exit;
+}
+
+// Main story popup: stage name, lives, score label
 var _progress_display = min(global.story_mode_progress, 15);
 var _txt = global.story_mode_progress >= 16 ? "GAME COMPLETE!" : global.story_mode_level[_progress_display][STORYPROP.NAME];
 draw_text_transformed(x , y - 20*image_yscale, _txt, _scale_x, _scale_y, 0);
-// lives
 draw_text_transformed(x , y, "LIVES: " + string(global.lives), _scale_x, _scale_y, 0);
-// Highscore
 draw_text_transformed(x , y + 15*image_yscale, "SCORE", _scale_x, _scale_y, 0);

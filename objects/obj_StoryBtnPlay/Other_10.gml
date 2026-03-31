@@ -14,10 +14,9 @@ for (var _gp = 0; _gp < _maxpads; _gp++)
     }
 }
 
-
 audio_play_sound(snd_PlaneRabboRoll, 10, false);
-// Assign current progress to current run. Progress 14 will repeat level 13
-global.lives = 4;
-global.story_mode_progress = 0;
-global.current_level = 0;
-instance_create_depth(0.5*room_width, 0.5*room_height, depth - 100, obj_Tutorial);
+// Replace main story popup with New Story Game (initials) screen; same frame, hide center NEW button
+global.story_popup_screen = 1;
+global.story_new_initials = "";
+StoryNewGameUnfocusButtons();
+visible = false;

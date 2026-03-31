@@ -1,5 +1,12 @@
 ///@desc Click
 
+// From New Story Game screen: return to Continue / New / Back (do not close Story menu)
+if (global.story_popup_screen == 1) {
+	audio_play_sound(snd_PlaneRabboRoll, 10, false);
+	StoryPopupExitNewGameScreen();
+	exit;
+}
+
 // Inherit the parent event
 event_inherited();
 

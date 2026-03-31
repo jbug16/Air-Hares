@@ -9,6 +9,9 @@ layer_set_visible("Effect_Grayscale", true);
 var _sprite_width = sprite_get_width(spr_TitleSelectionFrame);
 var _sprite_height = sprite_get_height(spr_TitleSelectionFrame);
 
+global.story_popup_screen = 0;
+global.story_new_initials = "";
+
 instance_create_layer(0.5*room_width - 0.31*_sprite_width, 0.5*room_height + 0.3*_sprite_height, "Instances_PopUp", obj_StoryBtnContinue);
 instance_create_layer(0.5*room_width, 0.5*room_height + 0.3*_sprite_height, "Instances_PopUp", obj_StoryBtnPlay);
 instance_create_layer(0.5*room_width + 0.31*_sprite_width, 0.5*room_height + 0.3*_sprite_height, "Instances_PopUp", obj_StoryBtnBack);

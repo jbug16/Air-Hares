@@ -10,7 +10,7 @@ var _select = InputGet(INPUT.MENU_SELECT);
 if(global.demo)
 {
 	var _movement = _up or _down or _select;
-	if ((_movement) and !instance_exists(obj_ModesBtnPAR))
+	if ((_movement) and !instance_exists(obj_ModesBtnPAR) and !instance_exists(obj_FreeModeFrame))
 	{
 		switch(_movement)
 		{
@@ -42,7 +42,7 @@ if(global.demo)
 else
 {
 	var _movement = _left or _right or _up or _down or _select;
-	if ((_movement) and !instance_exists(obj_ModesBtnPAR))
+	if ((_movement) and !instance_exists(obj_ModesBtnPAR) and !instance_exists(obj_FreeModeFrame))
 	{
 		selected_prev = selected;
 		switch(_movement){

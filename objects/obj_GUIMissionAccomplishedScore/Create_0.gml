@@ -55,13 +55,24 @@ if (global.game_mode == GAMEMODE.STORY && global.story_run_active) {
 	// Persist progress so quitting mid-run won't lose the cumulative score
 	StoryRunSave();
 
+	// Mission UI "Highscore:" row tracks arcade per-level in FREE mode; in Story it must show run total
+	score_highscore = global.story_run_score_cumulative;
+
 	// When the last level is cleared, progress is incremented to 16 before we create this UI.
 	if (global.story_mode_progress >= 16) {
 		var _is_coop = obj_ControllerPAR.multiplayer_status[1][MPPROP.JOINED];
 		var _name = global.story_run_initials;
 		if (!is_string(_name) || string_length(_name) <= 0) _name = global.player_initials;
 		if (!is_string(_name) || string_length(_name) <= 0) _name = "---";
-		if (string_length(_name) > 3) _name = string_copy(_name, 0, 3);
+		if (string_length(_name) > 3) _name = string_copy(_name, 1, 3);
+
+		var _lb_pre = LeaderboardReadRawData();
+		var _ent_pre = _is_coop ? _lb_pre.coop : _lb_pre.singleplayer;
+		var _best_pre = 0;
+		for (var _pi = 0; _pi < array_length(_ent_pre); _pi++) {
+			_best_pre = max(_best_pre, _ent_pre[_pi].score);
+		}
+		new_highscore = (round(global.story_run_score_cumulative) > _best_pre);
 
 		LeaderboardUploadScore(global.story_run_score_cumulative, _is_coop, _name);
 		StoryRunReset();

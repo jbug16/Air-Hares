@@ -31,6 +31,7 @@ if (global.story_popup_screen == 1) {
 	global.lives = 4;
 	global.story_mode_progress = 0;
 	global.current_level = 0;
+	StoryProgressSave();
 	StoryRunStartNew();
 	
 	global.story_popup_screen = 0;

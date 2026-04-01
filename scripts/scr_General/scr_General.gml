@@ -88,6 +88,65 @@ function StoryPopupExitNewGameScreen() {
 	global.story_popup_screen = 0;
 	global.story_new_initials = "";
 	with (obj_StoryBtnPlay) visible = true;
+	ModesBtnPopupSetAlarm2(-1);
+}
+
+/// @desc obj_ModesBtnPAR has no instances; story/arcade buttons are subclasses. with(ModesBtnPAR) skips them.
+function ModesBtnPopupUnhoverAll() {
+	with (obj_StoryBtnContinue) {
+		if (focus) event_user(2);
+	}
+	with (obj_StoryBtnPlay) {
+		if (focus) event_user(2);
+	}
+	with (obj_StoryBtnBack) {
+		if (focus) event_user(2);
+	}
+	with (obj_FreeModeBtnPlay) {
+		if (focus) event_user(2);
+	}
+	with (obj_FreeModeBtnBack) {
+		if (focus) event_user(2);
+	}
+	with (obj_ModesBtnPAR) {
+		if (focus) event_user(2);
+	}
+}
+
+function ModesBtnPopupButtonCount() {
+	return instance_number(obj_StoryBtnContinue) + instance_number(obj_StoryBtnPlay) + instance_number(obj_StoryBtnBack)
+		+ instance_number(obj_FreeModeBtnPlay) + instance_number(obj_FreeModeBtnBack) + instance_number(obj_ModesBtnPAR);
+}
+
+/// @param {real} _except_inst Instance id to skip (keyboard nav: current button)
+function ModesBtnPopupFocusByButtonId(_sel, _except_inst) {
+	with (obj_StoryBtnContinue) {
+		if (id != _except_inst && button_id == _sel) event_user(1);
+	}
+	with (obj_StoryBtnPlay) {
+		if (id != _except_inst && button_id == _sel) event_user(1);
+	}
+	with (obj_StoryBtnBack) {
+		if (id != _except_inst && button_id == _sel) event_user(1);
+	}
+	with (obj_FreeModeBtnPlay) {
+		if (id != _except_inst && button_id == _sel) event_user(1);
+	}
+	with (obj_FreeModeBtnBack) {
+		if (id != _except_inst && button_id == _sel) event_user(1);
+	}
+	with (obj_ModesBtnPAR) {
+		if (id != _except_inst && button_id == _sel) event_user(1);
+	}
+}
+
+function ModesBtnPopupSetAlarm2(_val) {
+	with (obj_StoryBtnContinue) alarm[2] = _val;
+	with (obj_StoryBtnPlay) alarm[2] = _val;
+	with (obj_StoryBtnBack) alarm[2] = _val;
+	with (obj_FreeModeBtnPlay) alarm[2] = _val;
+	with (obj_FreeModeBtnBack) alarm[2] = _val;
+	with (obj_ModesBtnPAR) alarm[2] = _val;
 }
 
 function ArcadePopupUnfocusButtons() {
@@ -116,16 +175,16 @@ function ArcadePopupFocusPlayButton() {
 	ArcadePopupUnfocusButtons();
 	with (obj_FreeModeBtnPlay) {
 		event_user(1);
-		parent_index.alarm[2] = 1;
 	}
+	ModesBtnPopupSetAlarm2(1);
 }
 
 function ArcadePopupFocusBackButton() {
 	ArcadePopupUnfocusButtons();
 	with (obj_FreeModeBtnBack) {
 		event_user(1);
-		parent_index.alarm[2] = 1;
 	}
+	ModesBtnPopupSetAlarm2(1);
 }
 
 function StoryNewGameUnfocusButtons() {
@@ -133,6 +192,10 @@ function StoryNewGameUnfocusButtons() {
 		if (focus) event_user(2);
 	}
 	with (obj_StoryBtnBack) {
+		if (focus) event_user(2);
+	}
+	// NEW is hidden on initials screen but can still hold focus from the click that opened it; Enter would re-fire Other_10.
+	with (obj_StoryBtnPlay) {
 		if (focus) event_user(2);
 	}
 }
@@ -153,16 +216,16 @@ function StoryNewGameFocusContinue() {
 	StoryNewGameUnfocusButtons();
 	with (obj_StoryBtnContinue) {
 		event_user(1);
-		parent_index.alarm[2] = 1;
 	}
+	ModesBtnPopupSetAlarm2(1);
 }
 
 function StoryNewGameFocusBack() {
 	StoryNewGameUnfocusButtons();
 	with (obj_StoryBtnBack) {
 		event_user(1);
-		parent_index.alarm[2] = 1;
 	}
+	ModesBtnPopupSetAlarm2(1);
 }
 
 /// @desc Leave arcade initials step; return to level summary + Play/Back

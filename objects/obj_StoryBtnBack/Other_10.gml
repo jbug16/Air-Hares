@@ -11,7 +11,10 @@ if (global.story_popup_screen == 1) {
 event_inherited();
 
 instance_destroy(obj_StoryModeFrame);
-instance_destroy(obj_ModesBtnPAR);
+while (instance_exists(obj_ModesBtnPAR)) instance_destroy(obj_ModesBtnPAR);
+with (obj_StoryBtnContinue) instance_destroy();
+with (obj_StoryBtnPlay) instance_destroy();
+with (obj_StoryBtnBack) instance_destroy();
 
 with(obj_TitlebBtnGeneralPAR){
 	alarm[2] = 20;

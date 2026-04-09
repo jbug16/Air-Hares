@@ -86,6 +86,36 @@ function StoryRunStartNew(){
 	StoryRunSave();
 }
 
+/// @desc Full story clear: push each level's story score into arcade high tables (with initials) so Free Mode shows the same bests / names.
+function StoryRunPromoteScoresToArcade() {
+	var _nm = global.story_run_initials;
+	if (!is_string(_nm) || string_length(_nm) <= 0) _nm = global.player_initials;
+	if (!is_string(_nm) || string_length(_nm) <= 0) _nm = "---";
+	_nm = string_upper(_nm);
+	if (string_length(_nm) > 3) _nm = string_copy(_nm, 1, 3);
+
+	var _need_write = false;
+	for (var i = 0; i <= 15; i++) {
+		if (!global.story_run_level_scores_set[i]) continue;
+		var _sc = global.story_run_level_scores[i];
+		var _hs = global.highscore[i];
+		var _cur = global.highscore_initials[i];
+		var _blank = (!is_string(_cur) || string_length(_cur) <= 0);
+		if (_sc > _hs || (_sc == _hs && _blank)) {
+			global.highscore[i] = _sc;
+			global.highscore_initials[i] = _nm;
+			_need_write = true;
+		}
+	}
+	if (!_need_write) return;
+	ini_open("save.sav");
+	for (var j = 0; j <= 15; j++) {
+		ini_write_real("highscore", string(j), global.highscore[j]);
+		ini_write_string("highscore_initials", string(j), global.highscore_initials[j]);
+	}
+	ini_close();
+}
+
 /// @desc Leave "New Story Game" initials screen; return to Continue/New/Back popup
 function StoryPopupExitNewGameScreen() {
 	global.story_popup_screen = 0;

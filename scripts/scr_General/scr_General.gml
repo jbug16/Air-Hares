@@ -35,6 +35,16 @@ function StoryProgressSave(){
 	ini_close();
 }
 
+/// @desc Display name for story/arcade popups: e.g. "Barren Bunlands 1-1" or "Hopeful Hareway 2-B"
+function StoryLevelPopupTitle(_level_index) {
+	if (_level_index < 0 || _level_index > 15) return "";
+	var _name = global.story_mode_level[_level_index][STORYPROP.NAME];
+	var _stage = (_level_index div 4) + 1;
+	var _col = _level_index mod 4;
+	var _sub = (_col == 3) ? "B" : string(_col + 1);
+	return _name + " " + string(_stage) + "-" + _sub;
+}
+
 // Story Mode run tracking (cumulative full-run score for leaderboards)
 
 /// @desc cumulative must equal sum of per-level scores in this run (fixes orphaned values in old saves)

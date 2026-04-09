@@ -37,5 +37,8 @@ ini_open("save.sav");
 ini_write_string("leaderboard", "initials", _name);
 ini_close();
 
+global.arcade_popup_screen = 0;
+global.arcade_new_initials = "";
+
 global.current_level = tgt_level;
 room_goto(global.story_mode_level[global.current_level][STORYPROP.ROOM]);

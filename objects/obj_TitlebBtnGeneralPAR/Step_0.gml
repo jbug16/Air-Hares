@@ -20,9 +20,9 @@ if (!global.mouse_disable and !focus and (mouse_prev_x != mouse_x or mouse_prev_
 
 // KEYBOARD
 if (alarm[2] < 0 and focus) {
-	// Initials sub-screen: obj_StoryModeFrame / obj_FreeModeFrame Step owns MENU_LEFT/RIGHT (center field + wrap).
-	// Letting this block run too fights that logic and breaks instance_number(parent_index) with hidden siblings (e.g. NEW).
-	if (global.story_popup_screen == 1 || global.arcade_popup_screen == 1) {
+	// Initials sub-screen: only obj_ModesBtnPAR children (Continue/New/Back, Play/Back). obj_FreeModeFrame Step owns
+	// MENU_LEFT/RIGHT for the center field. End-level buttons (obj_EndLevelPAR) and main title rows must keep full nav.
+	if ((global.story_popup_screen == 1 || global.arcade_popup_screen == 1) && parent_index == obj_ModesBtnPAR) {
 		// Subclass buttons (e.g. hidden NEW) must not activate on Enter — only visible rows.
 		if (InputGet(INPUT.MENU_SELECT) && visible) event_user(0);
 	} else {

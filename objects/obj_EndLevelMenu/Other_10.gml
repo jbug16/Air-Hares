@@ -31,4 +31,10 @@ if(instance_exists(obj_ControllerFightBoss4_3))
 	exit;
 }
 
+// Leaving gameplay for main menu: clear popup state so title / end-level buttons are not stuck in "initials" input mode.
+global.arcade_popup_screen = 0;
+global.story_popup_screen = 0;
+global.arcade_new_initials = "";
+global.story_new_initials = "";
+
 TransitionGoto(rm_MainMenu);

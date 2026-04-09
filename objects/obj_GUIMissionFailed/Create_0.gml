@@ -44,6 +44,9 @@ if (global.game_mode == GAMEMODE.FREE && score_total > global.highscore[global.l
 	new_highscore = true;
 }
 score_highscore = global.highscore[global.level_highscore];
+if (global.game_mode == GAMEMODE.STORY) {
+	score_highscore = global.story_run_score_cumulative;
+}
 
 display_score = 0;
 display_score_time = 0;

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_ResetSaveForTesting",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_ResetSaveForTesting",
+  "parent":{
+    "name":"Init",
+    "path":"folders/Scripts/Init.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

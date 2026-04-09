@@ -74,7 +74,6 @@ if (global.game_mode == GAMEMODE.STORY && global.story_run_active) {
 		}
 		new_highscore = (round(global.story_run_score_cumulative) > _best_pre);
 
-		StoryRunPromoteScoresToArcade();
 		LeaderboardUploadScore(global.story_run_score_cumulative, _is_coop, _name);
 		StoryRunReset();
 	}

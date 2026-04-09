@@ -323,6 +323,7 @@
     {"id":{"name":"scr_Leaderboard","path":"scripts/scr_Leaderboard/scr_Leaderboard.yy",},},
     {"id":{"name":"scr_Macros","path":"scripts/scr_Macros/scr_Macros.yy",},},
     {"id":{"name":"scr_Player","path":"scripts/scr_Player/scr_Player.yy",},},
+    {"id":{"name":"scr_ResetSaveForTesting","path":"scripts/scr_ResetSaveForTesting/scr_ResetSaveForTesting.yy",},},
     {"id":{"name":"scr_TextAndDialogue","path":"scripts/scr_TextAndDialogue/scr_TextAndDialogue.yy",},},
     {"id":{"name":"scr_Tween","path":"scripts/scr_Tween/scr_Tween.yy",},},
     {"id":{"name":"scr_VisualEffects","path":"scripts/scr_VisualEffects/scr_VisualEffects.yy",},},

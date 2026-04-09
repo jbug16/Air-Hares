@@ -134,6 +134,7 @@
     {"id":{"name":"obj_ControllerNormalPAR","path":"objects/obj_ControllerNormalPAR/obj_ControllerNormalPAR.yy",},},
     {"id":{"name":"obj_ControllerPAR","path":"objects/obj_ControllerPAR/obj_ControllerPAR.yy",},},
     {"id":{"name":"obj_ControllerPause","path":"objects/obj_ControllerPause/obj_ControllerPause.yy",},},
+    {"id":{"name":"obj_CoopPortraitSelect","path":"objects/obj_CoopPortraitSelect/obj_CoopPortraitSelect.yy",},},
     {"id":{"name":"obj_Credits","path":"objects/obj_Credits/obj_Credits.yy",},},
     {"id":{"name":"obj_CRTController","path":"objects/obj_CRTController/obj_CRTController.yy",},},
     {"id":{"name":"obj_CutscenePAR","path":"objects/obj_CutscenePAR/obj_CutscenePAR.yy",},},

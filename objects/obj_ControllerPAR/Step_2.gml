@@ -1,9 +1,10 @@
 /// @desc
+
 // Count elapsed time
 time_elapsed += 1;
 
 // Check for pause
-if (InputGet(INPUT.PAUSE) and !instance_exists(obj_EndLevelPAR)) {
+if (InputGet(INPUT.PAUSE) and !instance_exists(obj_EndLevelPAR) and !global.pause_coop_portrait_select) {
 	if !instance_exists(obj_Pause) instance_create_depth(x,y,depth,obj_Pause);
 	exit;
 }
@@ -67,16 +68,12 @@ if _player_alive == 0 {
 			global.control_device[0] = _join_requestor;	
 		}
 		if !PlayerCheckAlive(1) && _p2_can_join && _join_requestor != global.control_device[0] && _join_requestor >= 0 {
-			// Create the 2nd player spawner
-			var _player = instance_create_layer(960, 608, "Instances", obj_PlayerRabboSpawner);
-			_player.player = 1;
-			_player.character = global.character_selected[_player.player]
-			_player.sprite_index = global.character_sprite[_player.character][CHARACTER_SPRITE.IDLE];
-			global.control_device[1] = _join_requestor;
-			multiplayer_status[1][MPPROP.JOINED] = true;
-			if (global.game_mode == GAMEMODE.STORY && global.story_run_active) {
-				global.story_run_ever_coop = true;
-				StoryRunSave();
+			if (!global.pause_coop_portrait_select) {
+				global.pause_coop_portrait_select = true;
+				global.coop_portrait_select_device = _join_requestor;
+				global.coop_portrait_select_index = 0;
+				global.coop_portrait_select_ignore_confirm = 12;
+				if (!instance_exists(obj_Pause)) instance_create_depth(x, y, depth, obj_Pause);
 			}
 		}
 	}

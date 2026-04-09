@@ -28,6 +28,17 @@ global.story_new_initials = "";
 global.arcade_popup_screen = 0;
 global.arcade_new_initials = "";
 
+// Co-op drop-in: portrait select (obj_Pause freeze + obj_ControllerPAR UI)
+global.pause_coop_portrait_select = false;
+global.coop_portrait_select_device = 0;
+global.coop_portrait_select_index = 0;
+global.coop_portrait_select_ignore_confirm = 0;
+// P2 picker: all characters except Rabbo (Dirk + Linnie/Betty/Candie); swap sprites when final art exists
+global.coop_portrait_sprite[0] = spr_RabboPortraitConfident;
+global.coop_portrait_sprite[1] = spr_RabboPortraitConfident;
+global.coop_portrait_sprite[2] = spr_RabboPortraitSpeaking;
+global.coop_portrait_sprite[3] = spr_RabboPortraitShocked;
+
 // Tips screen
 global.tips_return_room = noone;
 global.death_transition_triggered = false;	// Prevents multiple lives decrements while fade runs
@@ -192,8 +203,12 @@ global.character_selected[1] = CHARACTER.DIRK;
 // Character Name
 global.character_name[CHARACTER.RABBO] = "Captain Rabbo";
 global.character_name[CHARACTER.DIRK] = "Dirk Doggo";
+global.character_name[CHARACTER.LINNIE] = "Linnie Lightfoote";
+global.character_name[CHARACTER.BETTY] = "Betty Bunting";
+global.character_name[CHARACTER.CANDIE] = "Candie Clayton";
 
 // Define character sprites here. Format: global.character_sprite[enum _character][enum _char_sprite]
+// Rabbo
 global.character_sprite[CHARACTER.RABBO][CHARACTER_SPRITE.IDLE] = spr_RabboIdle;
 global.character_sprite[CHARACTER.RABBO][CHARACTER_SPRITE.BANK_LEFT] = spr_RabboLeft;
 global.character_sprite[CHARACTER.RABBO][CHARACTER_SPRITE.BANK_LEFT_MAX] = spr_RabboLeftMax;
@@ -205,6 +220,7 @@ global.character_sprite[CHARACTER.RABBO][CHARACTER_SPRITE.LOOP] = spr_RabboLoopD
 global.character_sprite[CHARACTER.RABBO][CHARACTER_SPRITE.PARRY] = spr_RabboParry;
 global.character_sprite[CHARACTER.RABBO][CHARACTER_SPRITE.DEATH] = spr_RabboIdle;
 
+// Dirk
 global.character_sprite[CHARACTER.DIRK][CHARACTER_SPRITE.IDLE] = spr_DirkIdle;
 global.character_sprite[CHARACTER.DIRK][CHARACTER_SPRITE.BANK_LEFT] = spr_DirkLeft;
 global.character_sprite[CHARACTER.DIRK][CHARACTER_SPRITE.BANK_LEFT_MAX] = spr_DirkLeftMax;
@@ -215,6 +231,42 @@ global.character_sprite[CHARACTER.DIRK][CHARACTER_SPRITE.ROLL_RIGHT] = spr_DirkR
 global.character_sprite[CHARACTER.DIRK][CHARACTER_SPRITE.LOOP] = spr_DirkLoopDeLoop;
 global.character_sprite[CHARACTER.DIRK][CHARACTER_SPRITE.PARRY] = spr_DirkParry;
 global.character_sprite[CHARACTER.DIRK][CHARACTER_SPRITE.DEATH] = spr_DirkIdle;
+
+// Linnie
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.IDLE] = spr_DirkIdle;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.BANK_LEFT] = spr_DirkLeft;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.BANK_LEFT_MAX] = spr_DirkLeftMax;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.BANK_RIGHT] = spr_DirkRight;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.BANK_RIGHT_MAX] = spr_DirkRightMax;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.ROLL_LEFT] = spr_DirkRollLeft;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.ROLL_RIGHT] = spr_DirkRollRight;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.LOOP] = spr_DirkLoopDeLoop;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.PARRY] = spr_DirkParry;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.DEATH] = spr_DirkIdle;
+
+// Betty
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.IDLE] = spr_DirkIdle;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.BANK_LEFT] = spr_DirkLeft;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.BANK_LEFT_MAX] = spr_DirkLeftMax;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.BANK_RIGHT] = spr_DirkRight;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.BANK_RIGHT_MAX] = spr_DirkRightMax;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.ROLL_LEFT] = spr_DirkRollLeft;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.ROLL_RIGHT] = spr_DirkRollRight;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.LOOP] = spr_DirkLoopDeLoop;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.PARRY] = spr_DirkParry;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.DEATH] = spr_DirkIdle;
+
+// Candie
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.IDLE] = spr_DirkIdle;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.BANK_LEFT] = spr_DirkLeft;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.BANK_LEFT_MAX] = spr_DirkLeftMax;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.BANK_RIGHT] = spr_DirkRight;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.BANK_RIGHT_MAX] = spr_DirkRightMax;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.ROLL_LEFT] = spr_DirkRollLeft;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.ROLL_RIGHT] = spr_DirkRollRight;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.LOOP] = spr_DirkLoopDeLoop;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.PARRY] = spr_DirkParry;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.DEATH] = spr_DirkIdle;
 
 // Actual levels
 if(global.demo)

@@ -52,7 +52,10 @@ enum INPUT
 
 enum CHARACTER {
 	RABBO,
-	DIRK
+	DIRK,
+	LINNIE,
+	BETTY,
+	CANDIE
 }
 
 enum CHARACTER_SPRITE {

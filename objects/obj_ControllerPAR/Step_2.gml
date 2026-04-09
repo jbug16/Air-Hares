@@ -73,6 +73,11 @@ if _player_alive == 0 {
 			_player.character = global.character_selected[_player.player]
 			_player.sprite_index = global.character_sprite[_player.character][CHARACTER_SPRITE.IDLE];
 			global.control_device[1] = _join_requestor;
+			multiplayer_status[1][MPPROP.JOINED] = true;
+			if (global.game_mode == GAMEMODE.STORY && global.story_run_active) {
+				global.story_run_ever_coop = true;
+				StoryRunSave();
+			}
 		}
 	}
 }

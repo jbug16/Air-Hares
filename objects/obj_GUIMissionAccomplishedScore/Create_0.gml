@@ -60,7 +60,7 @@ if (global.game_mode == GAMEMODE.STORY && global.story_run_active) {
 
 	// When the last level is cleared, progress is incremented to 16 before we create this UI.
 	if (global.story_mode_progress >= 16) {
-		var _is_coop = obj_ControllerPAR.multiplayer_status[1][MPPROP.JOINED];
+		var _is_coop = global.story_run_ever_coop || obj_ControllerPAR.multiplayer_status[1][MPPROP.JOINED];
 		var _name = global.story_run_initials;
 		if (!is_string(_name) || string_length(_name) <= 0) _name = global.player_initials;
 		if (!is_string(_name) || string_length(_name) <= 0) _name = "---";

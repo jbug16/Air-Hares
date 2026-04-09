@@ -127,6 +127,7 @@ global.story_run_score_cumulative = 0;
 global.story_run_level_scores = array_create(16, 0);
 global.story_run_level_scores_set = array_create(16, false);
 global.story_run_initials = "";
+global.story_run_ever_coop = false;
 
 // Load story mode progress
 ini_open("save.sav");
@@ -143,6 +144,7 @@ for (var i = 0; i <= 15; i += 1) {
 	global.story_run_level_scores_set[i] = bool(ini_read_real("story_run", "level_score_set_" + string(i), 0));
 }
 global.story_run_initials = ini_read_string("story_run", "initials", global.story_run_initials);
+global.story_run_ever_coop = bool(ini_read_real("story_run", "ever_coop", 0));
 if (string_length(global.story_run_initials) <= 0 && global.story_run_active) {
 	global.story_run_initials = global.player_initials;
 }
@@ -156,7 +158,9 @@ StoryRunReconcileCumulative();
 if (global.story_run_score_cumulative != _story_run_cumulative_ini) {
 	StoryRunSave();
 }
-	
+
+LeaderboardDownloadTopScores();
+
 // Options
 // Load saved options value
 ini_open("save.sav");

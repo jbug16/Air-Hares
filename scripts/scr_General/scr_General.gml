@@ -55,6 +55,7 @@ function StoryRunSave(){
 	ini_write_real("story_run", "cumulative", global.story_run_score_cumulative);
 	if (!is_string(global.story_run_initials)) global.story_run_initials = "";
 	ini_write_string("story_run", "initials", global.story_run_initials);
+	ini_write_real("story_run", "ever_coop", global.story_run_ever_coop ? 1 : 0);
 	for (var i = 0; i <= 15; i += 1) {
 		ini_write_real("story_run", "level_score_" + string(i), global.story_run_level_scores[i]);
 		ini_write_real("story_run", "level_score_set_" + string(i), global.story_run_level_scores_set[i] ? 1 : 0);
@@ -66,6 +67,7 @@ function StoryRunReset(){
 	global.story_run_active = false;
 	global.story_run_score_cumulative = 0;
 	global.story_run_initials = "";
+	global.story_run_ever_coop = false;
 	for (var i = 0; i <= 15; i += 1) {
 		global.story_run_level_scores[i] = 0;
 		global.story_run_level_scores_set[i] = false;
@@ -75,6 +77,7 @@ function StoryRunReset(){
 
 function StoryRunStartNew(){
 	global.story_run_active = true;
+	global.story_run_ever_coop = false;
 	global.story_run_score_cumulative = 0;
 	for (var i = 0; i <= 15; i += 1) {
 		global.story_run_level_scores[i] = 0;

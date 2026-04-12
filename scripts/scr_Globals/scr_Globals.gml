@@ -33,11 +33,9 @@ global.pause_coop_portrait_select = false;
 global.coop_portrait_select_device = 0;
 global.coop_portrait_select_index = 0;
 global.coop_portrait_select_ignore_confirm = 0;
-// P2 picker: all characters except Rabbo (Dirk + Linnie/Betty/Candie); swap sprites when final art exists
-global.coop_portrait_sprite[0] = spr_RabboPortraitConfident;
-global.coop_portrait_sprite[1] = spr_RabboPortraitConfident;
-global.coop_portrait_sprite[2] = spr_RabboPortraitSpeaking;
-global.coop_portrait_sprite[3] = spr_RabboPortraitShocked;
+
+global.coop_portrait_sprite[0] = spr_DirkIcon;
+global.coop_portrait_sprite[1] = spr_LinnieIcon;
 
 // Tips screen
 global.tips_return_room = noone;
@@ -233,16 +231,16 @@ global.character_sprite[CHARACTER.DIRK][CHARACTER_SPRITE.PARRY] = spr_DirkParry;
 global.character_sprite[CHARACTER.DIRK][CHARACTER_SPRITE.DEATH] = spr_DirkIdle;
 
 // Linnie
-global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.IDLE] = spr_DirkIdle;
-global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.BANK_LEFT] = spr_DirkLeft;
-global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.BANK_LEFT_MAX] = spr_DirkLeftMax;
-global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.BANK_RIGHT] = spr_DirkRight;
-global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.BANK_RIGHT_MAX] = spr_DirkRightMax;
-global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.ROLL_LEFT] = spr_DirkRollLeft;
-global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.ROLL_RIGHT] = spr_DirkRollRight;
-global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.LOOP] = spr_DirkLoopDeLoop;
-global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.PARRY] = spr_DirkParry;
-global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.DEATH] = spr_DirkIdle;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.IDLE] = spr_LinnieIdle;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.BANK_LEFT] = spr_LinnieLeft;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.BANK_LEFT_MAX] = spr_LinnieLeftMax;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.BANK_RIGHT] = spr_LinnieRight;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.BANK_RIGHT_MAX] = spr_LinnieRightMax;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.ROLL_LEFT] = spr_LinnieRollLeft;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.ROLL_RIGHT] = spr_LinnieRollRight;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.LOOP] = spr_LinnieLoopDeLoop;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.PARRY] = spr_LinnieParry;
+global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.DEATH] = spr_LinnieIdle;
 
 // Betty
 global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.IDLE] = spr_DirkIdle;

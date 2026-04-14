@@ -149,6 +149,28 @@ else if(menu_selected > menu_count - 1) menu_selected = 0;
 
 if(global.mouse_disable) exit;
 
+// Footer Back for screens that draw it away from the main menu column
+if(in_achievements or in_leaderboards)
+{
+	draw_set_font(fnt_Federo24);
+	var _back_y = room_height * 0.9;
+	var _pad = 16;
+	var cx = room_width * 0.5;
+	var w = max(string_width(menu[0]), 80);
+	var h = max(string_height(menu[0]), 28);
+	if(point_in_rectangle(mouse_x, mouse_y, cx - w * 0.5 - _pad, _back_y - h * 0.5 - _pad, cx + w * 0.5 + _pad, _back_y + h * 0.5 + _pad))
+	{
+		menu_selected = 0;
+		if(mouse_check_button_pressed(mb_left))
+			event_user(0);
+		if(mouse_check_button_pressed(mb_right))
+			event_user(3);
+	}
+	mouse_prev_x = mouse_x;
+	mouse_prev_y = mouse_y;
+	exit;
+}
+
 // Only if mouse moving
 if(mouse_prev_x != mouse_x or mouse_prev_y != mouse_y)
 {

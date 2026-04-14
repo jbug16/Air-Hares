@@ -84,22 +84,20 @@ else if(in_graphics)
 	}
 	menu_count = 4;
 }
-// Create achievements		#TODO
+// Create achievements (custom draw; menu is Back only)
 else if(in_achievements)
 {
-	menu[0] = "Coming soon";
-	menu[1] = "Back";
+	menu[0] = "Back";
 	
 	menu_status[0] = "";
-	menu_status[1] = "";
 	
-	for(var i = 2; i <= 8; i++)
+	for(var i = 1; i <= 8; i++)
 	{
 		menu[i] = "";
 		menu_status[i] = "";
 	}
 	
-	menu_count = 2;
+	menu_count = 1;
 }
 // Create saves		#TODO
 else if(in_saves)

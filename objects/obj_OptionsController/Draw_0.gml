@@ -10,13 +10,12 @@ var _x_left = room_width * 0.2; //position of the text
 if (in_controls) _x_left = room_width*0.1;
 
 // Draw options
-if menu_draw and !in_controls and !in_leaderboards {
+if menu_draw and !in_controls and !in_leaderboards and !in_achievements and !in_saves {
 	for (var i=0; i<array_length(menu); i++) {
-		if (i == menu_selected and !in_saves and !in_achievements and !in_leaderboards) {
+		if (i == menu_selected) {
 			draw_set_color(c_orange);	
-		} else{
+		} else {
 			draw_set_color(c_white);	
-			if(i == menu_count - 1 and (in_achievements or in_saves or in_leaderboards)) draw_set_color(c_orange);
 		}
 		
 		// Draw menu		
@@ -80,6 +79,94 @@ else if(menu_draw and in_controls)
 		else draw_set_color(c_white);
 		draw_text_transformed(_x_left, _y_start + (45 * i), key_joypad[i], image_xscale, image_yscale, image_angle);
 		draw_set_alpha(image_alpha);
+	}
+}
+// Achievements (design layout; carrot states are preview placeholders)
+else if(menu_draw and in_achievements)
+{
+	var rw = room_width;
+	var rh = room_height;
+	
+	draw_set_font(fnt_Federo24);
+	draw_set_halign(fa_center);
+	draw_set_valign(fa_top);
+	draw_set_color(c_white);
+	draw_text_transformed(rw * 0.5, rh * 0.10, "STORY CARROTS", image_xscale, image_yscale, image_angle);
+	
+	draw_set_font(fnt_Federo16);
+	var _ly = rh * 0.128;
+	draw_text_transformed(rw * 0.5, _ly, "1  100%  Complete every objective for the level.", image_xscale, image_yscale, image_angle);
+	_ly += rh * 0.028;
+	draw_text_transformed(rw * 0.5, _ly, "2  No damage  Finish without taking a hit.", image_xscale, image_yscale, image_angle);
+	_ly += rh * 0.028;
+	draw_text_transformed(rw * 0.5, _ly, "3  Peace  Parry is fine; do not harm enemies with ammo.", image_xscale, image_yscale, image_angle);
+	
+	var _hdr_y = rh * 0.218;
+	draw_set_halign(fa_left);
+	draw_text_transformed(rw * 0.05, _hdr_y, "Level", image_xscale, image_yscale, image_angle);
+	draw_set_halign(fa_center);
+	var _cx1 = rw * 0.72;
+	var _cx2 = rw * 0.82;
+	var _cx3 = rw * 0.92;
+	draw_text_transformed(_cx1, _hdr_y, "100%", image_xscale, image_yscale, image_angle);
+	draw_text_transformed(_cx2, _hdr_y, "No hit", image_xscale, image_yscale, image_angle);
+	draw_text_transformed(_cx3, _hdr_y, "Peace", image_xscale, image_yscale, image_angle);
+	
+	var _row_start = rh * 0.248;
+	var _row_spacing = (rh * 0.475) / 16;
+	var _carrot_s = 0.16;
+	var _lvl_n = array_length(global.story_mode_level);
+	for (var _r = 0; _r < 16; _r++) {
+		var _y = _row_start + _r * _row_spacing;
+		var _row_label = string(_r + 1) + ". ";
+		var _nm = "---";
+		if (_r < _lvl_n && is_array(global.story_mode_level[_r]))
+			_nm = string(global.story_mode_level[_r][STORYPROP.NAME]);
+		_row_label += _nm;
+		
+		draw_set_halign(fa_left);
+		draw_set_color(c_white);
+		draw_text_transformed(rw * 0.05, _y, _row_label, image_xscale * 0.85, image_yscale * 0.85, image_angle);
+		
+		var _cy = _y + _row_spacing * 0.5;
+		for (var _c = 0; _c < 3; _c++) {
+			var _cx = (_c == 0) ? _cx1 : ((_c == 1) ? _cx2 : _cx3);
+			var _earned = false;
+			if (_r == 0 && _c == 0) _earned = true;
+			if (_r == 1) _earned = true;
+			var _a = _earned ? 1 : 0.32;
+			draw_sprite_ext(spr_GateCarrot, 0, _cx, _cy, _carrot_s * image_xscale, _carrot_s * image_yscale, 0, c_white, _a);
+		}
+	}
+	
+	draw_set_halign(fa_center);
+	draw_set_font(fnt_Federo16);
+	draw_set_alpha(0.62);
+	draw_set_color(c_white);
+	draw_text_transformed(rw * 0.5, rh * 0.805, "Earn the full row in a level — peace leaves a quiet blessing on your score.", image_xscale, image_yscale, image_angle);
+	draw_set_alpha(1);
+	
+	var _back_y = rh * 0.9;
+	if (menu_selected == 0)
+		draw_set_color(c_orange);
+	else
+		draw_set_color(c_white);
+	draw_set_font(fnt_Federo24);
+	draw_text_transformed(rw * 0.5, _back_y, menu[0], image_xscale, image_yscale, image_angle);
+}
+// Saves placeholder (same list style as main options)
+else if(menu_draw and in_saves)
+{
+	for (var i = 0; i < array_length(menu); i++) {
+		if (i == menu_selected)
+			draw_set_color(c_orange);
+		else
+			draw_set_color(c_white);
+		draw_set_halign(fa_left);
+		draw_text_transformed(_x_left, room_height * 0.3 + (52 * i), menu[i], image_xscale, image_yscale, image_angle);
+		draw_set_halign(fa_right);
+		draw_text_transformed(room_width * 0.8, room_height * 0.3 + (52 * i), menu_status[i], image_xscale, image_yscale, image_angle);
+		draw_set_alpha(1);
 	}
 }
 // Draw leaderboards

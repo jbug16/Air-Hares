@@ -17,7 +17,7 @@ switch(menu_selected)
 			if global.options_scanline menu_status[0] = "ON";
 			else menu_status[0] = "OFF";
 		}
-		else if(menu[0] == "Back" and in_leaderboards)
+		else if(menu[0] == "Back" and (in_leaderboards or in_achievements))
 		{
 			event_user(2);
 		}
@@ -116,7 +116,7 @@ switch(menu_selected)
 		if(menu[5] == "Achievements")
 		{
 			in_achievements = true;
-			menu_selected = 1;
+			menu_selected = 0;
 			event_user(1);
 		}
 		break;
@@ -135,7 +135,7 @@ switch(menu_selected)
 		if(menu[7] == "Leaderboards")
 		{
 			in_leaderboards = true;
-			menu_selected = 1;
+			menu_selected = 0;
 			event_user(1);
 		}
 		break;

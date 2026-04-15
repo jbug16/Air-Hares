@@ -11,4 +11,6 @@ else if (room == rm_Level4_3FightBoss) instance_create_layer(0,0, layer, obj_Con
 if(room != rm_Level4_3FightBoss) instance_create_layer(0,0, "Top_Weather", obj_WindParticles);	// only wind
 instance_create_layer(x, 608, "Instances", obj_PlayerRabboSpawner);
 
+LevelRunMedalsReset();
+
 instance_destroy();

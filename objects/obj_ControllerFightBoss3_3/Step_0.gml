@@ -109,6 +109,27 @@ switch(state) {
 		break;
 		
 	case ENEMIES.PHASE_CLOSING:
+	{
+		var _level_index = clamp(global.current_level, 0, 15);
+		var _ach_save = false;
+		if (!global.level_run_any_hp_damage) {
+			global.achievement_no_damage[_level_index] = true;
+			_ach_save = true;
+			show_debug_message("[Medal] No-damage earned for level index " + string(_level_index) + " (boss clear).");
+		}
+		if (!global.level_run_ammo_aggression) {
+			global.achievement_no_aggression[_level_index] = true;
+			_ach_save = true;
+			show_debug_message("[Medal] No-aggression earned for level index " + string(_level_index) + " (boss clear).");
+		}
+		if (_ach_save) AchievementFarm100Save();
+		if (global.level_run_any_hp_damage) {
+			show_debug_message("[Medal] No-damage not awarded this boss run (took HP damage).");
+		}
+		if (global.level_run_ammo_aggression) {
+			show_debug_message("[Medal] No-aggression not awarded this boss run (used ammo on enemies).");
+		}
+	}
 	//if (global.game_mode == GAMEMODE.FREE) TransitionGoto(rm_MainMenu);
 	if (global.game_mode == GAMEMODE.FREE) 
 	{

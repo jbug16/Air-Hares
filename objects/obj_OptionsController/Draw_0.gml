@@ -81,72 +81,77 @@ else if(menu_draw and in_controls)
 		draw_set_alpha(image_alpha);
 	}
 }
-// Achievements (design layout; carrot states are preview placeholders)
+// Achievements — table layout (spr_Carrot: only subimages 0 and 1 — 0 = empty, 1 = star; data from global.achievement_*)
 else if(menu_draw and in_achievements)
 {
 	var rw = room_width;
 	var rh = room_height;
+	// Clear obj_OptionsTitle / spr_Title (scaled logo ~top third); start text below it
+	var _title_y = max(rh * 0.16, 112);
 	
 	draw_set_font(fnt_Federo24);
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_top);
 	draw_set_color(c_white);
-	draw_text_transformed(rw * 0.5, rh * 0.10, "STORY CARROTS", image_xscale, image_yscale, image_angle);
+	draw_text_transformed(rw * 0.5, _title_y, "ACHIEVEMENTS", image_xscale, image_yscale, image_angle);
+	var _title_line_h = string_height("ACHIEVEMENTS") * image_yscale;
+	
+	// Column centers: generous spacing (match mockup grid)
+	var _col_lvl = rw * 0.10;
+	var _cx_pct = rw * 0.40;
+	var _cx_ndmg = rw * 0.58;
+	var _cx_peace = rw * 0.76;
 	
 	draw_set_font(fnt_Federo16);
-	var _ly = rh * 0.128;
-	draw_text_transformed(rw * 0.5, _ly, "1  100%  Complete every objective for the level.", image_xscale, image_yscale, image_angle);
-	_ly += rh * 0.028;
-	draw_text_transformed(rw * 0.5, _ly, "2  No damage  Finish without taking a hit.", image_xscale, image_yscale, image_angle);
-	_ly += rh * 0.028;
-	draw_text_transformed(rw * 0.5, _ly, "3  Peace  Parry is fine; do not harm enemies with ammo.", image_xscale, image_yscale, image_angle);
-	
-	var _hdr_y = rh * 0.218;
+	// Subtitle row sits below full title height + extra gap (breathing room under ACHIEVEMENTS)
+	var _hdr_y = _title_y + _title_line_h + rh * 0.042;
 	draw_set_halign(fa_left);
-	draw_text_transformed(rw * 0.05, _hdr_y, "Level", image_xscale, image_yscale, image_angle);
+	draw_text_transformed(_col_lvl, _hdr_y, "Level", image_xscale, image_yscale, image_angle);
 	draw_set_halign(fa_center);
-	var _cx1 = rw * 0.72;
-	var _cx2 = rw * 0.82;
-	var _cx3 = rw * 0.92;
-	draw_text_transformed(_cx1, _hdr_y, "100%", image_xscale, image_yscale, image_angle);
-	draw_text_transformed(_cx2, _hdr_y, "No hit", image_xscale, image_yscale, image_angle);
-	draw_text_transformed(_cx3, _hdr_y, "Peace", image_xscale, image_yscale, image_angle);
+	draw_text_transformed(_cx_pct, _hdr_y, "100% completion", image_xscale, image_yscale, image_angle);
+	draw_text_transformed(_cx_ndmg, _hdr_y, "No damage", image_xscale, image_yscale, image_angle);
+	draw_text_transformed(_cx_peace, _hdr_y, "No Aggression", image_xscale, image_yscale, image_angle);
 	
-	var _row_start = rh * 0.248;
-	var _row_spacing = (rh * 0.475) / 16;
-	var _carrot_s = 0.16;
-	var _lvl_n = array_length(global.story_mode_level);
+	// Clear band below header text (carrots are centered in each row; tops must not cover headers)
+	var _hdr_line_h = string_height("100% completion") * image_yscale;
+	var _header_bottom = _hdr_y + _hdr_line_h + rh * 0.022;
+	var _row_start = _header_bottom + rh * 0.014;
+	
+	// Reserve only for Back (hint line removed — extra height for taller rows + bigger carrots)
+	var _back_y = rh * 0.93;
+	var _table_end = _back_y - rh * 0.065;
+	var _row_spacing = (_table_end - _row_start) / 16;
+	// spr_Carrot is 100×100, origin centered — use most of each row, leave ~8% padding so rows never overlap
+	var _carrot_px = min(100, _row_spacing * 0.92);
+	var _carrot_sc = _carrot_px / 100;
+	
+	draw_set_valign(fa_middle);
 	for (var _r = 0; _r < 16; _r++) {
 		var _y = _row_start + _r * _row_spacing;
-		var _row_label = string(_r + 1) + ". ";
-		var _nm = "---";
-		if (_r < _lvl_n && is_array(global.story_mode_level[_r]))
-			_nm = string(global.story_mode_level[_r][STORYPROP.NAME]);
-		_row_label += _nm;
-		
-		draw_set_halign(fa_left);
-		draw_set_color(c_white);
-		draw_text_transformed(rw * 0.05, _y, _row_label, image_xscale * 0.85, image_yscale * 0.85, image_angle);
+		var _stage = (_r div 4) + 1;
+		var _col = _r mod 4;
+		var _lvl_txt = string(_stage) + "-" + ((_col == 3) ? "B" : string(_col + 1));
 		
 		var _cy = _y + _row_spacing * 0.5;
-		for (var _c = 0; _c < 3; _c++) {
-			var _cx = (_c == 0) ? _cx1 : ((_c == 1) ? _cx2 : _cx3);
-			var _earned = false;
-			if (_r == 0 && _c == 0) _earned = true;
-			if (_r == 1) _earned = true;
-			var _a = _earned ? 1 : 0.32;
-			draw_sprite_ext(spr_GateCarrot, 0, _cx, _cy, _carrot_s * image_xscale, _carrot_s * image_yscale, 0, c_white, _a);
-		}
+		draw_set_halign(fa_left);
+		draw_set_color(c_white);
+		draw_text_transformed(_col_lvl, _cy, _lvl_txt, image_xscale, image_yscale, image_angle);
+		
+		// spr_Carrot has subimages 0 (empty) and 1 (star); coerce in case values came from INI as reals
+		var _e0 = bool(global.achievement_farm100[_r]);
+		var _e1 = bool(global.achievement_no_damage[_r]);
+		var _e2 = bool(global.achievement_no_aggression[_r]);
+		
+		draw_set_halign(fa_center);
+		var _sx = _carrot_sc * image_xscale;
+		var _sy = _carrot_sc * image_yscale;
+		draw_sprite_ext(spr_Carrot, _e0 ? 1 : 0, _cx_pct, _cy, _sx, _sy, 0, c_white, 1);
+		draw_sprite_ext(spr_Carrot, _e1 ? 1 : 0, _cx_ndmg, _cy, _sx, _sy, 0, c_white, 1);
+		draw_sprite_ext(spr_Carrot, _e2 ? 1 : 0, _cx_peace, _cy, _sx, _sy, 0, c_white, 1);
 	}
 	
 	draw_set_halign(fa_center);
-	draw_set_font(fnt_Federo16);
-	draw_set_alpha(0.62);
-	draw_set_color(c_white);
-	draw_text_transformed(rw * 0.5, rh * 0.805, "Earn the full row in a level — peace leaves a quiet blessing on your score.", image_xscale, image_yscale, image_angle);
-	draw_set_alpha(1);
-	
-	var _back_y = rh * 0.9;
+	draw_set_valign(fa_middle);
 	if (menu_selected == 0)
 		draw_set_color(c_orange);
 	else
@@ -154,7 +159,7 @@ else if(menu_draw and in_achievements)
 	draw_set_font(fnt_Federo24);
 	draw_text_transformed(rw * 0.5, _back_y, menu[0], image_xscale, image_yscale, image_angle);
 }
-// Saves placeholder (same list style as main options)
+// Saves (same list style as main options)
 else if(menu_draw and in_saves)
 {
 	for (var i = 0; i < array_length(menu); i++) {

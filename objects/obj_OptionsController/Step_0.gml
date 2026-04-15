@@ -10,8 +10,8 @@ var _left = InputGet(INPUT.MENU_LEFT);
 var _right = InputGet(INPUT.MENU_RIGHT);
 var _select = InputGet(INPUT.MENU_SELECT);
 
-// If in achievements, saves, or leaderboards - cannot do anything but select back
-if(in_achievements or in_saves or in_leaderboards)
+// If in achievements or leaderboards - cannot do anything but select back (saves: normal 2-row menu)
+if(in_achievements or in_leaderboards)
 {
 	_up = false;
 	_down = false;
@@ -153,7 +153,7 @@ if(global.mouse_disable) exit;
 if(in_achievements or in_leaderboards)
 {
 	draw_set_font(fnt_Federo24);
-	var _back_y = room_height * 0.9;
+	var _back_y = in_achievements ? room_height * 0.93 : room_height * 0.9;
 	var _pad = 16;
 	var cx = room_width * 0.5;
 	var w = max(string_width(menu[0]), 80);

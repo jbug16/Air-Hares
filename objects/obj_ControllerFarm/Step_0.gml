@@ -115,6 +115,33 @@ if (room == rm_LevelX1Farm) switch (state)
 		if (obj_GUIScreenCloseLeft.x != 640) break;
 		// Save progress (only after success — END branch uses same crop threshold for fail UI)
 		state++;
+		var _level_index = clamp(global.current_level, 0, 15);
+		var _ach_save = false;
+		if (crops_filled >= crops_available) {
+			global.achievement_farm100[_level_index] = true;
+			_ach_save = true;
+			show_debug_message("[Medal] Farm 100% earned for level index " + string(_level_index) + " (" + string(crops_filled) + "/" + string(crops_available) + " crops).");
+		}
+		if (crops_filled >= 0.6 * crops_available && !global.level_run_any_hp_damage) {
+			global.achievement_no_damage[_level_index] = true;
+			_ach_save = true;
+			show_debug_message("[Medal] No-damage earned for level index " + string(_level_index) + ".");
+		}
+		if (crops_filled >= 0.6 * crops_available && !global.level_run_ammo_aggression) {
+			global.achievement_no_aggression[_level_index] = true;
+			_ach_save = true;
+			show_debug_message("[Medal] No-aggression earned for level index " + string(_level_index) + ".");
+		}
+		if (_ach_save) AchievementFarm100Save();
+		if (crops_filled < crops_available) {
+			show_debug_message("[Medal] Farm 100% not achieved this run (" + string(crops_filled) + " / " + string(crops_available) + " crops).");
+		}
+		if (global.level_run_any_hp_damage) {
+			show_debug_message("[Medal] No-damage not awarded this run (took HP damage).");
+		}
+		if (global.level_run_ammo_aggression) {
+			show_debug_message("[Medal] No-aggression not awarded this run (used ammo on enemies).");
+		}
 		if (global.game_mode == GAMEMODE.STORY && crops_filled >= 0.6 * crops_available) {
 			AdvanceLevel();
 		}

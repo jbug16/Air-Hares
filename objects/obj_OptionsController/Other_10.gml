@@ -3,6 +3,11 @@
 switch(menu_selected)
 {
 	case 0:
+		if (in_saves && menu[0] == "Erase all saved data")
+		{
+			EraseAllSavedData();
+			break;
+		}
 		if(menu[0] == "Controls")
 		{
 			in_controls = true;

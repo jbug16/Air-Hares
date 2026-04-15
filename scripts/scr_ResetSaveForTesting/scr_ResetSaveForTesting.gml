@@ -1,6 +1,5 @@
 /// @desc Delete save.sav + local story leaderboard JSON, then restart the game (re-runs scr_Globals).
-/// Call from the debugger (Execute Code): ResetSaveForTesting();
-function ResetSaveForTesting() {
+function EraseAllSavedData() {
 	ini_close();
 	if (file_exists("save.sav")) {
 		file_delete("save.sav");
@@ -11,6 +10,11 @@ function ResetSaveForTesting() {
 	if (file_exists(_lb)) {
 		file_delete(_lb);
 	}
-	show_debug_message("ResetSaveForTesting: removed save files; game_restart()");
+	show_debug_message("EraseAllSavedData: removed save files; game_restart()");
 	game_restart();
+}
+
+/// Call from the debugger (Execute Code): ResetSaveForTesting();
+function ResetSaveForTesting() {
+	EraseAllSavedData();
 }

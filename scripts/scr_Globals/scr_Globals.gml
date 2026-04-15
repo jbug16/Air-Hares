@@ -138,6 +138,16 @@ global.story_run_level_scores_set = array_create(16, false);
 global.story_run_initials = "";
 global.story_run_ever_coop = false;
 
+// Farm level 100% crop completion (per level index 0–15), local save only
+global.achievement_farm100 = array_create(16, false);
+// No-damage / no-aggression per story level (0–15); persisted when gameplay sets them
+global.achievement_no_damage = array_create(16, false);
+global.achievement_no_aggression = array_create(16, false);
+// True if any obj_PlayerRabbo took HP damage this level run (medal tracking)
+global.level_run_any_hp_damage = false;
+// True if player seed/water hit an enemy via EnemyBirdPAR hit helpers (medal tracking)
+global.level_run_ammo_aggression = false;
+
 // Load story mode progress
 ini_open("save.sav");
 global.story_mode_progress = ini_read_real("story", "progress", global.story_mode_progress);
@@ -156,6 +166,12 @@ global.story_run_initials = ini_read_string("story_run", "initials", global.stor
 global.story_run_ever_coop = bool(ini_read_real("story_run", "ever_coop", 0));
 if (string_length(global.story_run_initials) <= 0 && global.story_run_active) {
 	global.story_run_initials = global.player_initials;
+}
+
+for (var _af = 0; _af <= 15; _af += 1) {
+	global.achievement_farm100[_af] = bool(ini_read_real("achievements", "farm100_" + string(_af), 0));
+	global.achievement_no_damage[_af] = bool(ini_read_real("achievements", "nodamage_" + string(_af), 0));
+	global.achievement_no_aggression[_af] = bool(ini_read_real("achievements", "noaggro_" + string(_af), 0));
 }
 
 // Test

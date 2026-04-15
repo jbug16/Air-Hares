@@ -87,6 +87,7 @@ else if(in_graphics)
 // Create achievements (custom draw; menu is Back only)
 else if(in_achievements)
 {
+	AchievementsLoadFromSave();
 	menu[0] = "Back";
 	
 	menu_status[0] = "";
@@ -99,10 +100,10 @@ else if(in_achievements)
 	
 	menu_count = 1;
 }
-// Create saves		#TODO
+// Create saves
 else if(in_saves)
 {
-	menu[0] = "Coming soon";
+	menu[0] = "Erase all saved data";
 	menu[1] = "Back";
 	
 	menu_status[0] = "";

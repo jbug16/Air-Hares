@@ -32,6 +32,50 @@ function StoryProgressSave(){
 	ini_open("save.sav");
 	ini_write_real("story", "progress", global.story_mode_progress);
 	ini_write_real("arcade", "max_unlocked", global.arcade_max_unlocked); // Save arcade max
+	// Keep medal section in the same write pass (avoids INI merge issues with separate opens)
+	for (var _m = 0; _m <= 15; _m += 1) {
+		ini_write_real("achievements", "farm100_" + string(_m), global.achievement_farm100[_m] ? 1 : 0);
+		ini_write_real("achievements", "nodamage_" + string(_m), global.achievement_no_damage[_m] ? 1 : 0);
+		ini_write_real("achievements", "noaggro_" + string(_m), global.achievement_no_aggression[_m] ? 1 : 0);
+	}
+	ini_close();
+}
+
+/// @desc Reset per-run flags for level-based medals (call at level start)
+function LevelRunMedalsReset() {
+	global.level_run_any_hp_damage = false;
+	global.level_run_ammo_aggression = false;
+}
+
+/// @desc Mark no-aggression medal failed if instance is player seed or water projectile
+function LevelRunRegisterAmmoAggressionIfPlayerProjectile(_inst) {
+	if (!instance_exists(_inst)) return;
+	var _oi = _inst.object_index;
+	if (_oi == obj_PlayerProjectileSeed || _oi == obj_PlayerProjectileWater) {
+		global.level_run_ammo_aggression = true;
+		show_debug_message("[Medal] No-aggression challenge failed (seed/water hit combat target).");
+	}
+}
+
+/// @desc Persist per-level medal flags (100% farm, no damage, no aggression) to save.sav
+function AchievementFarm100Save() {
+	ini_open("save.sav");
+	for (var _i = 0; _i <= 15; _i += 1) {
+		ini_write_real("achievements", "farm100_" + string(_i), global.achievement_farm100[_i] ? 1 : 0);
+		ini_write_real("achievements", "nodamage_" + string(_i), global.achievement_no_damage[_i] ? 1 : 0);
+		ini_write_real("achievements", "noaggro_" + string(_i), global.achievement_no_aggression[_i] ? 1 : 0);
+	}
+	ini_close();
+}
+
+/// @desc Reload per-level medal flags from save.sav into globals (e.g. before drawing Achievements UI)
+function AchievementsLoadFromSave() {
+	ini_open("save.sav");
+	for (var _af = 0; _af <= 15; _af += 1) {
+		global.achievement_farm100[_af] = bool(ini_read_real("achievements", "farm100_" + string(_af), 0));
+		global.achievement_no_damage[_af] = bool(ini_read_real("achievements", "nodamage_" + string(_af), 0));
+		global.achievement_no_aggression[_af] = bool(ini_read_real("achievements", "noaggro_" + string(_af), 0));
+	}
 	ini_close();
 }
 

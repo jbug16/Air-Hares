@@ -36,6 +36,7 @@ global.coop_portrait_select_ignore_confirm = 0;
 
 global.coop_portrait_sprite[0] = spr_DirkIcon;
 global.coop_portrait_sprite[1] = spr_LinnieIcon;
+global.coop_portrait_sprite[2] = spr_BettyIcon;
 
 // Tips screen
 global.tips_return_room = noone;
@@ -259,16 +260,16 @@ global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.PARRY] = spr_LinniePa
 global.character_sprite[CHARACTER.LINNIE][CHARACTER_SPRITE.DEATH] = spr_LinnieIdle;
 
 // Betty
-global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.IDLE] = spr_DirkIdle;
-global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.BANK_LEFT] = spr_DirkLeft;
-global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.BANK_LEFT_MAX] = spr_DirkLeftMax;
-global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.BANK_RIGHT] = spr_DirkRight;
-global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.BANK_RIGHT_MAX] = spr_DirkRightMax;
-global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.ROLL_LEFT] = spr_DirkRollLeft;
-global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.ROLL_RIGHT] = spr_DirkRollRight;
-global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.LOOP] = spr_DirkLoopDeLoop;
-global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.PARRY] = spr_DirkParry;
-global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.DEATH] = spr_DirkIdle;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.IDLE] = spr_BettyIdle;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.BANK_LEFT] = spr_BettyLeft;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.BANK_LEFT_MAX] = spr_BettyLeftMax;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.BANK_RIGHT] = spr_BettyRight;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.BANK_RIGHT_MAX] = spr_BettyRightMax;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.ROLL_LEFT] = spr_BettyRollLeft;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.ROLL_RIGHT] = spr_BettyRollRight;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.LOOP] = spr_BettyLoopDeLoop;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.PARRY] = spr_BettyParry;
+global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.DEATH] = spr_BettyIdle;
 
 // Candie
 global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.IDLE] = spr_DirkIdle;

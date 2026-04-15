@@ -79,6 +79,57 @@ function AchievementsLoadFromSave() {
 	ini_close();
 }
 
+/// @desc Mark a medal unlocked for a story level and print a debug line.
+/// @param {string} _medal_key "farm100", "no_damage", or "no_aggression"
+/// @param {real} _level_index Story level index (0-15)
+/// @param {string} _context Optional debug suffix (e.g. "(boss clear)")
+/// @return {bool} True only when this call newly unlocked the medal
+function AchievementMarkUnlocked(_medal_key, _level_index, _context) {
+	var _idx = clamp(_level_index, 0, 15);
+	var _context_txt = "";
+	if (is_string(_context) && string_length(_context) > 0) {
+		_context_txt = " " + _context;
+	}
+	var _changed = false;
+	var _label = "";
+	switch (_medal_key) {
+		case "farm100":
+			_label = "Farm 100%";
+			if (!global.achievement_farm100[_idx]) {
+				global.achievement_farm100[_idx] = true;
+				_changed = true;
+			}
+		break;
+		
+		case "no_damage":
+			_label = "No-damage";
+			if (!global.achievement_no_damage[_idx]) {
+				global.achievement_no_damage[_idx] = true;
+				_changed = true;
+			}
+		break;
+		
+		case "no_aggression":
+			_label = "No-aggression";
+			if (!global.achievement_no_aggression[_idx]) {
+				global.achievement_no_aggression[_idx] = true;
+				_changed = true;
+			}
+		break;
+		
+		default:
+			show_debug_message("[Medal] Unknown medal key '" + string(_medal_key) + "' at level index " + string(_idx) + _context_txt + ".");
+			return false;
+	}
+	
+	if (_changed) {
+		show_debug_message("[Medal] " + _label + " earned for level index " + string(_idx) + _context_txt + ".");
+	} else {
+		show_debug_message("[Medal] " + _label + " already unlocked for level index " + string(_idx) + _context_txt + ".");
+	}
+	return _changed;
+}
+
 /// @desc Display name for story/arcade popups: e.g. "Barren Bunlands 1-1" or "Hopeful Hareway 2-B"
 function StoryLevelPopupTitle(_level_index) {
 	if (_level_index < 0 || _level_index > 15) return "";

@@ -118,19 +118,13 @@ if (room == rm_LevelX1Farm) switch (state)
 		var _level_index = clamp(global.current_level, 0, 15);
 		var _ach_save = false;
 		if (crops_filled >= crops_available) {
-			global.achievement_farm100[_level_index] = true;
-			_ach_save = true;
-			show_debug_message("[Medal] Farm 100% earned for level index " + string(_level_index) + " (" + string(crops_filled) + "/" + string(crops_available) + " crops).");
+			_ach_save = AchievementMarkUnlocked("farm100", _level_index, "(" + string(crops_filled) + "/" + string(crops_available) + " crops)") || _ach_save;
 		}
-		if (crops_filled >= 0.6 * crops_available && !global.level_run_any_hp_damage) {
-			global.achievement_no_damage[_level_index] = true;
-			_ach_save = true;
-			show_debug_message("[Medal] No-damage earned for level index " + string(_level_index) + ".");
+		if (!global.level_run_any_hp_damage) {
+			_ach_save = AchievementMarkUnlocked("no_damage", _level_index, "(farm clear)") || _ach_save;
 		}
-		if (crops_filled >= 0.6 * crops_available && !global.level_run_ammo_aggression) {
-			global.achievement_no_aggression[_level_index] = true;
-			_ach_save = true;
-			show_debug_message("[Medal] No-aggression earned for level index " + string(_level_index) + ".");
+		if (!global.level_run_ammo_aggression) {
+			_ach_save = AchievementMarkUnlocked("no_aggression", _level_index, "(farm clear)") || _ach_save;
 		}
 		if (_ach_save) AchievementFarm100Save();
 		if (crops_filled < crops_available) {

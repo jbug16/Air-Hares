@@ -16,6 +16,11 @@ function InputGet(_key = noone, _pressed = true, _device = all){
 	
 	if (_device == -1)							// KEYBOARD
 	{		
+		// During restart/global teardown, keymap can be missing or already destroyed.
+		if (!variable_global_exists("keymap")) return false;
+		if (!ds_exists(global.keymap, ds_type_map)) return false;
+		if (!ds_map_exists(global.keymap, _key)) return false;
+		
 		// Check in keymap
 		var _key_list = global.keymap[? _key];
 		
@@ -99,7 +104,13 @@ function InputGet(_key = noone, _pressed = true, _device = all){
 			INPUT.PAUSE, INPUT.MENU_DOWN, INPUT.MENU_LEFT, INPUT.MENU_RIGHT, INPUT.MENU_SELECT, INPUT.MENU_UP, INPUT.LOOP_DE_LOOP, INPUT.ROLL_LEFT, INPUT.ROLL_RIGHT, INPUT.TOGGLE_AIM];
 		
 		var _key_list = -1;
-		if(array_contains(_mapped, _key)) _key_list = global.gpmap[? _key];
+		if(array_contains(_mapped, _key))
+		{
+			if (!variable_global_exists("gpmap")) return false;
+			if (!ds_exists(global.gpmap, ds_type_map)) return false;
+			if (!ds_map_exists(global.gpmap, _key)) return false;
+			_key_list = global.gpmap[? _key];
+		}
 		
 		// check keys
 		for (var i = 0; i < array_length(_gp); i++)

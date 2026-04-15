@@ -30,6 +30,7 @@ VfxShadow(id);
 
 sequence = 0; // in which sequence the fight - 0 is first wave of falcons, 1 is boss sequence
 seq_phase = 0; // sequence phases 3-4-5 falcons
+prep_wave_took_hp_hit = false;
 
 // Falcon goons
 falcon_ids = array_create(4, noone);	// for 2nd sequence - remember for roost/dive

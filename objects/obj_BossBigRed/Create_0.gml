@@ -48,6 +48,7 @@ time[1] = [0.7*GAMESPD];	// sequence 2
 // Boss sequence
 sequence = 0;	// 0,1 - consists of 2 sequence phases below
 seq_phase = -1;	// [0] falcons idle, [1] falcons diving [2] boss diving
+prep_wave_took_hp_hit = false;
 state = BOSS.INIT;
 state_prev = state;
 speed_prev = speed;

@@ -94,6 +94,7 @@ damage_apply = function() {
 	trig_damaged_breaker = false;
 	hp_invincibility = 60;	// Invincible for 60 s;
 	global.level_run_any_hp_damage = true;
+	BossIntroPrepWaveRegisterPlayerHit();
 	show_debug_message("[Medal] No-damage challenge failed (HP hit).");
 	hp -= 1;
 	CombosAddMiss(0);

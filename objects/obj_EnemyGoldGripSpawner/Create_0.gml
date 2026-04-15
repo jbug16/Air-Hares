@@ -34,6 +34,7 @@ obj_ControllerPAR.env_weather.lightning_fx_create(1, 1);
 // Sequences and phases
 sequence = 0; // in which sequence the fight - 0 is first wave of falcons, 1 is boss sequence
 seq_phase = 0;
+prep_wave_took_hp_hit = false;
 
 // Falcon goons
 falcon_ids = array_create(4, noone);	// for 2nd sequence - remember for roost/dive

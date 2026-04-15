@@ -7,6 +7,7 @@ if (sequence != 0) exit;
 
 if (seq_phase <= array_length(falcon_positions) - 1)
 {
+	prep_wave_took_hp_hit = false;
 	var _num = array_length(falcon_positions[seq_phase]);	// how many to spawn
 		
 	falcon_ids = array_create(_num, noone);	// reset falcon IDs

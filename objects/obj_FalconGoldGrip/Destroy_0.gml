@@ -3,11 +3,18 @@ if (obj_EnemyGoldGripSpawner.sequence == 0)
 {
 	if (instance_number(object_index) <= 1) 
 	{
-		// next phase or sequence
-		obj_EnemyGoldGripSpawner.seq_phase++;
-		with (obj_EnemyGoldGripSpawner) // spawn next falcon formation
+		with (obj_EnemyGoldGripSpawner)
 		{
-			alarm[0] = time[0][seq_phase];
+			if (prep_wave_took_hp_hit)
+			{
+				prep_wave_took_hp_hit = false;
+				alarm[0] = time[0][seq_phase];
+			}
+			else
+			{
+				seq_phase++;
+				alarm[0] = time[0][seq_phase];
+			}
 		}
 	}
 }

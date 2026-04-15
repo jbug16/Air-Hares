@@ -47,6 +47,18 @@ function LevelRunMedalsReset() {
 	global.level_run_ammo_aggression = false;
 }
 
+/// @desc During boss intro (sequence 0 falcon waves, before boss flies in), register an HP hit for wave-repeat logic.
+function BossIntroPrepWaveRegisterPlayerHit() {
+	if (instance_exists(obj_BossHighTop) && obj_BossHighTop.sequence == 0)
+		obj_BossHighTop.prep_wave_took_hp_hit = true;
+	if (instance_exists(obj_BossBigRed) && obj_BossBigRed.sequence == 0)
+		obj_BossBigRed.prep_wave_took_hp_hit = true;
+	if (instance_exists(obj_EnemyGoldGripSpawner) && obj_EnemyGoldGripSpawner.sequence == 0)
+		obj_EnemyGoldGripSpawner.prep_wave_took_hp_hit = true;
+	if (instance_exists(obj_EnemyTwinhornSpawner) && obj_EnemyTwinhornSpawner.sequence == 0)
+		obj_EnemyTwinhornSpawner.prep_wave_took_hp_hit = true;
+}
+
 /// @desc Mark no-aggression medal failed if instance is player seed or water projectile
 function LevelRunRegisterAmmoAggressionIfPlayerProjectile(_inst) {
 	if (!instance_exists(_inst)) return;

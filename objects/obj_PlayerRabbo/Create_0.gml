@@ -23,6 +23,8 @@ aim_at_crops = !(instance_exists(obj_ControllerFightBoss1_3) ||
 				instance_exists(obj_ControllerFightBoss4_3)); // automatically off for boss levels
 shoot_target_acquisition_minimum = 128;
 shoot_target_acquisition_range = 1280;
+// Extra horizontal margin (each side) when locking onto the end shrine vs strict bbox
+shoot_target_shrine_horizontal_extra = 200;
 shoot_cooldown_seed = 0;
 shoot_cooldown_water = 0;
 shoot_cooldown_period_seed = 0.4 * GAMESPD;

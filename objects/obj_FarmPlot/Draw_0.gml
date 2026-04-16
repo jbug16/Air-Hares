@@ -5,7 +5,7 @@ var _y_pos = DepthGetPositionY(y,z)
 
 draw_sprite_ext(sprite_index, image_index, _x_pos, _y_pos, scaling, scaling, image_angle, c_white, 1);
 
-if (array_length(targeted) > 0 and !instance_exists(obj_EndShrine)) {
+if (array_length(targeted) > 0) {
 	
 	// Check if both players are targeting this crop
 	var _both_targeting = (array_length(targeted) == 2);

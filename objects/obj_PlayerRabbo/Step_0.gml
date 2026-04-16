@@ -350,6 +350,8 @@ switch(state) {
 }
 
 // Aim shooting
+var _target_y = -1000;
+var _aim_plot = false;
 if (aim_at_crops) {
 	var i = shoot_target_acquisition_minimum;	// Min acquisition range
 	var _aim_success = false;
@@ -378,48 +380,81 @@ if (aim_at_crops) {
 		}
 		i++;
 	}
-	if (!_aim_success && shoot_target != noone)
-	if (!instance_exists(obj_EndShrine)) 
+	_aim_plot = _aim_success;
+	// No valid crop in the aim cone — drop crop targeting (shrine handled below when aim is on)
+	if (!_aim_success && shoot_target != noone && shoot_target.object_index == obj_FarmPlot)
 	{
 		var _index = -1;
 		for (var i = 0; i < array_length(shoot_target.targeted); i++) 
 			if (shoot_target.targeted[i] == player) _index = i;
 		if (_index > -1) array_delete(shoot_target.targeted, _index, 1);
-		//shoot_target.targeted = [];
 		shoot_target = noone;
 	}
 }
 else {
-	// Clear crop target when toggle is off (but keep shrine targeting)
-	if (shoot_target != noone && !instance_exists(obj_EndShrine)) {
-		// Only clear if it's a crop (FarmPlot), not shrine
-		if (shoot_target.object_index == obj_FarmPlot) {
+	// Aim off: free-fire — clear crop or shrine lock and untarget
+	if (shoot_target != noone && instance_exists(shoot_target)
+		&& (shoot_target.object_index == obj_FarmPlot || shoot_target.object_index == obj_EndShrine))
+	{
+		var _index = -1;
+		for (var i = 0; i < array_length(shoot_target.targeted); i++) 
+			if (shoot_target.targeted[i] == player) _index = i;
+		if (_index > -1) array_delete(shoot_target.targeted, _index, 1);
+		shoot_target = noone;
+	}
+}
+
+// Crop row takes priority over the end shrine when both could apply
+if (_aim_plot && instance_exists(obj_EndShrine))
+{
+	var _si = -1;
+	for (var _ti = 0; _ti < array_length(obj_EndShrine.targeted); _ti++)
+		if (obj_EndShrine.targeted[_ti] == player) _si = _ti;
+	if (_si > -1) array_delete(obj_EndShrine.targeted, _si, 1);
+}
+
+// End shrine: only while crop reticle mode is on; wider horizontal band than raw bbox; never steals an active crop lock
+if (aim_at_crops && !_aim_plot && instance_exists(obj_EndShrine))
+{
+	var _shr = obj_EndShrine.id;
+	var _x_lo = _shr.bbox_left - shoot_target_shrine_horizontal_extra;
+	var _x_hi = _shr.bbox_right + shoot_target_shrine_horizontal_extra;
+	if (_shr.bbox_bottom < y && _x_lo < x && _x_hi > x)
+	{
+		if (shoot_target != noone && shoot_target != _shr && shoot_target.targeted != noone)
+		{
 			var _index = -1;
 			for (var i = 0; i < array_length(shoot_target.targeted); i++) 
 				if (shoot_target.targeted[i] == player) _index = i;
 			if (_index > -1) array_delete(shoot_target.targeted, _index, 1);
-			shoot_target = noone;
 		}
-	}
-}
-
-// shoot_target is a shrine
-var _target_y = -1000;
-if instance_exists(obj_EndShrine)
-{
-	if (obj_EndShrine.bbox_bottom < y and obj_EndShrine.bbox_left < x and obj_EndShrine.bbox_right > x)
-	{
-		shoot_target = obj_EndShrine.id;
+		shoot_target = _shr;
+		var _target = true;
+		for (var i = 0; i < array_length(shoot_target.targeted); i++) 
+		{
+			if (shoot_target.targeted[i] == player) _target = false;
+		}
+		if (_target) array_push(shoot_target.targeted, player);
 		var _count = 50;
 		do
 		{
-			_target_y = irandom_range(obj_EndShrine.bbox_top, obj_EndShrine.bbox_bottom);
+			_target_y = irandom_range(_shr.bbox_top, _shr.bbox_bottom);
 			_count--;
 		}
 		until (collision_point(x, _target_y, obj_EndShrine, true, false) or _count < 0);
-		
+	}
+	else if (shoot_target == _shr)
+	{
+		var _index = -1;
+		for (var i = 0; i < array_length(shoot_target.targeted); i++) 
+			if (shoot_target.targeted[i] == player) _index = i;
+		if (_index > -1) array_delete(shoot_target.targeted, _index, 1);
+		shoot_target = noone;
+		_target_y = -1000;
 	}
 }
+
+var _aiming_shrine = instance_exists(obj_EndShrine) && shoot_target == obj_EndShrine.id;
 
 // Perform shooting
 if (shoot_cooldown_seed > 0) {
@@ -431,7 +466,7 @@ if (shoot_cooldown_seed > 0) {
 		if (shoot_target != noone) {
 			// Create targeted projectile
 			var _proj = instance_create_layer(x, y, "Instances", obj_PlayerProjectileSeed);
-			if !(instance_exists(obj_EndShrine)) 
+			if (!_aiming_shrine) 
 			{
 				_proj.hsp = (shoot_target.x - x) / ((y - shoot_target.y)/speed_projectile_seed);
 				_proj.zsp = (shoot_target.z) / ((y - shoot_target.y)/speed_projectile_seed);
@@ -477,7 +512,7 @@ if (shoot_cooldown_water > 0) {
 		if (shoot_target != noone) {
 			// Create targeted projectile
 			var _proj = instance_create_layer(x, y, "Instances", obj_PlayerProjectileWater);
-			if !(instance_exists(obj_EndShrine)) 
+			if (!_aiming_shrine) 
 			{
 				_proj.hsp = (shoot_target.x - x) / ((y - shoot_target.y)/speed_projectile_seed);
 				_proj.zsp = (shoot_target.z) / ((y - shoot_target.y)/speed_projectile_seed);

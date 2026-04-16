@@ -117,23 +117,29 @@ if (room == rm_LevelX1Farm) switch (state)
 		state++;
 		var _level_index = clamp(global.current_level, 0, 15);
 		var _ach_save = false;
-		if (crops_filled >= crops_available) {
-			_ach_save = AchievementMarkUnlocked("farm100", _level_index, "(" + string(crops_filled) + "/" + string(crops_available) + " crops)") || _ach_save;
-		}
-		if (!global.level_run_any_hp_damage) {
-			_ach_save = AchievementMarkUnlocked("no_damage", _level_index, "(farm clear)") || _ach_save;
-		}
-		if (!global.level_run_ammo_aggression) {
-			_ach_save = AchievementMarkUnlocked("no_aggression", _level_index, "(farm clear)") || _ach_save;
+		// Story or arcade: medals only count after passing the level (same threshold as mission success UI).
+		var _level_passed = crops_filled >= 0.6 * crops_available;
+		if (_level_passed) {
+			if (crops_filled >= crops_available) {
+				_ach_save = AchievementMarkUnlocked("farm100", _level_index, "(" + string(crops_filled) + "/" + string(crops_available) + " crops)") || _ach_save;
+			}
+			if (!global.level_run_any_hp_damage) {
+				_ach_save = AchievementMarkUnlocked("no_damage", _level_index, "(farm clear)") || _ach_save;
+			}
+			if (!global.level_run_ammo_aggression) {
+				_ach_save = AchievementMarkUnlocked("no_aggression", _level_index, "(farm clear)") || _ach_save;
+			}
+		} else {
+			show_debug_message("[Medal] Level not passed — no medals awarded this run (" + string(crops_filled) + " / " + string(crops_available) + " crops).");
 		}
 		if (_ach_save) AchievementFarm100Save();
-		if (crops_filled < crops_available) {
+		if (_level_passed && crops_filled < crops_available) {
 			show_debug_message("[Medal] Farm 100% not achieved this run (" + string(crops_filled) + " / " + string(crops_available) + " crops).");
 		}
-		if (global.level_run_any_hp_damage) {
+		if (_level_passed && global.level_run_any_hp_damage) {
 			show_debug_message("[Medal] No-damage not awarded this run (took HP damage).");
 		}
-		if (global.level_run_ammo_aggression) {
+		if (_level_passed && global.level_run_ammo_aggression) {
 			show_debug_message("[Medal] No-aggression not awarded this run (used ammo on enemies).");
 		}
 		if (global.game_mode == GAMEMODE.STORY && crops_filled >= 0.6 * crops_available) {

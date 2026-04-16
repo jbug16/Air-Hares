@@ -108,12 +108,12 @@ else if(menu_draw and in_achievements)
 	draw_set_halign(fa_left);
 	draw_text_transformed(_col_lvl, _hdr_y, "Level", image_xscale, image_yscale, image_angle);
 	draw_set_halign(fa_center);
-	draw_text_transformed(_cx_pct, _hdr_y, "100% completion", image_xscale, image_yscale, image_angle);
-	draw_text_transformed(_cx_ndmg, _hdr_y, "No damage", image_xscale, image_yscale, image_angle);
+	draw_text_transformed(_cx_pct, _hdr_y, "100% Completion", image_xscale, image_yscale, image_angle);
+	draw_text_transformed(_cx_ndmg, _hdr_y, "No Damage", image_xscale, image_yscale, image_angle);
 	draw_text_transformed(_cx_peace, _hdr_y, "No Aggression", image_xscale, image_yscale, image_angle);
 	
 	// Clear band below header text (carrots are centered in each row; tops must not cover headers)
-	var _hdr_line_h = string_height("100% completion") * image_yscale;
+	var _hdr_line_h = string_height("100% Completion") * image_yscale;
 	var _header_bottom = _hdr_y + _hdr_line_h + rh * 0.022;
 	var _row_start = _header_bottom + rh * 0.014;
 	

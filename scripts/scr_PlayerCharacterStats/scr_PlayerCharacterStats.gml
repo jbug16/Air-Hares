@@ -5,6 +5,7 @@ function PlayerApplyCharacterStats() {
 	var _loop = 1;
 	var _wind = 1;
 	var _hp = 1;
+	lightning_immune = false;
 	
 	switch (character) {
 		case CHARACTER.RABBO:
@@ -31,6 +32,7 @@ function PlayerApplyCharacterStats() {
 			_loop = 0.65;
 			_hp = 1.35;
 			_wind = 1;
+			lightning_immune = true;
 			break;
 	}
 	

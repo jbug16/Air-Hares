@@ -21,6 +21,7 @@ stat_loop_dist_mult = 1;
 stat_wind_mult = 1;
 stat_max_hp_mult = 1;
 loop_parallax_target = -6;
+lightning_immune = false;
 speed_projectile_water = 12;
 speed_projectile_seed = 12;
 shoot_target = noone;

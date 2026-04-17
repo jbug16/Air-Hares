@@ -14,6 +14,13 @@ can_shoot = true;
 can_control = true;
 speed_bank_inertia = 0.1;
 speed_roll_multiplier = 2;
+// Per-character modifiers (defaults; real values from PlayerApplyCharacterStats after spawn)
+stat_bank_mult = 1;
+stat_roll_mult = 1;
+stat_loop_dist_mult = 1;
+stat_wind_mult = 1;
+stat_max_hp_mult = 1;
+loop_parallax_target = -6;
 speed_projectile_water = 12;
 speed_projectile_seed = 12;
 shoot_target = noone;

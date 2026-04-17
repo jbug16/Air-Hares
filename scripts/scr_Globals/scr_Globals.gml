@@ -37,6 +37,7 @@ global.coop_portrait_select_ignore_confirm = 0;
 global.coop_portrait_sprite[0] = spr_DirkIcon;
 global.coop_portrait_sprite[1] = spr_LinnieIcon;
 global.coop_portrait_sprite[2] = spr_BettyIcon;
+global.coop_portrait_sprite[3] = spr_BettyIcon;
 
 // Tips screen
 global.tips_return_room = noone;

@@ -49,7 +49,7 @@ function PlayerParryCheck(_in_parry){
 function PlayerLoopCheck(_in_loop){
 	if (_in_loop and global.movement_loop > 0) { // Check if input is true, and can loop.
 		
-		var _dist = -12;
+		var _dist = loop_parallax_target;
 		
 		// Only save the previous speed if we're not already in a loop state
 		if (global.speed_parallax != _dist) parallax_speed_prev = global.speed_parallax;

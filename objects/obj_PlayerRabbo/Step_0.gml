@@ -192,12 +192,15 @@ if !can_control
 	_key_toggle = false;
 }
 
+var _bank = global.movement_bank_speed * stat_bank_mult;
+var _roll_impulse = global.movement_bank_speed * stat_roll_mult;
+
 // State machine
 switch(state) {
 	case PLAYERSTATE.IDLE:
 		// Action
-		if (_key_left) hsp -= global.movement_bank_speed;
-		if (_key_right) hsp += global.movement_bank_speed;
+		if (_key_left) hsp -= _bank;
+		if (_key_right) hsp += _bank;
 		PlayerSpeedChange(_key_speed_up, _key_speed_down);
 		PlayerRollCooldown();
 		hsp = hsp * (1 - speed_bank_inertia);
@@ -221,8 +224,8 @@ switch(state) {
 		break;
 	case PLAYERSTATE.BANK_LEFT:
 		// Action
-		if _key_left hsp -= global.movement_bank_speed;
-		if _key_right hsp += global.movement_bank_speed;
+		if _key_left hsp -= _bank;
+		if _key_right hsp += _bank;
 		PlayerSpeedChange(_key_speed_up, _key_speed_down);
 		PlayerRollCooldown();
 		hsp = hsp * (1 - speed_bank_inertia);
@@ -241,8 +244,8 @@ switch(state) {
 		break;
 	case PLAYERSTATE.BANK_RIGHT:
 		// Action
-		if _key_left hsp -= global.movement_bank_speed;
-		if _key_right hsp += global.movement_bank_speed;
+		if _key_left hsp -= _bank;
+		if _key_right hsp += _bank;
 		PlayerSpeedChange(_key_speed_up, _key_speed_down);
 		PlayerRollCooldown();
 		hsp = hsp * (1 - speed_bank_inertia);
@@ -262,9 +265,9 @@ switch(state) {
 		}
 		break;
 	case PLAYERSTATE.ROLL_LEFT:
-		hsp -= speed_roll_multiplier * global.movement_bank_speed;
+		hsp -= speed_roll_multiplier * _roll_impulse;
 		// Allow small control
-		if _key_right hsp += global.movement_bank_speed;
+		if _key_right hsp += _bank;
 		hsp = hsp * (1 - speed_bank_inertia);
 		// Create shadow
 		var _shadow = instance_create_layer(x, y, layer, obj_PlayerShadow);
@@ -278,9 +281,9 @@ switch(state) {
 		}
 		break;
 	case PLAYERSTATE.ROLL_RIGHT:
-		hsp += speed_roll_multiplier * global.movement_bank_speed;
+		hsp += speed_roll_multiplier * _roll_impulse;
 		// Allow small control
-		if _key_left hsp -= global.movement_bank_speed;
+		if _key_left hsp -= _bank;
 		hsp = hsp * (1 - speed_bank_inertia);
 		// Create shadow
 		var _shadow = instance_create_layer(x, y, layer, obj_PlayerShadow);
@@ -324,12 +327,12 @@ switch(state) {
 		break;
 	case PLAYERSTATE.LOOP:
 		// Action
-		if _key_left hsp -= global.movement_bank_speed;
-		if _key_right hsp += global.movement_bank_speed;
+		if _key_left hsp -= _bank;
+		if _key_right hsp += _bank;
 		PlayerRollCooldown();
 		hsp = hsp * (1 - speed_bank_inertia);
 		
-		global.speed_parallax = -6;
+		global.speed_parallax = loop_parallax_target;
 		
 		// Transition
 		if trig_anim_end {
@@ -553,7 +556,7 @@ if trig_shoot_auto {
 //		hsp += WeatherGetWindDraft() * _wind_dir * 2;
 //	}
 //}
-if (state != PLAYERSTATE.LOOP and state != PLAYERSTATE.PARRY) hsp += WeatherGetWindDraft();
+if (state != PLAYERSTATE.LOOP and state != PLAYERSTATE.PARRY) hsp += WeatherGetWindDraft() * stat_wind_mult;
 
 // Perform movement
 if(state != PLAYERSTATE.PARRY) x += hsp;

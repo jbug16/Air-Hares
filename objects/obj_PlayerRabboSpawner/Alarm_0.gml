@@ -7,9 +7,10 @@ _spawned.splash[0].z = splash[0].z;
 _spawned.splash[1].z = splash[1].z;
 _spawned.player = player;
 _spawned.character = character;
-// Apply sprite
+// Apply sprite and per-character stats (character copied above)
 with(_spawned)
 {
 	PlayerAssignSprite(character);
+	PlayerApplyCharacterStats();
 }
 instance_destroy();

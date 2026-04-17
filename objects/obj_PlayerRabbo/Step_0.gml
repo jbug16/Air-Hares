@@ -538,13 +538,25 @@ if (shoot_cooldown_water > 0) {
 		audio_play_sound(snd_ProjWaterShot, 1, false);
 	}
 }
-// Perform auto shooting
+// Perform auto shooting (parry follow-up)
 if trig_shoot_auto {
 	trig_shoot_auto = false;
-	// Create a normal seed projectile
-	var _proj = instance_create_layer(x, y, "Top", obj_PlayerProjectileSeed);
-	_proj.vsp = -speed_projectile_seed;
-	_proj.have_shadow = true;
+	var _spd = speed_projectile_seed;
+	if (character == CHARACTER.CANDIE) {
+		// Triangle spread: forward + two diagonals (gunner wings)
+		var _dirs = [90, 90 + 28, 90 - 28];
+		for (var _si = 0; _si < 3; _si++) {
+			var _proj = instance_create_layer(x, y, "Top", obj_PlayerProjectileSeed);
+			_proj.hsp = lengthdir_x(_spd, _dirs[_si]);
+			_proj.vsp = lengthdir_y(_spd, _dirs[_si]);
+			_proj.have_shadow = true;
+		}
+		audio_play_sound(snd_ProjSeedShot, 1, false);
+	} else {
+		var _proj = instance_create_layer(x, y, "Top", obj_PlayerProjectileSeed);
+		_proj.vsp = -_spd;
+		_proj.have_shadow = true;
+	}
 }
 
 // Apply wind draft based on weather. Only active when wind blows

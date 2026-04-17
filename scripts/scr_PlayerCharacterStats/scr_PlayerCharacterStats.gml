@@ -6,11 +6,15 @@ function PlayerApplyCharacterStats() {
 	var _wind = 1;
 	var _hp = 1;
 	lightning_immune = false;
+	has_last_stand = false;
+	last_stand_used = false;
 	
 	switch (character) {
 		case CHARACTER.RABBO:
+			has_last_stand = true;
+			break;
 		case CHARACTER.DIRK:
-			// Base tuning; unique passives (last stand, falcon taunt) hook in later.
+			// Falcon taunt hooks in later.
 			break;
 		case CHARACTER.LINNIE:
 			_bank = 1.15;

@@ -52,10 +52,12 @@ switch(state) {
 			{
 				var _inst = noone;
 				with(obj_PlayerRabbo) if(character == CHARACTER.DIRK) _inst = id;
-				dirk_prop = instance_create_layer(_inst.x, _inst.y, "Top", obj_PlayerRabboProp);
-				dirk_prop.character = CHARACTER.DIRK;
-				dirk_prop.can_control = false;
-				with(dirk_prop) PlayerAssignSprite(character);
+				if (instance_exists(_inst)) {
+					dirk_prop = instance_create_layer(_inst.x, _inst.y, "Top", obj_PlayerRabboProp);
+					dirk_prop.character = CHARACTER.DIRK;
+					dirk_prop.can_control = false;
+					with(dirk_prop) PlayerAssignSprite(character);
+				}
 			}
 			with(obj_PlayerRabbo) instance_destroy();	
 		}
@@ -90,9 +92,11 @@ switch(state) {
 				TweenStart("speed", 0, 15, 0.5*GAMESPD)
 				direction = 90;
 			}
-			with(dirk_prop){
-				TweenStart("speed", 0, 15, 0.5*GAMESPD)
-				direction = 90;
+			if (instance_exists(dirk_prop)) {
+				with(dirk_prop){
+					TweenStart("speed", 0, 15, 0.5*GAMESPD)
+					direction = 90;
+				}
 			}
 			instance_create_layer(0, 0, "GUI_Top", obj_WhiteCloser);
 			state = ENEMIES.PHASE_ENDING;

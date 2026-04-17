@@ -62,7 +62,7 @@ switch(state)
 //----------------------------------------------------------
 #region
 	case ENEMIES.INIT:
-		target_id = instance_nearest(x, y, obj_PlayerPAR);
+		target_id = PlayerGetEnemyAggroTarget(x, y, true);
 		// Base on remaining HP, go to different prep phase
 		if(hp == 4) // phase 1
 		{

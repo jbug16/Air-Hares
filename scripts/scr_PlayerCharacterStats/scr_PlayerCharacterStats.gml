@@ -14,7 +14,7 @@ function PlayerApplyCharacterStats() {
 			has_last_stand = true;
 			break;
 		case CHARACTER.DIRK:
-			// Falcon taunt hooks in later.
+			// Base stats; falcon aggro uses PlayerGetEnemyAggroTarget() (not for boss *objects*).
 			break;
 		case CHARACTER.LINNIE:
 			_bank = 1.15;
@@ -47,4 +47,23 @@ function PlayerApplyCharacterStats() {
 	stat_max_hp_mult = _hp;
 	loop_parallax_target = -6 * stat_loop_dist_mult;
 	hp = max(1, floor(PlayerStatsArmorLoad() * stat_max_hp_mult));
+}
+
+/// @desc Pick a player for enemies to chase. Any living Dirk is always chosen unless _neutral (actual boss AI).
+/// @param {real} _x
+/// @param {real} _y
+/// @param {bool} [_neutral] If true, plain nearest player (use for obj_Boss* and worm boss only — not obj_Falcon* minions).
+function PlayerGetEnemyAggroTarget(_x, _y, _neutral = false) {
+	if (_neutral) {
+		return instance_nearest(_x, _y, obj_PlayerPAR);
+	}
+	var _n = instance_number(obj_PlayerRabbo);
+	for (var _i = 0; _i < _n; _i++) {
+		var _p = instance_find(obj_PlayerRabbo, _i);
+		if (!instance_exists(_p) || _p.state == PLAYERSTATE.DEATH) continue;
+		if (_p.character == CHARACTER.DIRK) {
+			return _p;
+		}
+	}
+	return instance_nearest(_x, _y, obj_PlayerPAR);
 }

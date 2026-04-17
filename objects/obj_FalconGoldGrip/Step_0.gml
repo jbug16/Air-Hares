@@ -133,7 +133,7 @@ switch (state)
 	break;
 	
 	case BOSS.APPEAR:	// glide into position from top
-	target_id = instance_nearest(x, y, obj_PlayerPAR);
+	target_id = PlayerGetEnemyAggroTarget(x, y);
 	EnemyFaceTarget(target_id);
 	if instance_exists(obj_EnemyGoldGripSpawner)
 	//if (y == sprite_height*0.2 and obj_EnemyGoldGripSpawner.sequence == 0)
@@ -156,7 +156,7 @@ switch (state)
 	break;
 	
 	case BOSS.IDLE:		// wait before diving
-	target_id = instance_nearest(x, y, obj_PlayerPAR);
+	target_id = PlayerGetEnemyAggroTarget(x, y);
 	EnemyFaceTarget(target_id);
 	
 	if (alarm[0] < 0) 
@@ -173,7 +173,7 @@ switch (state)
 		// Stop horizontal dive
 		if(direction < 40 or direction > 310 or (direction > 140 and  direction < 220))
 		{
-			var _inst = instance_nearest(x, y, obj_PlayerPAR);
+			var _inst = PlayerGetEnemyAggroTarget(x, y);
 			if(_inst != noone) direction = point_direction(x, y, _inst.x, _inst.y);
 		}
 	}

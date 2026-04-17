@@ -13,7 +13,7 @@ var _collide_counter = instance_place(x, y, obj_PlayerParry)
 switch(state) {
 	case ENEMY_STATE.IDLE:
 		if !instance_exists(obj_PlayerPAR) target_id = instance_nearest(x, y, obj_PlayerRabboSpawner);
-		else target_id = instance_nearest(x, y, obj_PlayerPAR);
+		else target_id = PlayerGetEnemyAggroTarget(x, y);
 		EnemyFaceTarget(target_id);
 		timer_prepare--;
 	

@@ -23,7 +23,7 @@ else
 
 	if (y < -720) {
 		// Missed shot reduce score
-		var _player = instance_nearest(x, y, obj_PlayerPAR);
+		var _player = PlayerGetEnemyAggroTarget(x, y, true);
 		if (_player != noone) var _scr = instance_create_layer(_player.x, _player.y - 64, "GUI", obj_GUITextFlying);
 		else var _scr = instance_create_layer(0.5*room_width, 0.8*room_width, "GUI", obj_GUITextFlying);
 		_scr.z = 0;

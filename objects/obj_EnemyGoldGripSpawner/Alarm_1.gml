@@ -24,7 +24,7 @@ for (var i = array_length(falcon_ids) - 1; i >= 0; i--)
 	with (obj_FalconGoldGrip)
 	{
 		if (alarm[0] > 0) continue;
-		var _inst = instance_nearest(x,y,obj_PlayerPAR);
+		var _inst = PlayerGetEnemyAggroTarget(x, y);
 		if (distance_to_object(_inst) < _dist)
 		{
 			_who = id;

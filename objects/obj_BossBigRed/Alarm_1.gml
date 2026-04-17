@@ -27,7 +27,7 @@ if (sequence == 0)
 		with (obj_FalconBigRed)
 		{
 			if (alarm[0] > 0) continue;
-			var _inst = instance_nearest(x,y,obj_PlayerPAR);
+			var _inst = PlayerGetEnemyAggroTarget(x, y, true);
 			if (distance_to_object(_inst) < _dist)
 			{
 				_who = id;

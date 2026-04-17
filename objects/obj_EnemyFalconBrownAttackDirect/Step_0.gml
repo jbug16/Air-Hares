@@ -6,7 +6,7 @@ var _collide_counter = instance_place(x, y, obj_PlayerParry)
 
 switch(state) {
 	case ENEMIES.PREPARING:
-		target_id = instance_nearest(x, y, obj_PlayerPAR);
+		target_id = PlayerGetEnemyAggroTarget(x, y);
 		EnemyFaceTarget(target_id);
 		
 		timer_prepare -= 1;

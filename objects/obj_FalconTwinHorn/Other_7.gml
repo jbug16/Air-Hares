@@ -45,7 +45,7 @@ else if(state == BOSS.DODGE)
 	// Setup according to state
 	if(state == BOSS.APPEAR)
 	{
-		target_id = instance_nearest(x, y, obj_PlayerPAR);
+		target_id = PlayerGetEnemyAggroTarget(x, y);
 		EnemyFaceTarget(target_id);
 		if instance_exists(obj_EnemyTwinhornSpawner)
 		if (y == sprite_height*0.2 and obj_EnemyTwinhornSpawner.sequence == 0)
@@ -67,7 +67,7 @@ else if(state == BOSS.DODGE)
 	}
 	else if(state == BOSS.IDLE)
 	{
-		target_id = instance_nearest(x, y, obj_PlayerPAR);
+		target_id = PlayerGetEnemyAggroTarget(x, y);
 		EnemyFaceTarget(target_id);
 	
 		if (alarm[0] < 0) 

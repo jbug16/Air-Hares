@@ -30,7 +30,7 @@ switch(state) {
 	// Sequence start - prepare for the attack
 	//----------------------------------------------------------
 	case ENEMIES.INIT:
-		target_id = instance_nearest(x, y, obj_PlayerPAR);
+		target_id = PlayerGetEnemyAggroTarget(x, y);
 		if(prep_duration != 60) prep_duration = 60;
 		state = ENEMIES.INIT_WAIT;
 		break;

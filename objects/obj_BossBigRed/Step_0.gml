@@ -2,7 +2,7 @@
 // Boss card - wait
 if(obj_ControllerFightBoss2_3.alarm[2] > 0 and state == BOSS.APPEAR)
 {
-	target_id = instance_nearest(x, y, obj_PlayerPAR);
+	target_id = PlayerGetEnemyAggroTarget(x, y, true);
 	EnemyFaceTarget(target_id);
 	exit;
 }
@@ -155,7 +155,7 @@ switch (state)
 	// Waiting for dive etc.
 	//----------------------------------------------------------
 	case BOSS.IDLE:
-		target_id = instance_nearest(x, y, obj_PlayerPAR);
+		target_id = PlayerGetEnemyAggroTarget(x, y, true);
 		EnemyFaceTarget(target_id);
 	
 		// falcons are diving and need to wait for their finish

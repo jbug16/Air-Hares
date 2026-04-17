@@ -10,7 +10,7 @@ switch(state)
 	// Starting statemachine (wait)
 	//----------------------------------------------------------
 	case ENEMIES.INIT:
-		target_id = instance_nearest(x, y, obj_PlayerPAR);
+		target_id = PlayerGetEnemyAggroTarget(x, y);
 		state = ENEMIES.PREP;
 		break;
 		
@@ -78,7 +78,7 @@ switch(state)
 		break;
 }
 
-target_id = instance_nearest(x, y, obj_PlayerPAR);
+target_id = PlayerGetEnemyAggroTarget(x, y);
 
 //----------------------------------------------------------
 // Sprite changes

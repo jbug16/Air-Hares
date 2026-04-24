@@ -116,6 +116,12 @@ function EraseAllSavedData() {
 	global.achievement_farm100 = array_create(16, false);
 	global.achievement_no_damage = array_create(16, false);
 	global.achievement_no_aggression = array_create(16, false);
+	global.mission_ach_just_earned_farm100 = false;
+	global.mission_ach_just_earned_no_damage = false;
+	global.mission_ach_just_earned_no_aggression = false;
+	global.mission_run_farm100_met = false;
+	global.mission_run_no_damage_met = false;
+	global.mission_run_no_aggression_met = false;
 	
 	global.leaderboard_singleplayer = [];
 	global.leaderboard_coop = [];

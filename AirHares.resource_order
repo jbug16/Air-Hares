@@ -365,7 +365,7 @@
     {"name":"spr_CardBossCloud","order":22,"path":"sprites/spr_CardBossCloud/spr_CardBossCloud.yy",},
     {"name":"spr_CardBossIcon","order":21,"path":"sprites/spr_CardBossIcon/spr_CardBossIcon.yy",},
     {"name":"spr_CardBossName","order":23,"path":"sprites/spr_CardBossName/spr_CardBossName.yy",},
-    {"name":"spr_Carrot","order":11,"path":"sprites/spr_Carrot/spr_Carrot.yy",},
+    {"name":"spr_Carrot","order":13,"path":"sprites/spr_Carrot/spr_Carrot.yy",},
     {"name":"spr_Credits","order":2,"path":"sprites/spr_Credits/spr_Credits.yy",},
     {"name":"spr_CropBarren","order":27,"path":"sprites/spr_CropBarren/spr_CropBarren.yy",},
     {"name":"spr_CropBooming","order":30,"path":"sprites/spr_CropBooming/spr_CropBooming.yy",},

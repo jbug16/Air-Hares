@@ -47,6 +47,26 @@ function LevelRunMedalsReset() {
 	global.level_run_ammo_aggression = false;
 }
 
+/// @desc Clear "new medal this clear" flags before awarding medals for a stage (mission UI reads them after)
+function MissionAchPopupClearFlags() {
+	global.mission_ach_just_earned_farm100 = false;
+	global.mission_ach_just_earned_no_damage = false;
+	global.mission_ach_just_earned_no_aggression = false;
+}
+
+/// @desc Snapshot this clear’s challenge results for the mission score UI (replay-safe; not save state)
+function MissionRunMedalSet(_farm100, _no_damage, _no_aggression) {
+	global.mission_run_farm100_met = _farm100;
+	global.mission_run_no_damage_met = _no_damage;
+	global.mission_run_no_aggression_met = _no_aggression;
+}
+
+function MissionRunMedalClearAfterRead() {
+	global.mission_run_farm100_met = false;
+	global.mission_run_no_damage_met = false;
+	global.mission_run_no_aggression_met = false;
+}
+
 /// @desc During boss intro (sequence 0 falcon waves, before boss flies in), register an HP hit for wave-repeat logic.
 function BossIntroPrepWaveRegisterPlayerHit() {
 	if (instance_exists(obj_BossHighTop) && obj_BossHighTop.sequence == 0)
@@ -110,6 +130,7 @@ function AchievementMarkUnlocked(_medal_key, _level_index, _context) {
 			if (!global.achievement_farm100[_idx]) {
 				global.achievement_farm100[_idx] = true;
 				_changed = true;
+				global.mission_ach_just_earned_farm100 = true;
 			}
 		break;
 		
@@ -118,6 +139,7 @@ function AchievementMarkUnlocked(_medal_key, _level_index, _context) {
 			if (!global.achievement_no_damage[_idx]) {
 				global.achievement_no_damage[_idx] = true;
 				_changed = true;
+				global.mission_ach_just_earned_no_damage = true;
 			}
 		break;
 		
@@ -126,6 +148,7 @@ function AchievementMarkUnlocked(_medal_key, _level_index, _context) {
 			if (!global.achievement_no_aggression[_idx]) {
 				global.achievement_no_aggression[_idx] = true;
 				_changed = true;
+				global.mission_ach_just_earned_no_aggression = true;
 			}
 		break;
 		

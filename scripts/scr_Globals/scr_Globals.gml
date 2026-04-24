@@ -145,6 +145,14 @@ global.achievement_farm100 = array_create(16, false);
 // No-damage / no-aggression per story level (0–15); persisted when gameplay sets them
 global.achievement_no_damage = array_create(16, false);
 global.achievement_no_aggression = array_create(16, false);
+// Mission-complete UI: medals newly unlocked this clear (set by AchievementMarkUnlocked, cleared when UI reads)
+global.mission_ach_just_earned_farm100 = false;
+global.mission_ach_just_earned_no_damage = false;
+global.mission_ach_just_earned_no_aggression = false;
+// Mission-complete UI: whether each challenge was met on this clear only (consumed by score UI Create)
+global.mission_run_farm100_met = false;
+global.mission_run_no_damage_met = false;
+global.mission_run_no_aggression_met = false;
 // True if any obj_PlayerRabbo took HP damage this level run (medal tracking)
 global.level_run_any_hp_damage = false;
 // True if player seed/water hit an enemy via EnemyBirdPAR hit helpers (medal tracking)

@@ -116,9 +116,15 @@ if (room == rm_LevelX1Farm) switch (state)
 		// Save progress (only after success — END branch uses same crop threshold for fail UI)
 		state++;
 		var _level_index = clamp(global.current_level, 0, 15);
+		MissionAchPopupClearFlags();
 		var _ach_save = false;
 		// Story or arcade: medals only count after passing the level (same threshold as mission success UI).
 		var _level_passed = crops_filled >= 0.6 * crops_available;
+		MissionRunMedalSet(
+			_level_passed && (crops_filled >= crops_available),
+			_level_passed && !global.level_run_any_hp_damage,
+			_level_passed && !global.level_run_ammo_aggression
+		);
 		if (_level_passed) {
 			if (crops_filled >= crops_available) {
 				_ach_save = AchievementMarkUnlocked("farm100", _level_index, "(" + string(crops_filled) + "/" + string(crops_available) + " crops)") || _ach_save;

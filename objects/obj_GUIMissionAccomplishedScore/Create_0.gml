@@ -85,3 +85,15 @@ display_score_total = 0;
 display_highscore = 0;
 
 TweenStart("image_yscale", 0, 1, 0.5*GAMESPD, TWEENTYPE.QUAD_OUT);
+
+// Medal carrots — this clear only (replay shows empty/filled from this run, not save file)
+mission_run_met = array_create(3, false);
+mission_run_met[0] = global.mission_run_farm100_met;
+mission_run_met[1] = global.mission_run_no_damage_met;
+mission_run_met[2] = global.mission_run_no_aggression_met;
+MissionRunMedalClearAfterRead();
+MissionAchPopupClearFlags();
+
+mission_ach_phase = array_create(3, 0);
+mission_ach_anim = array_create(3, 0);
+mission_ach_tally_step = 0;

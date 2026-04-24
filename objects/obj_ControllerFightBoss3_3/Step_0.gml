@@ -114,6 +114,7 @@ switch(state) {
 		
 	case ENEMIES.PHASE_CLOSING:
 	{
+		MissionAchPopupClearFlags();
 		var _level_index = clamp(global.current_level, 0, 15);
 		var _ach_save = false;
 		if (!global.level_run_any_hp_damage) {
@@ -129,6 +130,7 @@ switch(state) {
 		if (global.level_run_ammo_aggression) {
 			show_debug_message("[Medal] No-aggression not awarded this boss run (used ammo on enemies).");
 		}
+		MissionRunMedalSet(false, !global.level_run_any_hp_damage, !global.level_run_ammo_aggression);
 	}
 	//if (global.game_mode == GAMEMODE.FREE) TransitionGoto(rm_MainMenu);
 	if (global.game_mode == GAMEMODE.FREE) 

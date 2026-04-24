@@ -81,7 +81,7 @@ else if(menu_draw and in_controls)
 		draw_set_alpha(image_alpha);
 	}
 }
-// Achievements — table layout (spr_Carrot: only subimages 0 and 1 — 0 = empty, 1 = star; data from global.achievement_*)
+// Achievements — transposed table: levels across the top, challenge types down the left (fits tall spr_Carrot art)
 else if(menu_draw and in_achievements)
 {
 	var rw = room_width;
@@ -96,58 +96,64 @@ else if(menu_draw and in_achievements)
 	draw_text_transformed(rw * 0.5, _title_y, "ACHIEVEMENTS", image_xscale, image_yscale, image_angle);
 	var _title_line_h = string_height("ACHIEVEMENTS") * image_yscale;
 	
-	// Column centers: generous spacing (match mockup grid)
-	var _col_lvl = rw * 0.10;
-	var _cx_pct = rw * 0.40;
-	var _cx_ndmg = rw * 0.58;
-	var _cx_peace = rw * 0.76;
-	
 	draw_set_font(fnt_Federo16);
-	// Subtitle row sits below full title height + extra gap (breathing room under ACHIEVEMENTS)
-	var _hdr_y = _title_y + _title_line_h + rh * 0.042;
-	draw_set_halign(fa_left);
-	draw_text_transformed(_col_lvl, _hdr_y, "Level", image_xscale, image_yscale, image_angle);
-	draw_set_halign(fa_center);
-	draw_text_transformed(_cx_pct, _hdr_y, "100% Completion", image_xscale, image_yscale, image_angle);
-	draw_text_transformed(_cx_ndmg, _hdr_y, "No Damage", image_xscale, image_yscale, image_angle);
-	draw_text_transformed(_cx_peace, _hdr_y, "No Aggression", image_xscale, image_yscale, image_angle);
-	
-	// Clear band below header text (carrots are centered in each row; tops must not cover headers)
+	var _lvl_hdr_y = _title_y + _title_line_h + rh * 0.034;
 	var _hdr_line_h = string_height("100% Completion") * image_yscale;
-	var _header_bottom = _hdr_y + _hdr_line_h + rh * 0.022;
-	var _row_start = _header_bottom + rh * 0.014;
 	
-	// Reserve only for Back (hint line removed — extra height for taller rows + bigger carrots)
+	// Whole table (challenge labels + grid) centered horizontally on the room
+	var _label_gap = max(10, rw * 0.01);
+	var _lw = string_width("100% Completion");
+	_lw = max(_lw, string_width("No Damage"));
+	_lw = max(_lw, string_width("No Aggression"));
+	_lw *= image_xscale;
+	var _table_max_w = rw * 0.92;
+	var _grid_max_w = _table_max_w - _lw - _label_gap;
+	var _col_w = _grid_max_w / 16;
+	var _table_w = _lw + _label_gap + 16 * _col_w;
+	var _grid_left = rw * 0.5 - _table_w * 0.5 + _lw + _label_gap;
+	var _label_right_x = _grid_left - _label_gap;
+	
+	var _lvl_hdr_bottom = _lvl_hdr_y + _hdr_line_h + rh * 0.018;
 	var _back_y = rh * 0.93;
 	var _table_end = _back_y - rh * 0.065;
-	var _row_spacing = (_table_end - _row_start) / 16;
-	// spr_Carrot is 100×100, origin centered — use most of each row, leave ~8% padding so rows never overlap
-	var _carrot_px = min(100, _row_spacing * 0.92);
-	var _carrot_sc = _carrot_px / 100;
+	var _row_h = (_table_end - _lvl_hdr_bottom) / 3;
+	var _row_start = _lvl_hdr_bottom + _row_h * 0.5;
 	
-	draw_set_valign(fa_middle);
-	for (var _r = 0; _r < 16; _r++) {
-		var _y = _row_start + _r * _row_spacing;
-		var _stage = (_r div 4) + 1;
-		var _col = _r mod 4;
+	var _sw = sprite_get_width(spr_Carrot);
+	var _sh = sprite_get_height(spr_Carrot);
+	var _cell = min(_col_w * 0.86, _row_h * 0.86);
+	var _carrot_sc = _cell / max(_sw, _sh);
+	var _sx = _carrot_sc * image_xscale;
+	var _sy = _carrot_sc * image_yscale;
+	
+	// Top row: level ids 1-1 … 4-B
+	draw_set_halign(fa_center);
+	draw_set_valign(fa_top);
+	draw_set_color(c_white);
+	for (var _c = 0; _c < 16; _c++) {
+		var _stage = (_c div 4) + 1;
+		var _col = _c mod 4;
 		var _lvl_txt = string(_stage) + "-" + ((_col == 3) ? "B" : string(_col + 1));
-		
-		var _cy = _y + _row_spacing * 0.5;
-		draw_set_halign(fa_left);
+		var _cx = _grid_left + (_c + 0.5) * _col_w;
+		draw_text_transformed(_cx, _lvl_hdr_y, _lvl_txt, image_xscale, image_yscale, image_angle);
+	}
+	
+	var _ch_name = ["100% Completion", "No Damage", "No Aggression"];
+	draw_set_valign(fa_middle);
+	for (var _r = 0; _r < 3; _r++) {
+		var _cy = _row_start + _r * _row_h;
+		draw_set_halign(fa_right);
 		draw_set_color(c_white);
-		draw_text_transformed(_col_lvl, _cy, _lvl_txt, image_xscale, image_yscale, image_angle);
+		draw_text_transformed(_label_right_x, _cy, _ch_name[_r], image_xscale, image_yscale, image_angle);
 		
-		// spr_Carrot has subimages 0 (empty) and 1 (star); coerce in case values came from INI as reals
-		var _e0 = bool(global.achievement_farm100[_r]);
-		var _e1 = bool(global.achievement_no_damage[_r]);
-		var _e2 = bool(global.achievement_no_aggression[_r]);
-		
-		draw_set_halign(fa_center);
-		var _sx = _carrot_sc * image_xscale;
-		var _sy = _carrot_sc * image_yscale;
-		draw_sprite_ext(spr_Carrot, _e0 ? 1 : 0, _cx_pct, _cy, _sx, _sy, 0, c_white, 1);
-		draw_sprite_ext(spr_Carrot, _e1 ? 1 : 0, _cx_ndmg, _cy, _sx, _sy, 0, c_white, 1);
-		draw_sprite_ext(spr_Carrot, _e2 ? 1 : 0, _cx_peace, _cy, _sx, _sy, 0, c_white, 1);
+		for (var _c = 0; _c < 16; _c++) {
+			var _cx = _grid_left + (_c + 0.5) * _col_w;
+			var _e = false;
+			if (_r == 0) _e = bool(global.achievement_farm100[_c]);
+			else if (_r == 1) _e = bool(global.achievement_no_damage[_c]);
+			else _e = bool(global.achievement_no_aggression[_c]);
+			draw_sprite_ext(spr_Carrot, _e ? 1 : 0, _cx, _cy, 0.1, 0.1, 0, c_white, 1);
+		}
 	}
 	
 	draw_set_halign(fa_center);

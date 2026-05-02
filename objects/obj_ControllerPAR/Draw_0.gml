@@ -167,10 +167,13 @@ if instance_exists(obj_PlayerPAR) {
 	// If player 2 exists, draw seed & water
 	if _p2 != noone && instance_exists(_p2) 
 	{
+		// Icon + HP frame subimages match CHARACTER order (see spr_PlayerIcon / spr_HPFrame)
+		var _p2_gui_frame = clamp(_p2.character, 0, sprite_get_number(spr_PlayerIcon) - 1);
+		
 		// Draw player icon
 		var _x1 = 1280 - _scale_ui*0.5*sprite_get_width(spr_PlayerIcon);
 		var _y1 = gui_text_anchor_y - _scale_ui*20 + _scale_ui*0.5*sprite_get_height(spr_PlayerIcon);
-		draw_sprite_ext(spr_PlayerIcon, 1, _x1, _y1, _scale_ui, _scale_ui, 0, c_white, 0.8);
+		draw_sprite_ext(spr_PlayerIcon, _p2_gui_frame, _x1, _y1, _scale_ui, _scale_ui, 0, c_white, 0.8);
 		
 		// Draw lives
 		DrawText3(_x1 - _scale_ui*20, gui_text_anchor_y + _scale_ui*114, string(p1_lives) + "x", fa_left, 
@@ -186,7 +189,7 @@ if instance_exists(obj_PlayerPAR) {
 		
 		// Draw HP Frame
 		_x1 -= _scale_ui*0.5*sprite_get_width(spr_PlayerIcon) + _scale_ui*0.5*sprite_get_width(spr_HPFrame);
-		draw_sprite_ext(spr_HPFrame, 1, _x1, _y1, _scale_ui,_scale_ui, 0, c_white, 0.8);
+		draw_sprite_ext(spr_HPFrame, _p2_gui_frame, _x1, _y1, _scale_ui,_scale_ui, 0, c_white, 0.8);
 		
 		// draw score below 2nd player as well
 		_x_pos += 60;

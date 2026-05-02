@@ -37,7 +37,7 @@ global.coop_portrait_select_ignore_confirm = 0;
 global.coop_portrait_sprite[0] = spr_DirkIcon;
 global.coop_portrait_sprite[1] = spr_LinnieIcon;
 global.coop_portrait_sprite[2] = spr_BettyIcon;
-global.coop_portrait_sprite[3] = spr_BettyIcon;
+global.coop_portrait_sprite[3] = spr_CandieIcon;
 
 // Tips screen
 global.tips_return_room = noone;
@@ -281,16 +281,16 @@ global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.PARRY] = spr_BettyParr
 global.character_sprite[CHARACTER.BETTY][CHARACTER_SPRITE.DEATH] = spr_BettyIdle;
 
 // Candie
-global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.IDLE] = spr_DirkIdle;
-global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.BANK_LEFT] = spr_DirkLeft;
-global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.BANK_LEFT_MAX] = spr_DirkLeftMax;
-global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.BANK_RIGHT] = spr_DirkRight;
-global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.BANK_RIGHT_MAX] = spr_DirkRightMax;
-global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.ROLL_LEFT] = spr_DirkRollLeft;
-global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.ROLL_RIGHT] = spr_DirkRollRight;
-global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.LOOP] = spr_DirkLoopDeLoop;
-global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.PARRY] = spr_DirkParry;
-global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.DEATH] = spr_DirkIdle;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.IDLE] = spr_CandieIdle;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.BANK_LEFT] = spr_CandieLeft;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.BANK_LEFT_MAX] = spr_CandieLeftMax;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.BANK_RIGHT] = spr_CandieRight;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.BANK_RIGHT_MAX] = spr_CandieRightMax;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.ROLL_LEFT] = spr_CandieRollLeft;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.ROLL_RIGHT] = spr_CandieRollRight;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.LOOP] = spr_CandieLoopDeLoop;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.PARRY] = spr_CandieParry;
+global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.DEATH] = spr_CandieIdle;
 
 // Actual levels
 if(global.demo)

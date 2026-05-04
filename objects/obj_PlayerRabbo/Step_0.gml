@@ -571,7 +571,8 @@ if trig_shoot_auto {
 	var _spd = speed_projectile_seed;
 	if (character == CHARACTER.CANDIE) {
 		// Triangle spread: forward + two diagonals (gunner wings)
-		var _dirs = [90, 90 + 28, 90 - 28];
+		var _parry_spread = 12;
+		var _dirs = [90, 90 + _parry_spread, 90 - _parry_spread];
 		for (var _si = 0; _si < 3; _si++) {
 			var _proj = instance_create_layer(x, y, "Top", obj_PlayerProjectileSeed);
 			_proj.hsp = lengthdir_x(_spd, _dirs[_si]);

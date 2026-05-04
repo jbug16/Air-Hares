@@ -152,7 +152,7 @@ switch(state) {
 		AdvanceLevel();
 	}
 	// Create the mission complete
-	var _text = instance_create_layer(room_width/2, 216, "GUI_Top", obj_GUIMissionAccomplished);
+	var _text = instance_create_layer(room_width/2, 152, "GUI_Top", obj_GUIMissionAccomplished);
 	_text.depth -= 1;
 	// Score
 	_text = instance_create_layer(room_width/2, room_height/2 + 64, "GUI_Top", obj_GUIMissionAccomplishedScore);

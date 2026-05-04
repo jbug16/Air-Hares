@@ -91,6 +91,11 @@ mission_run_met = array_create(3, false);
 mission_run_met[0] = global.mission_run_farm100_met;
 mission_run_met[1] = global.mission_run_no_damage_met;
 mission_run_met[2] = global.mission_run_no_aggression_met;
+mission_hide_farm100 = (global.level_highscore mod 4 == 3);
+if (mission_hide_farm100) {
+	// Boss levels have no crops to fill, so never show the farm medal slot.
+	mission_run_met[0] = false;
+}
 MissionRunMedalClearAfterRead();
 MissionAchPopupClearFlags();
 

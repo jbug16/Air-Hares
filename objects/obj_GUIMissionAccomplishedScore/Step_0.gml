@@ -25,9 +25,11 @@ if (image_yscale >= 1) {
 	// Stagger medal carrot reveals during tally (farm → damage → aggression)
 	mission_ach_tally_step += 1;
 	var _nfx = sprite_get_number(spr_AnimShine);
-	var _delay = [20, 38, 56];
+	var _slot = 0;
 	for (var _i = 0; _i < 3; _i++) {
-		if (mission_ach_phase[_i] == 0 && mission_run_met[_i] && mission_ach_tally_step >= _delay[_i]) {
+		if (mission_hide_farm100 && _i == 0) continue;
+		var _delay = 20 + (_slot * 18);
+		if (mission_ach_phase[_i] == 0 && mission_run_met[_i] && mission_ach_tally_step >= _delay) {
 			mission_ach_phase[_i] = 1;
 			mission_ach_anim[_i] = 0;
 			audio_play_sound(snd_FarmTransform, 1, false);
@@ -37,5 +39,6 @@ if (image_yscale >= 1) {
 				mission_ach_phase[_i] = 2;
 			}
 		}
+		_slot += 1;
 	}
 }

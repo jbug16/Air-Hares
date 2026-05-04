@@ -149,7 +149,12 @@ else if(menu_draw and in_achievements)
 		for (var _c = 0; _c < 16; _c++) {
 			var _cx = _grid_left + (_c + 0.5) * _col_w;
 			var _e = false;
-			if (_r == 0) _e = bool(global.achievement_farm100[_c]);
+			var _is_boss_col = (_c mod 4 == 3);
+			if (_r == 0) {
+				// Boss levels have no crop objective, so this medal is not shown there.
+				if (_is_boss_col) continue;
+				_e = bool(global.achievement_farm100[_c]);
+			}
 			else if (_r == 1) _e = bool(global.achievement_no_damage[_c]);
 			else _e = bool(global.achievement_no_aggression[_c]);
 			draw_sprite_ext(spr_Carrot, _e ? 1 : 0, _cx, _cy, 0.1, 0.1, 0, c_white, 1);

@@ -17,6 +17,8 @@ text += "\n\n~Programming and Debugging~";
 text += "\nJenna Curls";
 text += "\n\n~Music by~";
 text += "\nOmar Chakor";
+text += "\n\n~Lead Playtesting by~";
+text += "\nKirby Bungeroth";
 text += "\n\n~Executive Produced by~";
 text += "\nMegan Bungeroth";
 

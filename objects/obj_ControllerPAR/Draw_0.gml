@@ -68,6 +68,15 @@ if instance_exists(obj_PlayerPAR) {
 		}
 	}
 	
+	var _aim_target_shared = false;
+	if (_p1 != noone && instance_exists(_p1) && _p2 != noone && instance_exists(_p2)
+		&& _p1.aim_at_crops && _p2.aim_at_crops && _p1.shoot_target != noone
+		&& instance_exists(_p1.shoot_target)
+		&& _p1.shoot_target == _p2.shoot_target
+		&& variable_instance_exists(_p1.shoot_target, "targeted")
+		&& array_length(_p1.shoot_target.targeted) == 2)
+		_aim_target_shared = true;
+	
 	if _p1 != noone && instance_exists(_p1) 
 	{
 
@@ -150,7 +159,8 @@ if instance_exists(obj_PlayerPAR) {
 		
 		// Draw target icon when toggle is on (aim_at_crops)
 		if (_p1.aim_at_crops) {
-			draw_sprite_ext(spr_Targets, 0, gui_text_anchor_x + 23, gui_text_anchor_y + _scale_ui*114 + 35, 0.20, 0.20, 0, 
+			var _tix1 = TargetReticleSpriteIndex(0, _aim_target_shared);
+			draw_sprite_ext(spr_Targets, _tix1, gui_text_anchor_x + 23, gui_text_anchor_y + _scale_ui*114 + 35, 0.20, 0.20, 0, 
 			c_white, 1);
 		}
 	} 
@@ -250,7 +260,8 @@ if instance_exists(obj_PlayerPAR) {
 		// Draw target icon when toggle is on
 		if (_p2.aim_at_crops) {
 			_x1 = 1280 - _scale_ui*0.5*sprite_get_width(spr_PlayerIcon);
-			draw_sprite_ext(spr_Targets, 1, _x1 + 2, gui_text_anchor_y + _scale_ui*114 + 35, 0.20, 0.20, 0, 
+			var _tix2 = TargetReticleSpriteIndex(1, _aim_target_shared);
+			draw_sprite_ext(spr_Targets, _tix2, _x1 + 2, gui_text_anchor_y + _scale_ui*114 + 35, 0.20, 0.20, 0, 
 			c_white, 1);
 		}
 		

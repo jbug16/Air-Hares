@@ -20,13 +20,13 @@ if (array_length(targeted) > 0) {
 			gpu_set_blendmode(bm_add);
 			draw_sprite_ext(sprite_index, image_index, _x_pos, _y_pos, scaling, scaling, image_angle, _col, _alpha);
 			gpu_set_blendmode(bm_normal);
-			draw_sprite_ext(spr_Targets, 2, _x_pos, _y_pos, 0.5*scaling, 0.5*scaling, image_angle, image_blend, 1);
+			draw_sprite_ext(spr_Targets, 5, _x_pos, _y_pos, 0.5*scaling, 0.5*scaling, image_angle, image_blend, 1);
 		}
 		else
 		{
 			var _col = c_yellow;
 			draw_sprite_ext(sprite_index, image_index, _x_pos, _y_pos, scaling, scaling, image_angle, _col, _alpha);
-			draw_sprite_ext(spr_Targets, 2, _x_pos, _y_pos, 0.5*scaling, 0.5*scaling, image_angle, image_blend, 1);
+			draw_sprite_ext(spr_Targets, 5, _x_pos, _y_pos, 0.5*scaling, 0.5*scaling, image_angle, image_blend, 1);
 		}
 	}
 	else
@@ -49,9 +49,9 @@ if (array_length(targeted) > 0) {
 				draw_sprite_ext(sprite_index, image_index, _x_pos, _y_pos, scaling, scaling, image_angle, _col, _alpha);
 				gpu_set_blendmode(bm_normal);
 				
-				// Draw targets
-				if(_col == c_lime or _col == c_green) draw_sprite_ext(spr_Targets, 1, _x_pos, _y_pos, 0.5*scaling, 0.5*scaling, image_angle, image_blend, 1);
-				else draw_sprite_ext(spr_Targets, 0, _x_pos, _y_pos, 0.5*scaling, 0.5*scaling, image_angle, image_blend, 1);
+				// Draw targets (per-character reticle)
+				var _tix = TargetReticleSpriteIndex(targeted[i], false);
+				draw_sprite_ext(spr_Targets, _tix, _x_pos, _y_pos, 0.5*scaling, 0.5*scaling, image_angle, image_blend, 1);
 			}
 			else
 			{
@@ -59,10 +59,9 @@ if (array_length(targeted) > 0) {
 				if (targeted[i] == 1) _col = c_green; 
 				draw_sprite_ext(sprite_index, image_index, _x_pos, _y_pos, scaling, scaling, image_angle, _col, _alpha);
 				
-				// Draw targets
-				var _index = 0;
-				if(_col == c_green) _index = 1;
-				draw_sprite_ext(spr_Targets, _index, _x_pos, _y_pos, 0.5*scaling, 0.5*scaling, image_angle, image_blend, 1);
+				// Draw targets (per-character reticle)
+				var _tix = TargetReticleSpriteIndex(targeted[i], false);
+				draw_sprite_ext(spr_Targets, _tix, _x_pos, _y_pos, 0.5*scaling, 0.5*scaling, image_angle, image_blend, 1);
 			}
 		}
 	}

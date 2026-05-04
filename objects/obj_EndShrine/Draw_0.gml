@@ -9,9 +9,9 @@ if (array_length(targeted) > 0) {
 	var _y_pos = DepthGetPositionY(y, z);
 	var _tscale = 0.5 * image_xscale;
 	if (array_length(targeted) == 2) {
-		draw_sprite_ext(spr_Targets, 2, _x_pos, _y_pos, _tscale, _tscale, 0, image_blend, 1);
+		draw_sprite_ext(spr_Targets, 5, _x_pos, _y_pos, _tscale, _tscale, 0, image_blend, 1);
 	} else {
-		var _tindex = (targeted[0] == 1) ? 1 : 0;
+		var _tindex = TargetReticleSpriteIndex(targeted[0], false);
 		draw_sprite_ext(spr_Targets, _tindex, _x_pos, _y_pos, _tscale, _tscale, 0, image_blend, 1);
 	}
 }

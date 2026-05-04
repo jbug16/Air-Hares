@@ -15,6 +15,16 @@ function PlayerCheckAlive(_player){
 	return false;
 }
 
+/// spr_Targets: subimages 0–4 match CHARACTER; 5 = both players on same crop/shrine
+function TargetReticleSpriteIndex(_player_slot, _both_players_on_same_target) {
+	if (_both_players_on_same_target) return 5;
+	var _c = CHARACTER.RABBO;
+	with (obj_PlayerPAR) {
+		if (player == _player_slot) _c = character;
+	}
+	return clamp(_c, 0, 4);
+}
+
 
 //@func PlayerAssignSprite(_character)
 // Assign sprite set to curretn player class

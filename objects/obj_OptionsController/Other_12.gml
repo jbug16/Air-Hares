@@ -30,8 +30,8 @@ else //back from controls to options
 	menu[3] = "Graphics";
 	menu[4] = "Tutorial";
 	menu[5] = "Achievements";
-	menu[6] = "Saves";
-	menu[7] = "Leaderboards";
+	menu[6] = "Leaderboards";
+	menu[7] = "Saves";
 	menu[8] = "Credits";
 	menu[9] = "Back";
 	
@@ -51,8 +51,8 @@ else //back from controls to options
 	
 	if(in_controls) menu_selected = 0;
 	if(in_achievements) menu_selected = 5;
-	if(in_saves) menu_selected = 6;
-	if(in_leaderboards) menu_selected = 7;
+	if(in_leaderboards) menu_selected = 6;
+	if(in_saves) menu_selected = 7;
 	if(in_graphics) menu_selected = 3;
 	
 	in_controls = false;

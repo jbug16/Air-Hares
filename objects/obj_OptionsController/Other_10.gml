@@ -127,20 +127,19 @@ switch(menu_selected)
 		break;
 		
 	case 6:
-		if(menu[6] == "Saves")
-		{
-			in_saves = true;
-			menu_selected = 1;
-			event_user(1);
-		}
-		if(menu[8] == "Back") event_user(2);
-		break;
-	
-	case 7:
-		if(menu[7] == "Leaderboards")
+		if(menu[6] == "Leaderboards")
 		{
 			in_leaderboards = true;
 			menu_selected = 0;
+			event_user(1);
+		}
+		break;
+	
+	case 7:
+		if(menu[7] == "Saves")
+		{
+			in_saves = true;
+			menu_selected = 1;
 			event_user(1);
 		}
 		break;
@@ -156,7 +155,6 @@ switch(menu_selected)
 			instance_deactivate_object(id);
 			instance_deactivate_object(obj_OptionsTitle);
 		}
-		if(menu[7] == "Back" or menu[7] == "Back") event_user(2);
 		break;
 		
 	case 9:

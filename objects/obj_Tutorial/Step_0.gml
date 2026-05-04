@@ -1,6 +1,6 @@
 /// @desc
 
-if(alarm[10] > 0 or alarm[0] > 0) exit;
+if(alarm[10] > 0 or alarm[0] > 0 or alarm[2] > 0) exit;
 
 var _next_index = [INPUT.MENU_DOWN, INPUT.MENU_LEFT, INPUT.MENU_RIGHT, INPUT.MENU_SELECT, INPUT.MENU_UP,
 	INPUT.LEFT, INPUT.RIGHT, INPUT.UP, INPUT.DOWN, INPUT.SEED, INPUT.ROLL_LEFT, INPUT.ROLL_RIGHT,
@@ -23,4 +23,8 @@ for(var i = 0; i < array_length(_next_index); i++)
 	}
 }
 
-if(InputGet(INPUT.PAUSE) or _done) event_user(1);
+if(InputGet(INPUT.PAUSE) or _done)
+{
+	TweenStart("fade_alpha", fade_alpha, 1, fade_time, TWEENTYPE.LINEAR);
+	alarm[2] = fade_time;
+}

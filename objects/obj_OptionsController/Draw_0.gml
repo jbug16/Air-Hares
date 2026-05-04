@@ -9,8 +9,17 @@ draw_set_valign(fa_middle);
 var _x_left = room_width * 0.2; //position of the text
 if (in_controls) _x_left = room_width*0.1;
 
+var _oa = image_alpha;
+// Main options / graphics / saves column — below obj_OptionsTitle (logo); tighter than 0.3*rh
+var _opts_menu_y0 = max(room_height * 0.18, 128);
+var _opts_line = 52;
+// Main 10-row list: same small gap after Graphics and after Credits
+var _opts_gap_block = _opts_line * 0.5;
+var _opts_grouped_main = (array_length(menu) == 10);
+
 // Draw options
 if menu_draw and !in_controls and !in_leaderboards and !in_achievements and !in_saves {
+	draw_set_alpha(_oa);
 	for (var i=0; i<array_length(menu); i++) {
 		if (i == menu_selected) {
 			draw_set_color(c_orange);	
@@ -18,20 +27,27 @@ if menu_draw and !in_controls and !in_leaderboards and !in_achievements and !in_
 			draw_set_color(c_white);	
 		}
 		
+		var _yy = _opts_menu_y0 + _opts_line * i;
+		if (_opts_grouped_main) {
+			if (i >= 4) _yy += _opts_gap_block;
+			if (i >= 9) _yy += _opts_gap_block;
+		}
+		
 		// Draw menu		
 		draw_set_halign(fa_left)
-		draw_text_transformed(_x_left, room_height * 0.3 + (52 * i), menu[i], image_xscale, image_yscale, image_angle);
+		draw_text_transformed(_x_left, _yy, menu[i], image_xscale, image_yscale, image_angle);
 		// Draw menu-status
 		draw_set_halign(fa_right)
-		draw_text_transformed(room_width*0.8, room_height*0.3 + (52*i), menu_status[i], image_xscale, image_yscale, image_angle);
+		draw_text_transformed(room_width*0.8, _yy, menu_status[i], image_xscale, image_yscale, image_angle);
 		
-		draw_set_alpha(1);
+		draw_set_alpha(_oa);
 	}
 }
 else if(menu_draw and in_controls)
 {
 	draw_set_halign(fa_left)
 	draw_set_font(fnt_Federo24);
+	draw_set_alpha(_oa);
 	
 	// Draw titles
 	draw_text_transformed(0.07*room_width, 0.155*room_height, "Actions:", image_xscale, image_yscale, image_angle);
@@ -46,11 +62,11 @@ else if(menu_draw and in_controls)
 		if(i == menu_selected)
 		{
 			draw_set_color(c_orange);
-			if(alarm[1] > 0) draw_set_alpha(control_alpha);
+			if(alarm[1] > 0) draw_set_alpha(control_alpha * _oa);
+			else draw_set_alpha(_oa);
 		}
-		else draw_set_color(c_white);
+		else { draw_set_color(c_white); draw_set_alpha(_oa); }
 		draw_text_transformed(_x_left, _y_start + (45 * i), menu[i], image_xscale, image_yscale, image_angle);
-		draw_set_alpha(image_alpha);
 	}
 	
 	// Keyboard key text
@@ -60,11 +76,11 @@ else if(menu_draw and in_controls)
 		if(i == menu_selected)
 		{
 			draw_set_color(c_orange);
-			if(alarm[1] > 0) draw_set_alpha(control_alpha);
+			if(alarm[1] > 0) draw_set_alpha(control_alpha * _oa);
+			else draw_set_alpha(_oa);
 		}
-		else draw_set_color(c_white);
+		else { draw_set_color(c_white); draw_set_alpha(_oa); }
 		draw_text_transformed(_x_left, _y_start + (45 * i), key_keyboard[i], image_xscale, image_yscale, image_angle);
-		draw_set_alpha(image_alpha);
 	}
 	
 	// Gamepad key text
@@ -74,16 +90,17 @@ else if(menu_draw and in_controls)
 		if(i == menu_selected)
 		{
 			draw_set_color(c_orange);
-			if(alarm[1] > 0) draw_set_alpha(control_alpha);
+			if(alarm[1] > 0) draw_set_alpha(control_alpha * _oa);
+			else draw_set_alpha(_oa);
 		}
-		else draw_set_color(c_white);
+		else { draw_set_color(c_white); draw_set_alpha(_oa); }
 		draw_text_transformed(_x_left, _y_start + (45 * i), key_joypad[i], image_xscale, image_yscale, image_angle);
-		draw_set_alpha(image_alpha);
 	}
 }
 // Achievements — transposed table: levels across the top, challenge types down the left (fits tall spr_Carrot art)
 else if(menu_draw and in_achievements)
 {
+	draw_set_alpha(_oa);
 	var rw = room_width;
 	var rh = room_height;
 	// Clear obj_OptionsTitle / spr_Title (scaled logo ~top third); start text below it
@@ -157,7 +174,7 @@ else if(menu_draw and in_achievements)
 			}
 			else if (_r == 1) _e = bool(global.achievement_no_damage[_c]);
 			else _e = bool(global.achievement_no_aggression[_c]);
-			draw_sprite_ext(spr_Carrot, _e ? 1 : 0, _cx, _cy, 0.1, 0.1, 0, c_white, 1);
+			draw_sprite_ext(spr_Carrot, _e ? 1 : 0, _cx, _cy, 0.1, 0.1, 0, c_white, _oa);
 		}
 	}
 	
@@ -173,21 +190,23 @@ else if(menu_draw and in_achievements)
 // Saves (same list style as main options)
 else if(menu_draw and in_saves)
 {
+	draw_set_alpha(_oa);
 	for (var i = 0; i < array_length(menu); i++) {
 		if (i == menu_selected)
 			draw_set_color(c_orange);
 		else
 			draw_set_color(c_white);
 		draw_set_halign(fa_left);
-		draw_text_transformed(_x_left, room_height * 0.3 + (52 * i), menu[i], image_xscale, image_yscale, image_angle);
+		draw_text_transformed(_x_left, _opts_menu_y0 + (52 * i), menu[i], image_xscale, image_yscale, image_angle);
 		draw_set_halign(fa_right);
-		draw_text_transformed(room_width * 0.8, room_height * 0.3 + (52 * i), menu_status[i], image_xscale, image_yscale, image_angle);
-		draw_set_alpha(1);
+		draw_text_transformed(room_width * 0.8, _opts_menu_y0 + (52 * i), menu_status[i], image_xscale, image_yscale, image_angle);
+		draw_set_alpha(_oa);
 	}
 }
 // Draw leaderboards
 else if(menu_draw and in_leaderboards)
 {
+	draw_set_alpha(_oa);
 	draw_set_font(fnt_Federo24);
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_top);

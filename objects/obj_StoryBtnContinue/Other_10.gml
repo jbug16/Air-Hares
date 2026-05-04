@@ -49,6 +49,10 @@ if (global.story_popup_screen == 1) {
 		else focus = false;
 	}
 	
+	// Match Options > Tutorial: freeze main menu so clicks/keys do not hit title buttons under the slides
+	with (all) {
+		if (!persistent) instance_deactivate_object(id);
+	}
 	instance_create_depth(0.5 * room_width, 0.5 * room_height, -150, obj_Tutorial);
 	exit;
 }

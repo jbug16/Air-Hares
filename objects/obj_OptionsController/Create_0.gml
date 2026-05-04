@@ -6,8 +6,10 @@ Music Slider
 Graphics
 Tutorial
 Achievements
+Leaderboards
 Saves
 Credits
+Back
 */
 
 menu_selected = 0;
@@ -27,8 +29,8 @@ menu[2] = "SFX Volume";
 menu[3] = "Graphics";
 menu[4] = "Tutorial";
 menu[5] = "Achievements";
-menu[6] = "Saves";
-menu[7] = "Leaderboards";
+menu[6] = "Leaderboards";
+menu[7] = "Saves";
 menu[8] = "Credits";
 menu[9] = "Back";
 

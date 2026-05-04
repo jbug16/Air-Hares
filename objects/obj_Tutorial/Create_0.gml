@@ -4,6 +4,7 @@
 // ====== ADJUSTABLE =======
 // =========================
 fade_time = 0.2*GAMESPD;
+tutorial_exit_fade_dur = 1*GAMESPD;
 fade_alpha = 1; 
 
 hold_end = false; // if after cutscenes go straight to the next part

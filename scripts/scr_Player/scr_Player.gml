@@ -25,6 +25,30 @@ function TargetReticleSpriteIndex(_player_slot, _both_players_on_same_target) {
 	return clamp(_c, 0, 4);
 }
 
+/// @desc HP fill colors by character [minColor, maxColor]
+function PlayerHpFillColors(_character) {
+	switch (_character) {
+		case CHARACTER.RABBO: return [c_aqua, c_blue];
+		case CHARACTER.DIRK: return [c_lime, c_green];
+		case CHARACTER.LINNIE: return [c_yellow, c_orange];
+		case CHARACTER.BETTY: return [c_aqua, c_teal];
+		case CHARACTER.CANDIE: return [c_fuchsia, c_purple];
+	}
+	return [c_aqua, c_blue];
+}
+
+/// @desc Target background tint by player slot using character colors
+/// Uses the lighter variant in BUSTING, darker/primary otherwise.
+function PlayerTargetTintColor(_player_slot) {
+	var _c = CHARACTER.RABBO;
+	with (obj_PlayerPAR) {
+		if (player == _player_slot) _c = character;
+	}
+	var _hp_col = PlayerHpFillColors(_c);
+	if (global.overworld_progress == PLOTSTATE.BUSTING) return _hp_col[0];
+	return _hp_col[1];
+}
+
 
 //@func PlayerAssignSprite(_character)
 // Assign sprite set to curretn player class

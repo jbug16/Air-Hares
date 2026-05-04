@@ -152,7 +152,8 @@ if instance_exists(obj_PlayerPAR) {
 		// HP bar
 		_y1 = _y2 + _scale_ui*0.1*sprite_get_height(spr_HPFrame);
 		_y2 = _y1 + _scale_ui*12;
-		draw_healthbar(_x1, _y1, _x2, _y2, (_p1.hp/global.armor_strength)*100, c_black, c_aqua, c_blue, 0, false, false);
+		var _hp_col1 = PlayerHpFillColors(_p1.character);
+		draw_healthbar(_x1, _y1, _x2, _y2, (_p1.hp/global.armor_strength)*100, c_black, _hp_col1[0], _hp_col1[1], 0, false, false);
 		if (hp_flash_on1 and _armor <= 0)
 			draw_healthbar(_x1, _y1, _x2, _y2, (_p1.hp/global.armor_strength)*100, c_black, c_white, c_white, 0, false, false);
 		hp_prev1 = _p1.hp;
@@ -252,7 +253,8 @@ if instance_exists(obj_PlayerPAR) {
 		// HP bar
 		_y1 = _y2 + _scale_ui*0.1*sprite_get_height(spr_HPFrame);
 		_y2 = _y1 + _scale_ui*12;
-		draw_healthbar(_x1, _y1, _x2, _y2, (_p2.hp/global.armor_strength)*100, c_black, c_lime, c_green, 0, false, false);
+		var _hp_col2 = PlayerHpFillColors(_p2.character);
+		draw_healthbar(_x1, _y1, _x2, _y2, (_p2.hp/global.armor_strength)*100, c_black, _hp_col2[0], _hp_col2[1], 0, false, false);
 		if (hp_flash_on2 and _armor <= 0)
 			draw_healthbar(_x1, _y1, _x2, _y2, (_p2.hp/global.armor_strength)*100, c_black, c_white, c_white, 0, false, false);
 		hp_prev2 = _p2.hp;

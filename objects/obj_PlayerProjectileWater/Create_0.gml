@@ -7,6 +7,7 @@ zsp = 0;
 scaling = DepthGetScale(z);
 
 target = noone;
+from_parry = false;
 target_y = -10000;
 pos_y = -10000;
 

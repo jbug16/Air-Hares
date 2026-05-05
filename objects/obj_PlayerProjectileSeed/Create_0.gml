@@ -4,6 +4,7 @@ vsp = 0;
 z = 0;
 zsp = 0;
 target = noone;
+from_parry = false;
 have_shadow = false;
 target_y = -10000;
 pos_y = -10000;

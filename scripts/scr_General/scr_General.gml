@@ -82,6 +82,7 @@ function BossIntroPrepWaveRegisterPlayerHit() {
 /// @desc Mark no-aggression medal failed if instance is player seed or water projectile
 function LevelRunRegisterAmmoAggressionIfPlayerProjectile(_inst) {
 	if (!instance_exists(_inst)) return;
+	if (variable_instance_exists(_inst, "from_parry") && _inst.from_parry) return;
 	var _oi = _inst.object_index;
 	if (_oi == obj_PlayerProjectileSeed || _oi == obj_PlayerProjectileWater) {
 		global.level_run_ammo_aggression = true;

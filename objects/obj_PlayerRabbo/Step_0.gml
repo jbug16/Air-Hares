@@ -575,6 +575,7 @@ if trig_shoot_auto {
 		var _dirs = [90, 90 + _parry_spread, 90 - _parry_spread];
 		for (var _si = 0; _si < 3; _si++) {
 			var _proj = instance_create_layer(x, y, "Top", obj_PlayerProjectileSeed);
+			_proj.from_parry = true;
 			_proj.hsp = lengthdir_x(_spd, _dirs[_si]);
 			_proj.vsp = lengthdir_y(_spd, _dirs[_si]);
 			_proj.have_shadow = true;
@@ -582,6 +583,7 @@ if trig_shoot_auto {
 		audio_play_sound(snd_ProjSeedShot, 1, false);
 	} else {
 		var _proj = instance_create_layer(x, y, "Top", obj_PlayerProjectileSeed);
+		_proj.from_parry = true;
 		_proj.vsp = -_spd;
 		_proj.have_shadow = true;
 	}

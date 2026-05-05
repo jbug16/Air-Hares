@@ -65,6 +65,21 @@ function PlayerAssignSprite(_character){
 	s_death = global.character_sprite[_character][CHARACTER_SPRITE.DEATH];
 }
 
+function PlayerCreateBossEndingProp(_player_inst) {
+	if (!instance_exists(_player_inst)) return noone;
+
+	var _prop = instance_create_layer(_player_inst.x, _player_inst.y, "Top", obj_PlayerRabboProp);
+	_prop.player = _player_inst.player;
+	_prop.character = _player_inst.character;
+	_prop.can_control = false;
+
+	with (_prop) {
+		PlayerAssignSprite(character);
+		sprite_index = s_idle;
+	}
+	return _prop;
+}
+
 function PlayerSpriteSet(s_index){
 	if (sprite_index != s_index) {
 		sprite_index = s_index;

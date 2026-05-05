@@ -49,20 +49,19 @@ switch(state) {
 			//	sprite_index = spr_HighTopIdle;
 			//	image_speed = 0;
 			//}
-			rabbo_prop = instance_create_layer(obj_PlayerRabbo.x, obj_PlayerRabbo.y, "Top", obj_PlayerRabboProp);
+			var _primary_player = noone;
+			with(obj_PlayerRabbo) if(player == 0) _primary_player = id;
+			if (!instance_exists(_primary_player)) _primary_player = instance_find(obj_PlayerRabbo, 0);
+			rabbo_prop = PlayerCreateBossEndingProp(_primary_player);
+
+			coop_prop = noone;
 			if(instance_number(obj_PlayerRabbo) > 1)
 			{
-				var _inst = noone;
-				with(obj_PlayerRabbo) if(character == CHARACTER.DIRK) _inst = id;
-				if (instance_exists(_inst)) {
-					dirk_prop = instance_create_layer(_inst.x, _inst.y, "Top", obj_PlayerRabboProp);
-					dirk_prop.character = CHARACTER.DIRK;
-					dirk_prop.can_control = false;
-					with(dirk_prop) PlayerAssignSprite(character);
-				}
+				var _coop_player = noone;
+				with(obj_PlayerRabbo) if(id != _primary_player) _coop_player = id;
+				coop_prop = PlayerCreateBossEndingProp(_coop_player);
 			}
 			instance_destroy(obj_PlayerRabbo);
-			rabbo_prop.can_control = false;
 			state = ENEMIES.PHASE_ENDING_INIT;	
 		}
 		break;
@@ -95,8 +94,8 @@ switch(state) {
 				
 				direction = 90;
 			}
-			if (instance_exists(dirk_prop)) {
-				with(dirk_prop){
+			if (instance_exists(coop_prop)) {
+				with(coop_prop){
 					TweenStart("speed", 0, 15,1.5*GAMESPD)
 					direction = 90;
 				}

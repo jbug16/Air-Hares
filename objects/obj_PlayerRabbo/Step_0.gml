@@ -131,6 +131,7 @@ if (confusion_counter > 0) confusion_counter--;
 if trig_death {
 	last_stand_revive_y = y;
 	if (has_last_stand && !last_stand_used) last_stand_mash_count = 0;
+	last_stand_revive_pending = false;
 	trig_death = false;
 	TweenStart("y", y, y + 720, 3*GAMESPD, TWEENTYPE.CUBIC_IN);
 	state = PLAYERSTATE.DEATH;
@@ -321,33 +322,47 @@ switch(state) {
 		break;
 	case PLAYERSTATE.DEATH:
 		// Captain Rabbo: mash SEED (controller A / keyboard Space) to recover once with 1 HP
-		if (has_last_stand && !last_stand_used) {
+		if (has_last_stand && !last_stand_used && !last_stand_revive_pending) {
 			if (InputGet(INPUT.SEED, true, _device)) {
 				last_stand_mash_count++;
 				if (last_stand_mash_count >= 7) {
 					last_stand_used = true;
 					last_stand_mash_count = 0;
-					hp = 1;
-					TweenStop(id, "y");
-					y = last_stand_revive_y;
-					hsp = 0;
-					state = PLAYERSTATE.IDLE;
-					hp_invincibility = 120;
-					death_counter = 180;
-					PlayerSpriteSet(s_idle);
-					image_index = 0;
-					trig_anim_end = false;
-					if (instance_exists(parry_hitbox)) {
-						instance_destroy(parry_hitbox);
-						parry_hitbox = noone;
-					}
-					audio_play_sound(snd_CarrotPickup, 1, false);
+					last_stand_revive_pending = true;
 				}
 			}
 		}
-		death_counter -= 1;
+		var _plane_out_of_frame = bbox_top > room_height + 120;
+		var _shadow_out_of_frame = true;
+		if (instance_exists(ground_shadow)) {
+			var _shadow_yscale = abs(ground_shadow.scaling * image_yscale);
+			var _shadow_top = ground_shadow.y + (sprite_get_bbox_top(sprite_index) - sprite_get_yoffset(sprite_index)) * _shadow_yscale;
+			_shadow_out_of_frame = _shadow_top > room_height;
+		}
+		if (last_stand_revive_pending && _plane_out_of_frame && _shadow_out_of_frame) {
+			last_stand_revive_pending = false;
+			hp = 1;
+			TweenStop(id, "y");
+			y = last_stand_revive_y + last_stand_revive_rise_dist;
+			TweenStart("y", y, last_stand_revive_y, last_stand_revive_rise_duration, TWEENTYPE.QUART_OUT);
+			hsp = 0;
+			state = PLAYERSTATE.IDLE;
+			alarm[2] = last_stand_revive_rise_duration;
+			hp_invincibility = 120;
+			death_counter = 180;
+			PlayerSpriteSet(s_idle);
+			image_index = 0;
+			trig_anim_end = false;
+			if (instance_exists(parry_hitbox)) {
+				instance_destroy(parry_hitbox);
+				parry_hitbox = noone;
+			}
+			audio_play_sound(snd_CarrotPickup, 1, false);
+		}
+		_key_space_p = false;
+		if (state == PLAYERSTATE.DEATH && !last_stand_revive_pending) death_counter -= 1;
 
-		if death_counter <= 0 {
+		if (state == PLAYERSTATE.DEATH && death_counter <= 0) {
 			obj_ControllerPAR.multiplayer_status[player][MPPROP.COOLDOWN] = 600; // Cooldown for 10 seconds
 			instance_destroy();
 		}

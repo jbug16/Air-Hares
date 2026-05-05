@@ -20,4 +20,4 @@ music_bg = audio_play_sound(snd_FalconWaves, 1, true); // current backtrack
 boss_card = false; // flag if showing boss card
 card_x = room_width + 0.51*sprite_get_width(spr_CardBossCloud);
 
-dirk_prop = noone;
+coop_prop = noone;

@@ -29,6 +29,29 @@ if (view_shake_duration > 0) {
 
 // When no player alive, show tips then restart or go to stage
 var _player_alive = instance_number(obj_PlayerPAR) + instance_number(obj_PlayerRabboSpawner);
+if (keyboard_check_pressed(vk_f2) && !PlayerCheckAlive(1) && PlayerCheckAlive(0) && !global.pause_coop_portrait_select && !instance_exists(obj_EndLevelPAR)) {
+	global.character_selected[1] = CHARACTER.LINNIE;
+	global.control_device[1] = 99; // Invalid gamepad slot keeps debug P2 idle.
+
+	var _p2 = instance_create_layer(960, 608, "Instances", obj_PlayerRabbo);
+	_p2.player = 1;
+	_p2.character = CHARACTER.LINNIE;
+	_p2.can_control = false;
+
+	with (_p2) {
+		PlayerAssignSprite(character);
+		PlayerApplyCharacterStats();
+	}
+
+	multiplayer_status[1][MPPROP.JOINED] = true;
+	if (global.game_mode == GAMEMODE.STORY && global.story_run_active) {
+		global.story_run_ever_coop = true;
+		StoryRunSave();
+	}
+
+	_player_alive += 1;
+}
+
 if _player_alive == 0 {
 		if (!level_completed) 
 		{

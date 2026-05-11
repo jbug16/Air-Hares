@@ -42,7 +42,7 @@ if (room == rm_LevelX1Farm) switch (state)
 			state++;
 			//event_user(2);
 		}
-		else if (!instance_exists(obj_EnemyPAR) and !instance_exists(obj_EnemyFalconSpawnerPAR)) event_user(0);	// spawn enemy
+		else if (!StoryPeacefulIntroFarmActive() && !instance_exists(obj_EnemyPAR) and !instance_exists(obj_EnemyFalconSpawnerPAR)) event_user(0);	// spawn enemy
 	break;
 	
 	case LVLFARM.POND1_SPAWN:
@@ -56,7 +56,7 @@ if (room == rm_LevelX1Farm) switch (state)
 			{
 				if (bbox_bottom <= 0.8*room_height) _can_spawn = false;
 			}
-			if (_can_spawn) event_user(0);
+			if (_can_spawn && !StoryPeacefulIntroFarmActive()) event_user(0);
 			break;
 		}
 		// Pond spawn + formation
@@ -64,8 +64,10 @@ if (room == rm_LevelX1Farm) switch (state)
 		with (obj_LevelTile) if (sprite_index == spr_BgPond) _can_next = true;
 		if (_can_next) 
 		{
-			alarm[11] = (3/global.speed_parallax)*formation_spawn_delay;		// spawn enemy formation
-			enemy_can_spawn = 0;
+			if (!StoryPeacefulIntroFarmActive()) {
+				alarm[11] = (3/global.speed_parallax)*formation_spawn_delay;		// spawn enemy formation
+				enemy_can_spawn = 0;
+			}
 			state++;
 		}
 	break;
@@ -115,41 +117,50 @@ if (room == rm_LevelX1Farm) switch (state)
 		if (obj_GUIScreenCloseLeft.x != 640) break;
 		// Save progress (only after success — END branch uses same crop threshold for fail UI)
 		state++;
+		var _peace = StoryPeacefulIntroFarmActive();
 		var _level_index = clamp(global.current_level, 0, 15);
 		MissionAchPopupClearFlags();
 		var _ach_save = false;
 		// Story or arcade: medals only count after passing the level (same threshold as mission success UI).
 		var _level_passed = crops_filled >= 0.6 * crops_available;
-		MissionRunMedalSet(
-			_level_passed && (crops_filled >= crops_available),
-			_level_passed && !global.level_run_any_hp_damage,
-			_level_passed && !global.level_run_ammo_aggression
-		);
-		if (_level_passed) {
-			if (crops_filled >= crops_available) {
-				_ach_save = AchievementMarkUnlocked("farm100", _level_index, "(" + string(crops_filled) + "/" + string(crops_available) + " crops)") || _ach_save;
+		if (!_peace) {
+			MissionRunMedalSet(
+				_level_passed && (crops_filled >= crops_available),
+				_level_passed && !global.level_run_any_hp_damage,
+				_level_passed && !global.level_run_ammo_aggression
+			);
+			if (_level_passed) {
+				if (crops_filled >= crops_available) {
+					_ach_save = AchievementMarkUnlocked("farm100", _level_index, "(" + string(crops_filled) + "/" + string(crops_available) + " crops)") || _ach_save;
+				}
+				if (!global.level_run_any_hp_damage) {
+					_ach_save = AchievementMarkUnlocked("no_damage", _level_index, "(farm clear)") || _ach_save;
+				}
+				if (!global.level_run_ammo_aggression) {
+					_ach_save = AchievementMarkUnlocked("no_aggression", _level_index, "(farm clear)") || _ach_save;
+				}
+			} else {
+				show_debug_message("[Medal] Level not passed — no medals awarded this run (" + string(crops_filled) + " / " + string(crops_available) + " crops).");
 			}
-			if (!global.level_run_any_hp_damage) {
-				_ach_save = AchievementMarkUnlocked("no_damage", _level_index, "(farm clear)") || _ach_save;
+			if (_ach_save) AchievementFarm100Save();
+			if (_level_passed && crops_filled < crops_available) {
+				show_debug_message("[Medal] Farm 100% not achieved this run (" + string(crops_filled) + " / " + string(crops_available) + " crops).");
 			}
-			if (!global.level_run_ammo_aggression) {
-				_ach_save = AchievementMarkUnlocked("no_aggression", _level_index, "(farm clear)") || _ach_save;
+			if (_level_passed && global.level_run_any_hp_damage) {
+				show_debug_message("[Medal] No-damage not awarded this run (took HP damage).");
 			}
-		} else {
-			show_debug_message("[Medal] Level not passed — no medals awarded this run (" + string(crops_filled) + " / " + string(crops_available) + " crops).");
+			if (_level_passed && global.level_run_ammo_aggression) {
+				show_debug_message("[Medal] No-aggression not awarded this run (used ammo on enemies).");
+			}
 		}
-		if (_ach_save) AchievementFarm100Save();
-		if (_level_passed && crops_filled < crops_available) {
-			show_debug_message("[Medal] Farm 100% not achieved this run (" + string(crops_filled) + " / " + string(crops_available) + " crops).");
-		}
-		if (_level_passed && global.level_run_any_hp_damage) {
-			show_debug_message("[Medal] No-damage not awarded this run (took HP damage).");
-		}
-		if (_level_passed && global.level_run_ammo_aggression) {
-			show_debug_message("[Medal] No-aggression not awarded this run (used ammo on enemies).");
-		}
-		if (global.game_mode == GAMEMODE.STORY && crops_filled >= 0.6 * crops_available) {
+		if (global.game_mode == GAMEMODE.STORY && crops_filled >= 0.6 * crops_available && !_peace && !global.options_peaceful_practice) {
 			AdvanceLevel();
+		}
+		if (_peace && _level_passed) {
+			global.score_base = 0;
+			global.score_current = 0;
+			global.combos_count = 0;
+			global.combos_multiplier = 1;
 		}
 	break;
 	
@@ -157,11 +168,19 @@ if (room == rm_LevelX1Farm) switch (state)
 		// Create the mission complete, score, restart button
 		if(crops_filled >= 0.6*crops_available)
 		{
-			with (instance_create_layer(room_width/2, 152, "GUI_Top", obj_GUIMissionAccomplished)) depth -= 1;
-			with instance_create_layer(room_width/2, room_height/2 + 64, "GUI_Top", obj_GUIMissionAccomplishedScore)
-			{
+			with (instance_create_layer(room_width/2, 152, "GUI_Top", obj_GUIMissionAccomplished)) {
 				depth -= 1;
-				crops_filled = string(100*other.crops_filled/other.crops_available);
+				if (StoryPeacefulIntroFarmActive()) {
+					peaceful_intro_summary = true;
+					crops_pct_display = string(100*other.crops_filled/other.crops_available);
+				}
+			}
+			if (!StoryPeacefulIntroFarmActive()) {
+				with instance_create_layer(room_width/2, room_height/2 + 64, "GUI_Top", obj_GUIMissionAccomplishedScore)
+				{
+					depth -= 1;
+					crops_filled = string(100*other.crops_filled/other.crops_available);
+				}
 			}
 			with instance_create_layer(room_width*0.1, room_height*0.9, "GUI_Top", obj_EndLevelRestart) depth -= 1;
 			// Buttons - other (menu/next)
@@ -171,7 +190,7 @@ if (room == rm_LevelX1Farm) switch (state)
 				with instance_create_layer(room_width*0.9, room_height*0.9, "GUI_Top", obj_EndLevelNext) depth -= 1;
 			}
 			else with instance_create_layer(room_width*0.9, room_height*0.9, "GUI_Top", obj_EndLevelMenu) depth -= 1;
-			}	
+		}
 		// Not enough crops filled, mission failed
 		else
 		{

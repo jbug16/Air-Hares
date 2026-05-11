@@ -31,6 +31,7 @@ if (global.story_popup_screen == 1) {
 	global.lives = 4;
 	global.story_mode_progress = 0;
 	global.current_level = 0;
+	global.story_peaceful_intro_farm = true;
 	StoryProgressSave();
 	StoryRunStartNew();
 	
@@ -50,6 +51,7 @@ if (global.story_popup_screen == 1) {
 	}
 	
 	// Match Options > Tutorial: freeze main menu so clicks/keys do not hit title buttons under the slides
+	global.tutorial_from_options = false;
 	with (all) {
 		if (!persistent) instance_deactivate_object(id);
 	}

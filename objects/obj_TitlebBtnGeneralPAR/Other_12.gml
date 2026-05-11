@@ -1,5 +1,5 @@
 /// @desc Button unhovered
-if (parent_index != obj_EndLevelPAR)
+if (parent_index != obj_EndLevelPAR && parent_index != obj_PreScreenTutorialBtnPAR)
 if !(parent_index == obj_TitlebBtnGeneralPAR and !mode_on or parent_index == obj_ModesBtnPAR and mode_on) exit;
 
 focus = false;

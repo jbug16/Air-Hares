@@ -1,4 +1,5 @@
 ///@desc Spawn normal enemy (1)
+if (StoryPeacefulIntroFarmActive()) exit;
 if (alarm[10] > 0 or instance_exists(obj_EndShrine)) exit;
 if (enemy_can_spawn) 
 {

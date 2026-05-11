@@ -2,6 +2,8 @@
 // Inherit the parent event
 event_inherited();
 
+global.story_peaceful_intro_farm = false;
+
 // If menu after bossfight - first cutscene, then menu
 if(instance_exists(obj_ControllerFightBoss1_3))
 {
@@ -37,4 +39,5 @@ global.story_popup_screen = 0;
 global.arcade_new_initials = "";
 global.story_new_initials = "";
 
+OptionsPeacefulPracticeAbortToMenu();
 TransitionGoto(rm_MainMenu);

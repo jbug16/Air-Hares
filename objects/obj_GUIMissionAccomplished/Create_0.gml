@@ -1,4 +1,6 @@
 /// @desc
+peaceful_intro_summary = false;
+crops_pct_display = "";
 text = "MISSION ACCOMPLISHED";
 color = c_white;
 font = fnt_Federo16;

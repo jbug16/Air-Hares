@@ -98,6 +98,13 @@ function EraseAllSavedData() {
 	global.currency_feather_twinhorn = 0;
 	
 	global.story_mode_progress = 0;
+	global.story_peaceful_intro_farm = false;
+	global.tutorial_from_options = false;
+	global.options_peaceful_practice = false;
+	global.peaceful_practice_saved_level = 0;
+	global.peaceful_practice_saved_progress = 0;
+	global.main_menu_open_options = false;
+	global.main_menu_open_options_tutorial_fade = false;
 	global.arcade_max_unlocked = 16;
 	global.player_initials = "---";
 	global.story_new_initials = "";

@@ -16,7 +16,10 @@ formation_type = formation_type[global.current_level mod 4];
 enemy_spawn_delay = 1.5*GAMESPD;	// how much the delay will be at 75 speed - at 300 speed it will be almost 0
 enemy_can_spawn = 1;		// just a help var
 formation_spawn_delay = GAMESPD*2.2;	// so the pond tile is shown a bit before they appear
-alarm[10] = GAMESPD*4.5;	// initial enemy spawn delay (only on level start)
+if (StoryPeacefulIntroFarmActive()) {
+	enemy_can_spawn = 0;
+	alarm[10] = -1;
+} else alarm[10] = GAMESPD*4.5;	// initial enemy spawn delay (only on level start)
 
 // Opening black screens ('curtains')
 instance_create_layer(640, 0, "GUI_Top", obj_GUIScreenOpenLeft);

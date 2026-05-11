@@ -5,6 +5,7 @@ SFX Slider
 Music Slider
 Graphics
 Tutorial
+Squadron
 Achievements
 Leaderboards
 Saves
@@ -28,11 +29,12 @@ menu[1] = "Music Volume";
 menu[2] = "SFX Volume";
 menu[3] = "Graphics";
 menu[4] = "Tutorial";
-menu[5] = "Achievements";
-menu[6] = "Leaderboards";
-menu[7] = "Saves";
-menu[8] = "Credits";
-menu[9] = "Back";
+menu[5] = "Squadron";
+menu[6] = "Achievements";
+menu[7] = "Leaderboards";
+menu[8] = "Saves";
+menu[9] = "Credits";
+menu[10] = "Back";
 
 menu_status[0] = "";
 menu_status[1] = string(round(global.options_music * 100));
@@ -44,6 +46,7 @@ menu_status[6] = "";
 menu_status[7] = "";
 menu_status[8] = "";
 menu_status[9] = "";
+menu_status[10] = "";
 
 menu_count = array_length(menu);
 

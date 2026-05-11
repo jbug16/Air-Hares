@@ -182,6 +182,7 @@ function GetAmmo(){
 
 // Add combos. Return applied score
 function CombosAddHit(_score_add){
+	if (StoryPeacefulIntroFarmActive()) return 0;
 	// Apply hit to current combos
 	global.combos_count += 1;
 	// Apply multiplier
@@ -218,6 +219,7 @@ function CombosAddHit(_score_add){
 
 // Add combos. Return applied score
 function CombosAddHitNoMultiply(_score_add){
+	if (StoryPeacefulIntroFarmActive()) return 0;
 	// Apply hit to current combos
 
 	// Apply to score
@@ -250,6 +252,7 @@ function CombosAddHitNoMultiply(_score_add){
 
 // Reset comboss.
 function CombosAddMiss(_score_add){
+	if (StoryPeacefulIntroFarmActive()) return 0;
 	// Apply miss to current combos
 	global.combos_count = 0;
 	// Reset multiplier

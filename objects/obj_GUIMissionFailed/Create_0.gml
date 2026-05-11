@@ -54,3 +54,5 @@ display_score_total = 0;
 display_highscore = 0;
 
 TweenStart("txt_yscale", 0, 1, 0.5*GAMESPD, TWEENTYPE.QUAD_OUT);
+
+peaceful_intro_mission = StoryPeacefulIntroFarmActive();

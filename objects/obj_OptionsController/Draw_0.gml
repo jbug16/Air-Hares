@@ -1,6 +1,6 @@
 /// @desc
 draw_set_color(c_white);
-draw_set_font(fnt_Federo37);
+draw_set_font(fnt_Federo30);
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
 
@@ -11,11 +11,11 @@ if (in_controls) _x_left = room_width*0.1;
 
 var _oa = image_alpha;
 // Main options / graphics / saves column — below obj_OptionsTitle (logo); tighter than 0.3*rh
-var _opts_menu_y0 = max(room_height * 0.18, 128);
-var _opts_line = 52;
-// Main 10-row list: same small gap after Graphics and after Credits
+var _opts_menu_y0 = max(room_height * 0.17, 120);
+var _opts_line = 44;
+// Main 11-row list: same small gap after Graphics and after Credits
 var _opts_gap_block = _opts_line * 0.5;
-var _opts_grouped_main = (array_length(menu) == 10);
+var _opts_grouped_main = (array_length(menu) == 11);
 
 // Draw options
 if menu_draw and !in_controls and !in_leaderboards and !in_achievements and !in_saves {
@@ -30,7 +30,7 @@ if menu_draw and !in_controls and !in_leaderboards and !in_achievements and !in_
 		var _yy = _opts_menu_y0 + _opts_line * i;
 		if (_opts_grouped_main) {
 			if (i >= 4) _yy += _opts_gap_block;
-			if (i >= 9) _yy += _opts_gap_block;
+			if (i >= 10) _yy += _opts_gap_block;
 		}
 		
 		// Draw menu		
@@ -197,9 +197,9 @@ else if(menu_draw and in_saves)
 		else
 			draw_set_color(c_white);
 		draw_set_halign(fa_left);
-		draw_text_transformed(_x_left, _opts_menu_y0 + (52 * i), menu[i], image_xscale, image_yscale, image_angle);
+		draw_text_transformed(_x_left, _opts_menu_y0 + (_opts_line * i), menu[i], image_xscale, image_yscale, image_angle);
 		draw_set_halign(fa_right);
-		draw_text_transformed(room_width * 0.8, _opts_menu_y0 + (52 * i), menu_status[i], image_xscale, image_yscale, image_angle);
+		draw_text_transformed(room_width * 0.8, _opts_menu_y0 + (_opts_line * i), menu_status[i], image_xscale, image_yscale, image_angle);
 		draw_set_alpha(_oa);
 	}
 }

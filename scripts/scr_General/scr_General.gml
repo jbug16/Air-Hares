@@ -380,6 +380,98 @@ function ArcadePopupExitInitialsScreen() {
 	ArcadePopupFocusPlayButton();
 }
 
+/// @desc First farm mission after story tutorial: teach crops only (no falcons, score, or medals).
+function StoryPeacefulIntroFarmActive() {
+	return global.game_mode == GAMEMODE.STORY && global.story_peaceful_intro_farm;
+}
+
+/// @desc Leaving options tutorial practice mid-run or via Main Menu: restore story indices and reopen Options.
+function OptionsPeacefulPracticeAbortToMenu() {
+	if (!global.options_peaceful_practice) return;
+	global.current_level = global.peaceful_practice_saved_level;
+	global.story_mode_progress = global.peaceful_practice_saved_progress;
+	global.options_peaceful_practice = false;
+	global.story_peaceful_intro_farm = false;
+	global.main_menu_open_options = true;
+}
+
+/// @desc Options practice: SKIP on pre-screen — same return as finishing tutorial cards (fade into Options), not Title Back.
+function OptionsPeacefulPracticeAbortFromPreScreenSkip() {
+	if (!global.options_peaceful_practice) return;
+	global.current_level = global.peaceful_practice_saved_level;
+	global.story_mode_progress = global.peaceful_practice_saved_progress;
+	global.options_peaceful_practice = false;
+	global.story_peaceful_intro_farm = false;
+	global.main_menu_open_options_tutorial_fade = true;
+}
+
+/// @desc Match obj_Tutorial/Other_11 when reopening Options on rm_MainMenu (dim title, fade in Options UI).
+function MainMenuOpenOptionsWithTutorialFade() {
+	with (all) {
+		if (!persistent) instance_deactivate_object(id);
+	}
+	layer_set_visible("Background_Options", true);
+	// Match obj_Tutorial Create: tutorial_exit_fade_dur = 1 * GAMESPD
+	var _in_d = ceil(1 * GAMESPD);
+	var _oc = instance_create_layer(0.3 * room_width, 0.5 * room_height, "Instances", obj_OptionsController);
+	with (_oc) {
+		image_alpha = 0;
+		TweenStart("image_alpha", 0, 1, _in_d, TWEENTYPE.LINEAR);
+	}
+	var _ot = instance_create_layer(0.5 * room_width, 0.1 * room_height, "Instances", obj_OptionsTitle);
+	with (_ot) {
+		image_alpha = 0;
+		TweenStart("image_alpha", 0, 1, _in_d, TWEENTYPE.LINEAR);
+	}
+}
+
+/// @param _skip_peaceful_tutorial true = SKIP (normal combat 1-1); false = PLAY tutorial farm
+function PreScreenBeginLevelFromChoice(_skip_peaceful_tutorial) {
+	if (_skip_peaceful_tutorial) global.story_peaceful_intro_farm = false;
+	with (obj_PreScreen) {
+		if (room == rm_LevelX1Farm) instance_create_layer(0, 0, layer, obj_ControllerFarm);
+		else if (room == rm_Level1_3FightBoss) instance_create_layer(0, 0, layer, obj_ControllerFightBoss1_3);
+		else if (room == rm_Level2_3FightBoss) instance_create_layer(0, 0, layer, obj_ControllerFightBoss2_3);
+		else if (room == rm_Level3_3FightBoss) instance_create_layer(0, 0, layer, obj_ControllerFightBoss3_3);
+		else if (room == rm_Level4_3FightBoss) instance_create_layer(0, 0, layer, obj_ControllerFightBoss4_3);
+		if (room != rm_Level4_3FightBoss) instance_create_layer(0, 0, "Top_Weather", obj_WindParticles);
+		instance_create_layer(x, 608, "Instances", obj_PlayerRabboSpawner);
+		LevelRunMedalsReset();
+		instance_destroy();
+	}
+}
+
+/// @desc After tutorial PLAY/SKIP: PLAY = fade out then peaceful farm; SKIP = normal pre-screen patrol + real 1-1 (options practice SKIP = same return as tutorial cards → Options).
+function PreScreenArmDelayedStart(_clear_peaceful_first) {
+	if (_clear_peaceful_first && global.options_peaceful_practice) {
+		OptionsPeacefulPracticeAbortFromPreScreenSkip();
+		with (obj_PreScreenTutorialBtnPlay) instance_destroy();
+		with (obj_PreScreenTutorialBtnSkip) instance_destroy();
+		with (obj_PreScreen) instance_destroy();
+		room_goto(rm_MainMenu);
+		return;
+	}
+	if (_clear_peaceful_first) global.story_peaceful_intro_farm = false;
+	with (obj_PreScreen) {
+		wait_tutorial_choice = false;
+		if (_clear_peaceful_first) {
+			txt = global.story_mode_level[global.current_level][STORYPROP.NAME];
+		}
+		with (obj_PreScreenTutorialBtnPlay) instance_destroy();
+		with (obj_PreScreenTutorialBtnSkip) instance_destroy();
+		TweenStop(id, "image_alpha");
+		if (_clear_peaceful_first) {
+			alarm[0] = fade_len;
+			image_alpha = 0;
+			TweenStart("image_alpha", 0, 1, fade_len / 2, TWEENTYPE.SINE_OUT, 0, TWEENREPEAT.PATROL, 2);
+		} else {
+			var _fade_out = ceil(fade_len / 2);
+			TweenStart("image_alpha", image_alpha, 0, _fade_out, TWEENTYPE.SINE_OUT, 0, TWEENREPEAT.RETWEEN, 1);
+			alarm[0] = _fade_out;
+		}
+	}
+}
+
 // Advance level, save progress.
 function AdvanceLevel() {
 	// Increment current level

@@ -1,4 +1,6 @@
 /// @desc
+if (peaceful_intro_mission) exit;
+
 if (txt_yscale >= 1) {
 	display_score = lerp(display_score, score_base, 0.07);
 	text = string(round(display_score));

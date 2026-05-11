@@ -175,21 +175,21 @@ if(in_achievements or in_leaderboards)
 if(mouse_prev_x != mouse_x or mouse_prev_y != mouse_y)
 {
 	var _x_left = room_width * 0.2; //position of the text
-	var _y_start = max(room_height * 0.18, 128);
-	var _row = in_controls ? 45 : 52;
+	var _y_start = max(room_height * 0.17, 120);
+	var _row = in_controls ? 45 : 44;
 	if (in_controls)
 	{
 		_x_left = room_width*0.07;
 		_y_start = room_height*0.24;
 	}
-	var _grouped_opts = (!in_controls && !in_saves && array_length(menu) == 10);
-	var _g_blk = 52 * 0.5;
+	var _grouped_opts = (!in_controls && !in_saves && array_length(menu) == 11);
+	var _g_blk = _row * 0.5;
 	for(var _i = 0; _i < array_length(menu); _i++)
 	{
 		var _yy = _y_start + _row * _i;
 		if (_grouped_opts) {
 			if (_i >= 4) _yy += _g_blk;
-			if (_i >= 9) _yy += _g_blk;
+			if (_i >= 10) _yy += _g_blk;
 		}
 		if(point_in_rectangle(mouse_x, mouse_y, _x_left, _yy - 0.03*room_height,
 			_x_left + string_width(menu[_i]), _yy + 0.03*room_height))
@@ -222,21 +222,21 @@ if(mouse_prev_x != mouse_x or mouse_prev_y != mouse_y)
 else
 {
 	var _x_left = room_width * 0.2; //position of the text
-	var _y_start = max(room_height * 0.18, 128);
-	var _row = in_controls ? 45 : 52;
+	var _y_start = max(room_height * 0.17, 120);
+	var _row = in_controls ? 45 : 44;
 	if (in_controls)
 	{
 		_x_left = room_width*0.07;
 		_y_start = room_height*0.24;
 	}
-	var _grouped_opts = (!in_controls && !in_saves && array_length(menu) == 10);
-	var _g_blk = 52 * 0.5;
+	var _grouped_opts = (!in_controls && !in_saves && array_length(menu) == 11);
+	var _g_blk = _row * 0.5;
 	for(var _i = 0; _i < array_length(menu); _i++)
 	{
 		var _yy = _y_start + _row * _i;
 		if (_grouped_opts) {
 			if (_i >= 4) _yy += _g_blk;
-			if (_i >= 9) _yy += _g_blk;
+			if (_i >= 10) _yy += _g_blk;
 		}
 		if(point_in_rectangle(mouse_x, mouse_y, _x_left, _yy - 0.03*room_height,
 			_x_left + string_width(menu[_i]), _yy + 0.03*room_height))

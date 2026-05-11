@@ -24,6 +24,16 @@ global.arcade_max_unlocked = 0;	// Max level  ever unlocked for arcade (never de
 // Main-menu Story popup: 0 = Continue/New/Back, 1 = New Story Game (initials + Continue/Back)
 global.story_popup_screen = 0;
 global.story_new_initials = "";
+// After New Story + tutorial: first 1-1 farm with no enemies/score/medals; then real 1-1.
+global.story_peaceful_intro_farm = false;
+// Options → Tutorial slideshow → peaceful farm practice (does not change story progress).
+global.tutorial_from_options = false;
+global.options_peaceful_practice = false;
+global.peaceful_practice_saved_level = 0;
+global.peaceful_practice_saved_progress = 0;
+global.main_menu_open_options = false;
+// After practice skip pre-screen: open Options with same fade as obj_Tutorial → Options (not instant TitleBtnOptions path).
+global.main_menu_open_options_tutorial_fade = false;
 // Arcade level popup: 0 = level + Play/Back, 1 = initials + Continue/Back
 global.arcade_popup_screen = 0;
 global.arcade_new_initials = "";

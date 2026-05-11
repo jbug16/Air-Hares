@@ -111,6 +111,7 @@ switch(menu_selected)
 	case 4:
 		if(menu[4] == "Tutorial")
 		{
+			global.tutorial_from_options = true;
 			instance_create_depth(0.5*room_width, 0.5*room_height, depth - 100, obj_Tutorial);
 			instance_deactivate_object(id);
 			instance_deactivate_object(obj_OptionsTitle);
@@ -118,7 +119,16 @@ switch(menu_selected)
 		break;
 	
 	case 5:
-		if(menu[5] == "Achievements")
+		if(menu[5] == "Squadron")
+		{
+			instance_create_depth(0.5*room_width, 0.5*room_height, depth - 100, obj_Lore);
+			instance_deactivate_object(id);
+			instance_deactivate_object(obj_OptionsTitle);
+		}
+		break;
+	
+	case 6:
+		if(menu[6] == "Achievements")
 		{
 			in_achievements = true;
 			menu_selected = 0;
@@ -126,8 +136,8 @@ switch(menu_selected)
 		}
 		break;
 		
-	case 6:
-		if(menu[6] == "Leaderboards")
+	case 7:
+		if(menu[7] == "Leaderboards")
 		{
 			in_leaderboards = true;
 			menu_selected = 0;
@@ -135,8 +145,8 @@ switch(menu_selected)
 		}
 		break;
 	
-	case 7:
-		if(menu[7] == "Saves")
+	case 8:
+		if(menu[8] == "Saves")
 		{
 			in_saves = true;
 			menu_selected = 1;
@@ -144,8 +154,8 @@ switch(menu_selected)
 		}
 		break;
 	
-	case 8:
-		if(menu[8] == "Credits")
+	case 9:
+		if(menu[9] == "Credits")
 		{
 			with(instance_create_depth(0.5*room_width, 0.5*room_height, depth - 100, obj_Credits)) 
 			{
@@ -157,11 +167,11 @@ switch(menu_selected)
 		}
 		break;
 		
-	case 9:
-		if(menu[9] == "Back" or menu[9] == "Back") event_user(2);
+	case 10:
+		if(menu[10] == "Back" or menu[10] == "Back") event_user(2);
 		break;
 	
-	case 10:
+	case 11:
 		event_user(2);
 		break;
 	

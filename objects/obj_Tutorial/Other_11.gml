@@ -1,5 +1,17 @@
 /// @desc After slides end
 
+if (global.tutorial_from_options) {
+	global.tutorial_from_options = false;
+	global.options_peaceful_practice = true;
+	global.peaceful_practice_saved_level = global.current_level;
+	global.peaceful_practice_saved_progress = global.story_mode_progress;
+	global.current_level = 0;
+	global.story_peaceful_intro_farm = true;
+	instance_destroy();
+	room_goto(rm_LevelX1Farm);
+	exit;
+}
+
 instance_activate_object(obj_OptionsController);
 instance_activate_object(obj_OptionsTitle);
 

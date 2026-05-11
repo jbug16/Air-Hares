@@ -58,7 +58,7 @@ if _player_alive == 0 {
 			// Only decrement and transition once per death (transition is async; this Step runs every frame until room changes)
 			if (!global.death_transition_triggered) {
 				global.death_transition_triggered = true;
-				if (global.game_mode == GAMEMODE.STORY)
+				if (global.game_mode == GAMEMODE.STORY && !StoryPeacefulIntroFarmActive())
 					global.lives--;
 				global.tips_return_room = room;
 				global.tips_skip_music = false;  // Death - music should play

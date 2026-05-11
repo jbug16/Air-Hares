@@ -44,11 +44,13 @@ if (_line_complete)
 	}
 		
 	// Add score by 1000 on completed line
-	with (instance_create_layer(x + 50, y, "GUI", obj_GUITextFlying))
-	{
-		z = 100;
-		text = "+1000";
+	if (!StoryPeacefulIntroFarmActive()) {
+		with (instance_create_layer(x + 50, y, "GUI", obj_GUITextFlying))
+		{
+			z = 100;
+			text = "+1000";
+		}
+		global.score_base += 1000;
 	}
-	global.score_base += 1000;
 	audio_play_sound(snd_FarmTransform, 1, false);	// sfx
 }

@@ -34,9 +34,10 @@ var _throttle = round(global.speed_parallax * 100);
 DrawText3(640,  gui_text_anchor_y + 40*_scale, string(_throttle) + " kts", fa_center, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
 
 // Story: level score on same row as lives/combo; cumulative run total drawn on the line below
+var _peace_intro = StoryPeacefulIntroFarmActive();
 var _sc_round = round(global.score_current);
 var _score_level = string(_sc_round);
-var _score_cumulative = (global.game_mode == GAMEMODE.STORY)
+var _score_cumulative = (!_peace_intro && global.game_mode == GAMEMODE.STORY)
 	? string(global.story_run_score_cumulative + _sc_round)
 	: "";
 draw_set_font(fnt_Federo24);
@@ -86,14 +87,18 @@ if instance_exists(obj_PlayerPAR) {
 		draw_sprite_ext(spr_PlayerIcon, 0, _x1, _y1, _scale_ui, _scale_ui, 0, c_white, 0.8);
 		
 		// Draw current lives
-		DrawText3(gui_text_anchor_x + 10, gui_text_anchor_y + _scale_ui*114, string(p1_lives) + "x", fa_left, 
-			fa_middle, c_white,fnt_Federo24, -1, 5000, 0, _scale);
+		if (!StoryPeacefulIntroFarmActive()) {
+			DrawText3(gui_text_anchor_x + 10, gui_text_anchor_y + _scale_ui*114, string(p1_lives) + "x", fa_left, 
+				fa_middle, c_white,fnt_Federo24, -1, 5000, 0, _scale);
+		}
 		
 		// draw combo multiplier
 		var _x_pos= _x1 + _scale_ui*0.5*sprite_get_width(spr_PlayerIcon) + _scale_ui*0.5*sprite_get_width(spr_HPFrame);
 		 _x_pos -= _scale_ui*0.36*sprite_get_width(spr_HPFrame);
-		DrawText3(_x_pos, gui_text_anchor_y + _scale_ui*114, "x" + string(global.combos_multiplier), fa_left, 
-			fa_middle, c_white,fnt_Federo24, -1, 5000, 0, _scale_combo);
+		if (!_peace_intro) {
+			DrawText3(_x_pos, gui_text_anchor_y + _scale_ui*114, "x" + string(global.combos_multiplier), fa_left, 
+				fa_middle, c_white,fnt_Federo24, -1, 5000, 0, _scale_combo);
+		}
 		//DrawText3(gui_text_anchor_x + 50, gui_text_anchor_y + _scale*114, "x" + string(global.combos_multiplier), fa_left, 
 		//	fa_middle, c_white,fnt_Federo24, -1, 5000, 0, _scale_combo);
 		
@@ -104,9 +109,11 @@ if instance_exists(obj_PlayerPAR) {
 		// Draw the score (below 1st player)
 		_x_pos += 60; //_scale*0.5*sprite_get_width(spr_PlayerIcon) + _scale*0.5*sprite_get_width(spr_HPFrame);
 		var _y_score = gui_text_anchor_y + _scale_ui*114;
-		DrawText3(_x_pos, _y_score, _score_level, fa_left, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
-		if (_score_cumulative != "") {
-			DrawText3(_x_pos, _y_score + _score_line_step, _score_cumulative, fa_left, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
+		if (!_peace_intro) {
+			DrawText3(_x_pos, _y_score, _score_level, fa_left, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
+			if (_score_cumulative != "") {
+				DrawText3(_x_pos, _y_score + _score_line_step, _score_cumulative, fa_left, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
+			}
 		}
 		//DrawText3(_x1 - _scale*0.4*sprite_get_width(spr_HPFrame)+ 5, gui_text_anchor_y + _scale*114, 
 		//	round(global.score_current), fa_left, fa_middle, c_white,fnt_Federo24, -1, 5000, 0, _scale)
@@ -158,8 +165,8 @@ if instance_exists(obj_PlayerPAR) {
 			draw_healthbar(_x1, _y1, _x2, _y2, (_p1.hp/global.armor_strength)*100, c_black, c_white, c_white, 0, false, false);
 		hp_prev1 = _p1.hp;
 		
-		// Draw target icon when toggle is on (aim_at_crops)
-		if (_p1.aim_at_crops) {
+		// Draw target icon when toggle is on (aim_at_crops) — hidden on peaceful intro (no falcons)
+		if (_p1.aim_at_crops && !_peace_intro) {
 			var _tix1 = TargetReticleSpriteIndex(0, _aim_target_shared);
 			draw_sprite_ext(spr_Targets, _tix1, gui_text_anchor_x + 23, gui_text_anchor_y + _scale_ui*114 + 35, 0.20, 0.20, 0, 
 			c_white, 1);
@@ -187,14 +194,18 @@ if instance_exists(obj_PlayerPAR) {
 		draw_sprite_ext(spr_PlayerIcon, _p2_gui_frame, _x1, _y1, _scale_ui, _scale_ui, 0, c_white, 0.8);
 		
 		// Draw lives
-		DrawText3(_x1 - _scale_ui*20, gui_text_anchor_y + _scale_ui*114, string(p1_lives) + "x", fa_left, 
-			fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
+		if (!StoryPeacefulIntroFarmActive()) {
+			DrawText3(_x1 - _scale_ui*20, gui_text_anchor_y + _scale_ui*114, string(p1_lives) + "x", fa_left, 
+				fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
+		}
 		
 		// draw combo multiplier
 		var _x_pos = _x1 - _scale_ui*0.5*sprite_get_width(spr_PlayerIcon) + _scale_ui*0.5*sprite_get_width(spr_HPFrame);
 		_x_pos -= 0.96*sprite_get_width(spr_HPFrame);
-		DrawText3(_x_pos, gui_text_anchor_y + _scale_ui*114, "x" + string(global.combos_multiplier), fa_left, 
-			fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale_combo);
+		if (!_peace_intro) {
+			DrawText3(_x_pos, gui_text_anchor_y + _scale_ui*114, "x" + string(global.combos_multiplier), fa_left, 
+				fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale_combo);
+		}
 		//DrawText3(_x1 - _scale*20, gui_text_anchor_y + _scale*114, "x" + string(global.combos_multiplier), fa_left, 
 		//	fa_middle, c_whi
 		
@@ -205,9 +216,11 @@ if instance_exists(obj_PlayerPAR) {
 		// draw score below 2nd player as well
 		_x_pos += 60;
 		var _y_score2 = gui_text_anchor_y + _scale_ui*114;
-		DrawText3(_x_pos, _y_score2, _score_level, fa_left, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
-		if (_score_cumulative != "") {
-			DrawText3(_x_pos, _y_score2 + _score_line_step, _score_cumulative, fa_left, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
+		if (!_peace_intro) {
+			DrawText3(_x_pos, _y_score2, _score_level, fa_left, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
+			if (_score_cumulative != "") {
+				DrawText3(_x_pos, _y_score2 + _score_line_step, _score_cumulative, fa_left, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
+			}
 		}
 		//DrawText3(_x1  + _scale*0.4*sprite_get_width(spr_HPFrame)+ 5, gui_text_anchor_y + _scale*114, 
 		//	round(global.score_current), fa_right, fa_middle, c_white, fnt_Federo24, -1, 5000, 0, _scale);
@@ -260,7 +273,7 @@ if instance_exists(obj_PlayerPAR) {
 		hp_prev2 = _p2.hp;
 		
 		// Draw target icon when toggle is on
-		if (_p2.aim_at_crops) {
+		if (_p2.aim_at_crops && !_peace_intro) {
 			_x1 = 1280 - _scale_ui*0.5*sprite_get_width(spr_PlayerIcon);
 			var _tix2 = TargetReticleSpriteIndex(1, _aim_target_shared);
 			draw_sprite_ext(spr_Targets, _tix2, _x1 + 2, gui_text_anchor_y + _scale_ui*114 + 35, 0.20, 0.20, 0, 

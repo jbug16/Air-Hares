@@ -63,7 +63,7 @@ switch(state) {
 			var _scr = instance_create_layer(x, y, "GUI", obj_GUITextFlying);
 			_scr.z = z;
 			_scr.text = "+100";
-			global.score_base += 100;
+			if (!StoryPeacefulIntroFarmActive()) global.score_base += 100;
 			state = PLOTSTATE.CARROT_FRESH;
 			alarm[1] = 2;
 			obj_ControllerFarm.crops_filled++;
@@ -96,7 +96,7 @@ switch(state) {
 			var _scr = instance_create_layer(x, y, "GUI", obj_GUITextFlying);
 			_scr.z = z;
 			_scr.text = "+100";
-			global.score_base += 100;
+			if (!StoryPeacefulIntroFarmActive()) global.score_base += 100;
 			state = PLOTSTATE.CARROT_FRESH;
 			obj_ControllerFarm.crops_filled++;
 			alarm[1] = 2;

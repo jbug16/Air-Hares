@@ -12,6 +12,11 @@ if (global.story_peaceful_intro_farm) {
 	global.story_peaceful_intro_farm = false;
 }
 
+if (global.demo && global.game_mode == GAMEMODE.STORY && global.current_level > DemoMaxLevelIndex()) {
+	TransitionGoto(rm_MainMenu);
+	exit;
+}
+
 if(global.current_level == 4) room_goto(rm_StageClear1);
 else if(global.current_level == 8) room_goto(rm_StageClear2);
 else if(global.current_level == 12) room_goto(rm_StageClear3);

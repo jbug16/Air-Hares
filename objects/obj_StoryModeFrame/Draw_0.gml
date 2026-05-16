@@ -32,7 +32,12 @@ if (global.story_popup_screen == 1) {
 
 // Main story popup: stage name, lives, score label
 var _progress_display = min(global.story_mode_progress, 15);
-var _txt = global.story_mode_progress >= 16 ? "GAME COMPLETE!" : StoryLevelPopupTitle(_progress_display);
+var _txt = "GAME COMPLETE!";
+if (global.demo && global.story_mode_progress >= DemoMaxProgress()) {
+	_txt = "DEMO COMPLETE!";
+} else if (global.story_mode_progress < 16) {
+	_txt = StoryLevelPopupTitle(DemoClampLevelIndex(_progress_display));
+}
 draw_text_transformed(x , y - 20*image_yscale, _txt, _scale_x, _scale_y, 0);
 draw_text_transformed(x , y, "LIVES: " + string(global.lives), _scale_x, _scale_y, 0);
 var _run_sc = global.story_run_score_cumulative;

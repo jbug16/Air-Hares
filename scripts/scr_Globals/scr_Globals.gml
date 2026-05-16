@@ -7,11 +7,12 @@
                              |___/                           
 */
 
+
 // General
 global.gamepad_connected = noone;		// Gamepad
 global.gamepad_debug = false;			// Set to false to disable debug messages after testing
-global.dev_mode = false;					// developer mode on/off
-global.demo = false;					// demo mode (only levels 1-1, 2-2, 3-B)
+global.dev_mode = false;				// developer mode on/off
+global.demo = true;	
 global.version = "v1.0.20251102.01";
 global.mouse_disable = false;
 global.menu = false;
@@ -204,6 +205,8 @@ if (global.story_run_score_cumulative != _story_run_cumulative_ini) {
 	StoryRunSave();
 }
 
+DemoApplyProgressCaps();
+
 LeaderboardDownloadTopScores();
 
 // Options
@@ -303,24 +306,6 @@ global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.PARRY] = spr_CandiePa
 global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.DEATH] = spr_CandieIdle;
 
 // Actual levels
-if(global.demo)
-{
-	global.story_mode_level[0][STORYPROP.ROOM] = rm_LevelX1Farm;		// First farm armor = 3;
-	global.story_mode_level[0][STORYPROP.OVERWORLD] = PLOTSTATE.BARREN;
-	global.story_mode_level[0][STORYPROP.WEATHER] = WEATHER.CLEAR;
-	global.story_mode_level[0][STORYPROP.NAME] = "Barren Bunlands";
-	
-	global.story_mode_level[5][STORYPROP.ROOM] = rm_LevelX1Farm;
-	global.story_mode_level[5][STORYPROP.OVERWORLD] = PLOTSTATE.BUDDING;
-	global.story_mode_level[5][STORYPROP.WEATHER] = WEATHER.WIND_LEFT;
-	global.story_mode_level[5][STORYPROP.NAME] = "Hopeful Hareway";
-	
-	global.story_mode_level[11][STORYPROP.ROOM] = rm_Level3_3FightBoss;
-	global.story_mode_level[11][STORYPROP.OVERWORLD] = PLOTSTATE.BUSTING;
-	global.story_mode_level[11][STORYPROP.WEATHER] = WEATHER.THUNDERSTORM;
-	global.story_mode_level[11][STORYPROP.NAME] = "Lushy Lagmire";
-}
-else
 {
 	// STAGE 1 (levels 0-3)
 	global.story_mode_level[0][STORYPROP.ROOM] = rm_LevelX1Farm;		// First farm armor = 3;

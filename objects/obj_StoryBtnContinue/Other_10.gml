@@ -61,5 +61,6 @@ if (global.story_popup_screen == 1) {
 
 audio_play_sound(snd_PlaneRabboRoll, 10, false);
 // Assign current progress to current run. Progress 14 will repeat level 13
-global.current_level = min(global.story_mode_progress, 15);	
+global.current_level = min(global.story_mode_progress, 15);
+global.current_level = DemoClampLevelIndex(global.current_level);
 room_goto(global.story_mode_level[global.current_level][STORYPROP.ROOM]);

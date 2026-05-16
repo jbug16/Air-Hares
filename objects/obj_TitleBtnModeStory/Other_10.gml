@@ -1,5 +1,4 @@
 /// @desc Click
-if(global.demo) exit;
 event_inherited();	// unhover
 
 global.game_mode = GAMEMODE.STORY;

@@ -7,74 +7,39 @@ var _up = InputGet(INPUT.MENU_UP);
 var _down = InputGet(INPUT.MENU_DOWN);
 var _select = InputGet(INPUT.MENU_SELECT);
 
-if(global.demo)
+var _movement = _left or _right or _up or _down or _select;
+if ((_movement) and !instance_exists(obj_ModesBtnPAR) and !instance_exists(obj_FreeModeFrame) and !instance_exists(obj_StoryModeFrame))
 {
-	var _movement = _up or _down or _select;
-	if ((_movement) and !instance_exists(obj_ModesBtnPAR) and !instance_exists(obj_FreeModeFrame) and !instance_exists(obj_StoryModeFrame))
-	{
-		switch(_movement)
-		{
-			case _up:
-				if(selected == 0) selected = 11;
-				else if(selected == 5) selected = 0;
-				else if(selected == 11) selected = 5;
-				break;
-			case _down:
-				if(selected == 0) selected = 5;
-				else if(selected == 5) selected = 11;
-				else if(selected == 11) selected = 0;
-				break;
-			case _select:
-				with(obj_FreeModeSelect){
-					if(tgt_level == other.selected) event_user(0);
-				}
-				break;
-		}
-		
-		if(instance_exists(obj_FreeModeSelect))
+	selected_prev = selected;
+	switch(_movement){
+		case _left:
+			if(selected_prev < 4 and selected_prev > 0) selected += 11;
+			else selected -= 4;
+			break;
+		case _right:
+			if(selected_prev > 11 and selected_prev < 15) selected -= 11;
+			else selected += 4;
+			break;
+		case _up:
+			selected -= 1;
+			break;
+		case _down:
+			selected += 1;
+			break;
+		case _select:
 			with(obj_FreeModeSelect){
-				if(tgt_level == other.selected) event_user(1);
-				else if(focus) event_user(2);
+				if(tgt_level == other.selected) event_user(0);
 			}
+			break;
 	}
-		
-}
-else
-{
-	var _movement = _left or _right or _up or _down or _select;
-	if ((_movement) and !instance_exists(obj_ModesBtnPAR) and !instance_exists(obj_FreeModeFrame) and !instance_exists(obj_StoryModeFrame))
-	{
-		selected_prev = selected;
-		switch(_movement){
-			case _left:
-				if(selected_prev < 4 and selected_prev > 0) selected += 11;
-				else selected -= 4;
-				break;
-			case _right:
-				if(selected_prev > 11 and selected_prev < 15) selected -= 11;
-				else selected += 4;
-				break;
-			case _up:
-				selected -= 1;
-				break;
-			case _down:
-				selected += 1;
-				break;
-			case _select:
-				with(obj_FreeModeSelect){
-					if(tgt_level == other.selected) event_user(0);
-				}
-				break;
+	if(selected < 0) selected = 15;
+	else if (selected > 15) selected = 0;
+
+	if(instance_exists(obj_FreeModeSelect))
+		with(obj_FreeModeSelect){
+			if(tgt_level == other.selected) event_user(1);
+			else if(tgt_level == other.selected_prev) event_user(2);
 		}
-		if(selected < 0) selected = 15;
-		else if (selected > 15) selected = 0;
-	
-		if(instance_exists(obj_FreeModeSelect))
-			with(obj_FreeModeSelect){
-				if(tgt_level == other.selected) event_user(1);
-				else if(tgt_level == other.selected_prev) event_user(2);
-			}
-	}
 }
 
 // Back

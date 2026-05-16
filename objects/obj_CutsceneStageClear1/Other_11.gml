@@ -8,5 +8,10 @@ if(global.menu)
 	exit;
 }
 
+if (global.demo && global.game_mode == GAMEMODE.STORY) {
+	room_goto(rm_MainMenu);
+	exit;
+}
+
 if (global.game_mode == GAMEMODE.FREE) room_goto(rm_MainMenu);
 else room_goto(global.story_mode_level[global.current_level][STORYPROP.ROOM]);

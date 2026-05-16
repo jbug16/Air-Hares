@@ -35,9 +35,6 @@ if (alarm[2] < 0 and focus) {
 				var _n = ModesBtnPopupButtonCount();
 				if (_sel < 1) _sel = _n;
 				else if (_sel > _n) _sel = 1;
-			} else if (global.demo) {
-				if (button_id == 2 and _movement == -1) _sel = 4;
-				else if (button_id == 4 and _movement == 1) _sel = 2;
 			} else {
 				if (_sel < 1) _sel = instance_number(parent_index);
 				else if (_sel > instance_number(parent_index)) _sel = 1;

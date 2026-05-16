@@ -24,10 +24,36 @@ function ArrayMultiply(_array, _multiplier)
 ////////////////////////////////////////////////////////////////////////////////////
 /* Options */
 
+/// @desc Last story level index included in the demo (1-B).
+function DemoMaxLevelIndex() {
+	return 3;
+}
+
+/// @desc Story progress after clearing all demo levels (level indices stay 0..DemoMaxLevelIndex).
+function DemoMaxProgress() {
+	return 4;
+}
+
+/// @desc Clamp saved/unlocked progress for demo builds.
+function DemoApplyProgressCaps() {
+	if (!global.demo) return;
+	global.story_mode_progress = clamp(global.story_mode_progress, 0, DemoMaxProgress());
+	global.arcade_max_unlocked = clamp(global.arcade_max_unlocked, 0, DemoMaxProgress());
+	// Arcade unlocks follow story progress (same as full game), capped at stage 1.
+	global.arcade_max_unlocked = min(global.arcade_max_unlocked, global.story_mode_progress);
+}
+
+/// @desc Clamp a level index to demo playable range.
+function DemoClampLevelIndex(_level_index) {
+	if (!global.demo) return _level_index;
+	return clamp(_level_index, 0, DemoMaxLevelIndex());
+}
+
 // Save story mode progress
 function StoryProgressSave(){
 	// Update arcade max if current progress exceeds it
 	global.arcade_max_unlocked = max(global.arcade_max_unlocked, global.story_mode_progress);
+	if (global.demo) DemoApplyProgressCaps();
 	
 	ini_open("save.sav");
 	ini_write_real("story", "progress", global.story_mode_progress);
@@ -479,6 +505,9 @@ function AdvanceLevel() {
 	
 	// Update story progress (only if we've progressed further than before)
 	global.story_mode_progress = max(global.story_mode_progress, global.current_level);
+	if (global.demo) {
+		global.story_mode_progress = min(global.story_mode_progress, DemoMaxProgress());
+	}
 	
 	// Save to file
 	StoryProgressSave();

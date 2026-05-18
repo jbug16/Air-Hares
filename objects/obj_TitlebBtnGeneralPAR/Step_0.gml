@@ -20,10 +20,8 @@ if (!global.mouse_disable and visible and !focus and (mouse_prev_x != mouse_x or
 
 // KEYBOARD
 if (alarm[2] < 0 and focus) {
-	// Initials sub-screen: only obj_ModesBtnPAR children (Continue/New/Back, Play/Back). obj_FreeModeFrame Step owns
-	// MENU_LEFT/RIGHT for the center field. End-level buttons (obj_EndLevelPAR) and main title rows must keep full nav.
-	if ((global.story_popup_screen == 1 || global.arcade_popup_screen == 1) && parent_index == obj_ModesBtnPAR) {
-		// Subclass buttons (e.g. hidden NEW) must not activate on Enter — only visible rows.
+	// Initials sub-screen: obj_StoryModeFrame / obj_FreeModeFrame Step owns MENU_LEFT/RIGHT.
+	if (global.story_popup_screen == 1 || global.arcade_popup_screen == 1) {
 		if (InputGet(INPUT.MENU_SELECT) && visible) event_user(0);
 	} else {
 		var _movement = InputGet(INPUT.MENU_RIGHT) - InputGet(INPUT.MENU_LEFT);
@@ -32,18 +30,12 @@ if (alarm[2] < 0 and focus) {
 		else if (_movement != 0) {
 			var _sel = button_id + _movement;
 			if (parent_index == obj_ModesBtnPAR) {
-				var _storyTwoBtn = (global.story_popup_screen == 0 && instance_exists(obj_StoryBtnContinue) && !obj_StoryBtnContinue.visible);
-				if (_storyTwoBtn) {
-					var _ids = ModesBtnPopupStoryMainVisibleOrderedIds();
+				var _ids = ModesBtnPopupVisibleOrderedIds();
+				if (array_length(_ids) > 0) {
 					_sel = ModesBtnPopupStoryMainNavWrap(_ids, button_id, _movement);
-				} else {
-					var _n = ModesBtnPopupButtonCount();
-					if (_sel < 1) _sel = _n;
-					else if (_sel > _n) _sel = 1;
 				}
-			} else if (global.demo) {
-				if (button_id == 2 and _movement == -1) _sel = 4;
-				else if (button_id == 4 and _movement == 1) _sel = 2;
+			} else if (parent_index == obj_TitlebBtnGeneralPAR && button_id >= 1 && button_id <= 7) {
+				_sel = ModesBtnPopupStoryMainNavWrap(TitleMainVisibleButtonIds(), button_id, _movement);
 			} else {
 				if (_sel < 1) _sel = instance_number(parent_index);
 				else if (_sel > instance_number(parent_index)) _sel = 1;

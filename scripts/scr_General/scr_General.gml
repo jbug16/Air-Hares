@@ -55,6 +55,11 @@ function CoopPortraitSelectSlotAvailable(_slot) {
 	return _slot == 0;
 }
 
+/// @desc Main menu: Story..Exit (1-4) then social icons (5-7), left-to-right wrap order.
+function TitleMainVisibleButtonIds() {
+	return [1, 2, 3, 4, 5, 6, 7];
+}
+
 // Save story mode progress
 function StoryProgressSave(){
 	// Update arcade max if current progress exceeds it
@@ -264,19 +269,34 @@ function StoryHasMainMenuContinue() {
 	return global.story_mode_progress > 0 || global.story_run_active || global.story_peaceful_intro_farm;
 }
 
-/// @desc Left-to-right: visible story popup row (Continue=1, New=2, Back=3). Used when Continue is hidden for nav.
-function ModesBtnPopupStoryMainVisibleOrderedIds() {
+/// @desc Left-to-right visible popup buttons for the active story/arcade frame only.
+function ModesBtnPopupVisibleOrderedIds() {
 	var _a = [];
-	with (obj_StoryBtnContinue) {
-		if (visible) array_push(_a, button_id);
+	if (instance_exists(obj_StoryModeFrame)) {
+		with (obj_StoryBtnContinue) {
+			if (visible) array_push(_a, button_id);
+		}
+		with (obj_StoryBtnPlay) {
+			if (visible) array_push(_a, button_id);
+		}
+		with (obj_StoryBtnBack) {
+			if (visible) array_push(_a, button_id);
+		}
 	}
-	with (obj_StoryBtnPlay) {
-		if (visible) array_push(_a, button_id);
-	}
-	with (obj_StoryBtnBack) {
-		if (visible) array_push(_a, button_id);
+	if (instance_exists(obj_FreeModeFrame)) {
+		with (obj_FreeModeBtnPlay) {
+			if (visible) array_push(_a, button_id);
+		}
+		with (obj_FreeModeBtnBack) {
+			if (visible) array_push(_a, button_id);
+		}
 	}
 	return _a;
+}
+
+/// @desc Left-to-right: visible story popup row (Continue=1, New=2, Back=3).
+function ModesBtnPopupStoryMainVisibleOrderedIds() {
+	return ModesBtnPopupVisibleOrderedIds();
 }
 
 /// @param {array} _ids
@@ -344,19 +364,19 @@ function ModesBtnPopupButtonCount() {
 /// @param {real} _except_inst Instance id to skip (keyboard nav: current button)
 function ModesBtnPopupFocusByButtonId(_sel, _except_inst) {
 	with (obj_StoryBtnContinue) {
-		if (id != _except_inst && button_id == _sel && visible) event_user(1);
+		if (id != _except_inst && button_id == _sel && visible && instance_exists(obj_StoryModeFrame)) event_user(1);
 	}
 	with (obj_StoryBtnPlay) {
-		if (id != _except_inst && button_id == _sel && visible) event_user(1);
+		if (id != _except_inst && button_id == _sel && visible && instance_exists(obj_StoryModeFrame)) event_user(1);
 	}
 	with (obj_StoryBtnBack) {
-		if (id != _except_inst && button_id == _sel && visible) event_user(1);
+		if (id != _except_inst && button_id == _sel && visible && instance_exists(obj_StoryModeFrame)) event_user(1);
 	}
 	with (obj_FreeModeBtnPlay) {
-		if (id != _except_inst && button_id == _sel) event_user(1);
+		if (id != _except_inst && button_id == _sel && visible && instance_exists(obj_FreeModeFrame)) event_user(1);
 	}
 	with (obj_FreeModeBtnBack) {
-		if (id != _except_inst && button_id == _sel) event_user(1);
+		if (id != _except_inst && button_id == _sel && visible && instance_exists(obj_FreeModeFrame)) event_user(1);
 	}
 	with (obj_ModesBtnPAR) {
 		if (id != _except_inst && button_id == _sel) event_user(1);

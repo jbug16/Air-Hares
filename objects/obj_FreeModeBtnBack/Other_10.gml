@@ -16,4 +16,5 @@ with(obj_FreeModeSelect){
 	alarm[0] = 2;
 }
 instance_destroy(obj_FreeModeFrame);
-while(instance_exists(obj_ModesBtnPAR)) instance_destroy(obj_ModesBtnPAR);
+with (obj_FreeModeBtnPlay) instance_destroy();
+with (obj_FreeModeBtnBack) instance_destroy();

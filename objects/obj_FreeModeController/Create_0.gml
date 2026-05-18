@@ -5,6 +5,7 @@
 var _level_count = global.arcade_max_unlocked;
 //if (global.dev_mode) _level_count = 16;					// DEBUG
 if(global.demo) _level_count = 3;
+level_count = max(1, _level_count);
 prev_left = false;
 prev_right = false;
 prev_up = false;

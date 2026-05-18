@@ -12,7 +12,7 @@
 global.gamepad_connected = noone;		// Gamepad
 global.gamepad_debug = false;			// Set to false to disable debug messages after testing
 global.dev_mode = false;				// developer mode on/off
-global.demo = true;	
+global.demo = true;						// demo mode (only levels 1-1, 2-2, 3-B)
 global.version = "v1.0.20251102.01";
 global.mouse_disable = false;
 global.menu = false;
@@ -195,9 +195,12 @@ for (var _af = 0; _af <= 15; _af += 1) {
 	global.achievement_no_aggression[_af] = bool(ini_read_real("achievements", "noaggro_" + string(_af), 0));
 }
 
-// Test
-//global.story_mode_progress = 16;
-global.arcade_max_unlocked = 16;
+// Load arcade mode depending on dev mode
+if (global.dev_mode) {
+	global.arcade_max_unlocked = 16;
+} else {
+	global.arcade_max_unlocked = max(global.arcade_max_unlocked, global.story_mode_progress);
+}
 ini_close();
 
 StoryRunReconcileCumulative();

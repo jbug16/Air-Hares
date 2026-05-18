@@ -4,6 +4,7 @@
 //var _level_count = global.story_mode_progress;
 var _level_count = global.arcade_max_unlocked;
 //if (global.dev_mode) _level_count = 16;					// DEBUG
+if(global.demo) _level_count = 3;
 prev_left = false;
 prev_right = false;
 prev_up = false;

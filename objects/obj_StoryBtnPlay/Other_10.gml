@@ -20,3 +20,4 @@ global.story_popup_screen = 1;
 global.story_new_initials = "";
 StoryNewGameUnfocusButtons();
 visible = false;
+with (obj_StoryBtnContinue) visible = true;

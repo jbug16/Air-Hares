@@ -3,7 +3,7 @@ if (parent_index == obj_TitlebBtnGeneralPAR and mode_on) exit;
 
 
 // MOUSE hover-in
-if (!global.mouse_disable and !focus and (mouse_prev_x != mouse_x or mouse_prev_y != mouse_y)) 
+if (!global.mouse_disable and visible and !focus and (mouse_prev_x != mouse_x or mouse_prev_y != mouse_y)) 
 {
 	var _scale = scale_big/image_xscale;	// check relative to original btn size
 	if (mouse_x > x - 0.5*sprite_width*_scale and mouse_x < x + 0.5*sprite_width*_scale)
@@ -32,9 +32,18 @@ if (alarm[2] < 0 and focus) {
 		else if (_movement != 0) {
 			var _sel = button_id + _movement;
 			if (parent_index == obj_ModesBtnPAR) {
-				var _n = ModesBtnPopupButtonCount();
-				if (_sel < 1) _sel = _n;
-				else if (_sel > _n) _sel = 1;
+				var _storyTwoBtn = (global.story_popup_screen == 0 && instance_exists(obj_StoryBtnContinue) && !obj_StoryBtnContinue.visible);
+				if (_storyTwoBtn) {
+					var _ids = ModesBtnPopupStoryMainVisibleOrderedIds();
+					_sel = ModesBtnPopupStoryMainNavWrap(_ids, button_id, _movement);
+				} else {
+					var _n = ModesBtnPopupButtonCount();
+					if (_sel < 1) _sel = _n;
+					else if (_sel > _n) _sel = 1;
+				}
+			} else if (global.demo) {
+				if (button_id == 2 and _movement == -1) _sel = 4;
+				else if (button_id == 4 and _movement == 1) _sel = 2;
 			} else {
 				if (_sel < 1) _sel = instance_number(parent_index);
 				else if (_sel > instance_number(parent_index)) _sel = 1;

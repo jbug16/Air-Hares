@@ -105,7 +105,8 @@ function EraseAllSavedData() {
 	global.peaceful_practice_saved_progress = 0;
 	global.main_menu_open_options = false;
 	global.main_menu_open_options_tutorial_fade = false;
-	global.arcade_max_unlocked = 16;
+	// Match scr_Globals: full arcade only in dev; release = fresh (story progress reset above).
+	global.arcade_max_unlocked = global.dev_mode ? 16 : 0;
 	global.player_initials = "---";
 	global.story_new_initials = "";
 	global.arcade_new_initials = "";

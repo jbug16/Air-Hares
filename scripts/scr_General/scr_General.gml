@@ -253,12 +253,59 @@ function StoryRunStartNew(){
 	StoryRunSave();
 }
 
+/// @desc True when Story main menu should offer Continue (persisted progress, active run, or mid-new-game intro).
+function StoryHasMainMenuContinue() {
+	return global.story_mode_progress > 0 || global.story_run_active || global.story_peaceful_intro_farm;
+}
+
+/// @desc Left-to-right: visible story popup row (Continue=1, New=2, Back=3). Used when Continue is hidden for nav.
+function ModesBtnPopupStoryMainVisibleOrderedIds() {
+	var _a = [];
+	with (obj_StoryBtnContinue) {
+		if (visible) array_push(_a, button_id);
+	}
+	with (obj_StoryBtnPlay) {
+		if (visible) array_push(_a, button_id);
+	}
+	with (obj_StoryBtnBack) {
+		if (visible) array_push(_a, button_id);
+	}
+	return _a;
+}
+
+/// @param {array} _ids
+/// @param {real} _cur button_id
+/// @param {real} _dir -1 or +1
+function ModesBtnPopupStoryMainNavWrap(_ids, _cur, _dir) {
+	var _len = array_length(_ids);
+	if (_len <= 0) return _cur;
+	var _idx = 0;
+	for (var _i = 0; _i < _len; _i++) {
+		if (_ids[_i] == _cur) {
+			_idx = _i;
+			break;
+		}
+	}
+	var _next = _idx + _dir;
+	while (_next < 0) _next += _len;
+	while (_next >= _len) _next -= _len;
+	return _ids[_next];
+}
+
 /// @desc Leave "New Story Game" initials screen; return to Continue/New/Back popup
 function StoryPopupExitNewGameScreen() {
 	global.story_popup_screen = 0;
 	global.story_new_initials = "";
 	with (obj_StoryBtnPlay) visible = true;
-	ModesBtnPopupSetAlarm2(-1);
+	with (obj_StoryBtnContinue) visible = StoryHasMainMenuContinue();
+	
+	ModesBtnPopupUnhoverAll();
+	if (StoryHasMainMenuContinue()) {
+		with (obj_StoryBtnContinue) event_user(1);
+	} else {
+		with (obj_StoryBtnPlay) event_user(1);
+	}
+	ModesBtnPopupSetAlarm2(1);
 }
 
 /// @desc obj_ModesBtnPAR has no instances; story/arcade buttons are subclasses. with(ModesBtnPAR) skips them.
@@ -291,13 +338,13 @@ function ModesBtnPopupButtonCount() {
 /// @param {real} _except_inst Instance id to skip (keyboard nav: current button)
 function ModesBtnPopupFocusByButtonId(_sel, _except_inst) {
 	with (obj_StoryBtnContinue) {
-		if (id != _except_inst && button_id == _sel) event_user(1);
+		if (id != _except_inst && button_id == _sel && visible) event_user(1);
 	}
 	with (obj_StoryBtnPlay) {
-		if (id != _except_inst && button_id == _sel) event_user(1);
+		if (id != _except_inst && button_id == _sel && visible) event_user(1);
 	}
 	with (obj_StoryBtnBack) {
-		if (id != _except_inst && button_id == _sel) event_user(1);
+		if (id != _except_inst && button_id == _sel && visible) event_user(1);
 	}
 	with (obj_FreeModeBtnPlay) {
 		if (id != _except_inst && button_id == _sel) event_user(1);

@@ -14,6 +14,9 @@ for (var _gp = 0; _gp < _maxpads; _gp++)
     }
 }
 
+// Main row: no-op when Continue is hidden (no save)
+if (global.story_popup_screen == 0 && !StoryHasMainMenuContinue()) exit;
+
 // New Story Game screen: CONTINUE saves initials and starts a new run + tutorial
 if (global.story_popup_screen == 1) {
 	if (string_length(global.story_new_initials) <= 0) exit;

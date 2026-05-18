@@ -28,7 +28,7 @@ if (global.coop_portrait_select_ignore_confirm > 0) {
 		global.coop_portrait_select_index++;
 		if (global.coop_portrait_select_index >= _n) global.coop_portrait_select_index = 0;
 	}
-	if (InputGet(INPUT.MENU_SELECT, true, _dev)) {
+	if (InputGet(INPUT.MENU_SELECT, true, _dev) && CoopPortraitSelectSlotAvailable(global.coop_portrait_select_index)) {
 		global.character_selected[1] = CHARACTER.DIRK + global.coop_portrait_select_index;
 		var _player = instance_create_layer(960, 608, "Instances", obj_PlayerRabboSpawner);
 		_player.player = 1;

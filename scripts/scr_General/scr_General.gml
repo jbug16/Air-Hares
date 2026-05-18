@@ -49,6 +49,12 @@ function DemoClampLevelIndex(_level_index) {
 	return clamp(_level_index, 0, DemoMaxLevelIndex());
 }
 
+/// @desc Co-op portrait slot (0 = Dirk) selectable in demo builds.
+function CoopPortraitSelectSlotAvailable(_slot) {
+	if (!global.demo) return true;
+	return _slot == 0;
+}
+
 // Save story mode progress
 function StoryProgressSave(){
 	// Update arcade max if current progress exceeds it

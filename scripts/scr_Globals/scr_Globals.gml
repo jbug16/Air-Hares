@@ -115,32 +115,32 @@ global.bgm_gametrack[14] = snd_MusicStage4_3;
 global.bgm_gametrack[15] = snd_MusicStage4_4Loop;
 
 // Currency
-ini_open("save.sav");
-global.currency_cloud = ini_read_real("currency", "cloud", 0);
-global.currency_feather_blue = ini_read_real("currency", "blue", 0);
-global.currency_feather_brown = ini_read_real("currency", "brown", 0);
-global.currency_feather_black = ini_read_real("currency", "black", 0);
-global.currency_feather_purple= ini_read_real("currency", "purple", 0);
-global.currency_feather_hightop = ini_read_real("currency", "hightop", 0);
-global.currency_feather_bigred = ini_read_real("currency", "bigred", 0);
-global.currency_feather_goldgrip = ini_read_real("currency", "goldgrip", 0);
-global.currency_feather_twinhorn = ini_read_real("currency", "twinhorn", 0);
-ini_close();
+SaveIniOpen();
+global.currency_cloud = SaveIniReadReal("currency", "cloud", 0);
+global.currency_feather_blue = SaveIniReadReal("currency", "blue", 0);
+global.currency_feather_brown = SaveIniReadReal("currency", "brown", 0);
+global.currency_feather_black = SaveIniReadReal("currency", "black", 0);
+global.currency_feather_purple= SaveIniReadReal("currency", "purple", 0);
+global.currency_feather_hightop = SaveIniReadReal("currency", "hightop", 0);
+global.currency_feather_bigred = SaveIniReadReal("currency", "bigred", 0);
+global.currency_feather_goldgrip = SaveIniReadReal("currency", "goldgrip", 0);
+global.currency_feather_twinhorn = SaveIniReadReal("currency", "twinhorn", 0);
+SaveIniClose();
 	
 // Highscore (arcade per-level) + initials for who set the record
 global.highscore_initials = array_create(16, "");
-ini_open("save.sav");
+SaveIniOpen();
 for (var i = 0; i <= 15; i += 1) {
-	global.highscore[i] = ini_read_real("highscore", i, 0);
-	global.highscore_initials[i] = ini_read_string("highscore_initials", string(i), "");
+	global.highscore[i] = SaveIniReadReal("highscore", i, 0);
+	global.highscore_initials[i] = SaveIniReadString("highscore_initials", string(i), "");
 }
-ini_close();
+SaveIniClose();
 
 // Leaderboards (local JSON: rank + score entries for UI)
 global.leaderboard_singleplayer = [];
 global.leaderboard_coop = [];
 // Use a dedicated file so old per-mission entries don't mix with cumulative story-run scores.
-global.leaderboard_json_filename = "local_leaderboard_story_run.json";
+global.leaderboard_json_filename = SaveGetLeaderboardFilename();
 global.leaderboard_max_entries = 10;
 
 // Story Mode run tracking (cumulative full-run score for leaderboards)
@@ -170,29 +170,29 @@ global.level_run_any_hp_damage = false;
 global.level_run_ammo_aggression = false;
 
 // Load story mode progress
-ini_open("save.sav");
-global.story_mode_progress = ini_read_real("story", "progress", global.story_mode_progress);
-global.arcade_max_unlocked = ini_read_real("arcade", "max_unlocked", global.arcade_max_unlocked);
-global.player_initials = ini_read_string("leaderboard", "initials", "---");
+SaveIniOpen();
+global.story_mode_progress = SaveIniReadReal("story", "progress", global.story_mode_progress);
+global.arcade_max_unlocked = SaveIniReadReal("arcade", "max_unlocked", global.arcade_max_unlocked);
+global.player_initials = SaveIniReadString("leaderboard", "initials", "---");
 
 // Load story run tracking (if a run was mid-way when the game was last closed)
-global.story_run_active = bool(ini_read_real("story_run", "active", 0));
-global.story_run_score_cumulative = ini_read_real("story_run", "cumulative", 0);
+global.story_run_active = bool(SaveIniReadReal("story_run", "active", 0));
+global.story_run_score_cumulative = SaveIniReadReal("story_run", "cumulative", 0);
 var _story_run_cumulative_ini = global.story_run_score_cumulative;
 for (var i = 0; i <= 15; i += 1) {
-	global.story_run_level_scores[i] = ini_read_real("story_run", "level_score_" + string(i), 0);
-	global.story_run_level_scores_set[i] = bool(ini_read_real("story_run", "level_score_set_" + string(i), 0));
+	global.story_run_level_scores[i] = SaveIniReadReal("story_run", "level_score_" + string(i), 0);
+	global.story_run_level_scores_set[i] = bool(SaveIniReadReal("story_run", "level_score_set_" + string(i), 0));
 }
-global.story_run_initials = ini_read_string("story_run", "initials", global.story_run_initials);
-global.story_run_ever_coop = bool(ini_read_real("story_run", "ever_coop", 0));
+global.story_run_initials = SaveIniReadString("story_run", "initials", global.story_run_initials);
+global.story_run_ever_coop = bool(SaveIniReadReal("story_run", "ever_coop", 0));
 if (string_length(global.story_run_initials) <= 0 && global.story_run_active) {
 	global.story_run_initials = global.player_initials;
 }
 
 for (var _af = 0; _af <= 15; _af += 1) {
-	global.achievement_farm100[_af] = bool(ini_read_real("achievements", "farm100_" + string(_af), 0));
-	global.achievement_no_damage[_af] = bool(ini_read_real("achievements", "nodamage_" + string(_af), 0));
-	global.achievement_no_aggression[_af] = bool(ini_read_real("achievements", "noaggro_" + string(_af), 0));
+	global.achievement_farm100[_af] = bool(SaveIniReadReal("achievements", "farm100_" + string(_af), 0));
+	global.achievement_no_damage[_af] = bool(SaveIniReadReal("achievements", "nodamage_" + string(_af), 0));
+	global.achievement_no_aggression[_af] = bool(SaveIniReadReal("achievements", "noaggro_" + string(_af), 0));
 }
 
 // Load arcade mode depending on dev mode
@@ -201,7 +201,7 @@ if (global.dev_mode) {
 } else {
 	global.arcade_max_unlocked = max(global.arcade_max_unlocked, global.story_mode_progress);
 }
-ini_close();
+SaveIniClose();
 
 StoryRunReconcileCumulative();
 if (global.story_run_score_cumulative != _story_run_cumulative_ini) {
@@ -214,14 +214,14 @@ LeaderboardDownloadTopScores();
 
 // Options
 // Load saved options value
-ini_open("save.sav");
-global.options_music = ini_read_real("options", "music", 1);
-global.options_sfx = ini_read_real("options", "sfx", 1);
-global.options_scanline = ini_read_real("options", "scanline", 1);
-global.options_windowed = bool(ini_read_real("options", "windowed", 1));
-global.options_res_h = ini_read_real("options", "resolution height", 720);
-global.options_res_w = ini_read_real("options", "resolution width", 1280);
-ini_close();
+SaveIniOpen();
+global.options_music = SaveIniReadReal("options", "music", 1);
+global.options_sfx = SaveIniReadReal("options", "sfx", 1);
+global.options_scanline = SaveIniReadReal("options", "scanline", 1);
+global.options_windowed = bool(SaveIniReadReal("options", "windowed", 1));
+global.options_res_h = SaveIniReadReal("options", "resolution height", 720);
+global.options_res_w = SaveIniReadReal("options", "resolution width", 1280);
+SaveIniClose();
 // Setup loaded options
 window_set_fullscreen(!global.options_windowed);
 window_set_size(global.options_res_w, global.options_res_h);
@@ -550,14 +550,14 @@ global.key_names[? ord("Y")] = "Y";
 global.key_names[? ord("Z")] = "Z";
 
 // Gameplay input from ini file
-ini_open("save.sav");
+SaveIniOpen();
 
 var _input = [INPUT.LEFT, INPUT.RIGHT, INPUT.UP, INPUT.DOWN, INPUT.ROLL_LEFT, INPUT.ROLL_RIGHT, INPUT.PARRY, INPUT.SEED, INPUT.WATER, INPUT.LOOP_DE_LOOP, INPUT.TOGGLE_AIM];
 
 for(var i = 0; i < array_length(_input); i++)
 {
 	// Keyboard
-	var _input_string = ini_read_string("controls kb", string(_input[i]), "");
+	var _input_string = SaveIniReadString("controls kb", string(_input[i]), "");
 	if(_input_string != "")
 	{
 		_input_string = string_split(_input_string, "-");
@@ -571,7 +571,7 @@ for(var i = 0; i < array_length(_input); i++)
 	}
 	
 	// Gamepad
-	_input_string = ini_read_string("controls gp", string(_input[i]), "");
+	_input_string = SaveIniReadString("controls gp", string(_input[i]), "");
 	if(_input_string != "")
 	{
 		_input_string = string_split(_input_string, "-");
@@ -585,4 +585,4 @@ for(var i = 0; i < array_length(_input); i++)
 	}
 }
 
-ini_close();
+SaveIniClose();

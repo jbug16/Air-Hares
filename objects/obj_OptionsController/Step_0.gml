@@ -53,9 +53,9 @@ else if(_select)
 		{
 			global.options_music = clamp(global.options_music + (0.1 * (_right - _left)), 0, 1);
 			audio_group_set_gain(audiogroup_music, global.options_music, 0);
-			ini_open("save.sav");
-			ini_write_real("options", "music", global.options_music);
-			ini_close();
+			SaveIniOpen();
+			SaveIniWriteReal("options", "music", global.options_music);
+			SaveIniClose();
 			menu_status[1] = string(round(global.options_music * 100));
 		}
 		// If manipulating windowing
@@ -69,9 +69,9 @@ else if(_select)
 			if(global.options_windowed) menu_status[1] = "ON";
 			else menu_status[1] = "OFF";
 			
-			ini_open("save.sav");
-			ini_write_real("options", "windowed", global.options_windowed);
-			ini_close();
+			SaveIniOpen();
+			SaveIniWriteReal("options", "windowed", global.options_windowed);
+			SaveIniClose();
 		}
 	} 
 	else if(menu_selected == 2)
@@ -82,9 +82,9 @@ else if(_select)
 			global.options_sfx = clamp(global.options_sfx + (0.1 * (_right - _left)), 0, 1);
 			audio_group_set_gain(audiogroup_default, global.options_sfx, 0);
 			audio_play_sound(snd_ProjSeedShot, 1, false);
-			ini_open("save.sav");
-			ini_write_real("options", "sfx", global.options_sfx);
-			ini_close();
+			SaveIniOpen();
+			SaveIniWriteReal("options", "sfx", global.options_sfx);
+			SaveIniClose();
 			menu_status[2] = string(round(global.options_sfx * 100));
 		}
 		// If manipulating resolution
@@ -115,10 +115,10 @@ else if(_select)
 			global.options_res_h = real(_resolution[1]);
 			window_set_size(global.options_res_w, global.options_res_h);
 			
-			ini_open("save.sav");
-			ini_write_real("options", "resolution height", global.options_res_h);
-			ini_write_real("options", "resolution width", global.options_res_w);
-			ini_close();
+			SaveIniOpen();
+			SaveIniWriteReal("options", "resolution height", global.options_res_h);
+			SaveIniWriteReal("options", "resolution width", global.options_res_w);
+			SaveIniClose();
 		}
 	} 
 	  else if(menu_selected == 0)
@@ -127,9 +127,9 @@ else if(_select)
 		 if(menu[0] == "CRT lines")
 		 {
 			global.options_scanline = global.options_scanline xor (_left or _right);	
-			ini_open("save.sav");
-			ini_write_real("options", "scanline", global.options_scanline);
-			ini_close();	
+			SaveIniOpen();
+			SaveIniWriteReal("options", "scanline", global.options_scanline);
+			SaveIniClose();	
 			if global.options_scanline menu_status[0] = "ON";
 			else menu_status[0] = "OFF";
 		 }

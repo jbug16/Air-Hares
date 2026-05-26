@@ -51,40 +51,11 @@ function ResetControlsToDefaultMappings() {
 
 /// @desc Delete save files, reset in-memory save state, return to main menu.
 function EraseAllSavedData() {
-	ini_close();
-	
-	var _save_name = "save.sav";
-	var _lb_name = variable_global_exists("leaderboard_json_filename")
-		? global.leaderboard_json_filename
-		: "local_leaderboard_story_run.json";
-	
-	// Try safe built-in locations used by desktop runtimes.
-	var _save_paths = [
-		_save_name,
-		program_directory + _save_name,
-		working_directory + _save_name
-	];
-	var _lb_paths = [
-		_lb_name,
-		program_directory + _lb_name,
-		working_directory + _lb_name
-	];
-	
-	var _removed_save = false;
-	for (var i = 0; i < array_length(_save_paths); i++) {
-		if (file_exists(_save_paths[i])) {
-			file_delete(_save_paths[i]);
-			_removed_save = true;
-		}
-	}
-	
-	var _removed_lb = false;
-	for (var j = 0; j < array_length(_lb_paths); j++) {
-		if (file_exists(_lb_paths[j])) {
-			file_delete(_lb_paths[j]);
-			_removed_lb = true;
-		}
-	}
+	SaveIniClose();
+
+	var _erase = SaveEraseAllFiles();
+	var _removed_save = _erase[0];
+	var _removed_lb = _erase[1];
 	
 	// Reset save-backed globals immediately so the current runtime reflects the erase now.
 	global.currency_cloud = 0;

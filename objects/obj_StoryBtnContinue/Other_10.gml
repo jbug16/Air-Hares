@@ -27,9 +27,9 @@ if (global.story_popup_screen == 1) {
 	global.player_initials = _name;
 	global.story_run_initials = _name;
 	
-	ini_open("save.sav");
-	ini_write_string("leaderboard", "initials", _name);
-	ini_close();
+	SaveIniOpen();
+	SaveIniWriteString("leaderboard", "initials", _name);
+	SaveIniClose();
 	
 	global.lives = 4;
 	global.story_mode_progress = 0;

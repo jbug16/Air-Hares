@@ -66,16 +66,16 @@ function StoryProgressSave(){
 	global.arcade_max_unlocked = max(global.arcade_max_unlocked, global.story_mode_progress);
 	if (global.demo) DemoApplyProgressCaps();
 	
-	ini_open("save.sav");
-	ini_write_real("story", "progress", global.story_mode_progress);
-	ini_write_real("arcade", "max_unlocked", global.arcade_max_unlocked); // Save arcade max
+	SaveIniOpen();
+	SaveIniWriteReal("story", "progress", global.story_mode_progress);
+	SaveIniWriteReal("arcade", "max_unlocked", global.arcade_max_unlocked); // Save arcade max
 	// Keep medal section in the same write pass (avoids INI merge issues with separate opens)
 	for (var _m = 0; _m <= 15; _m += 1) {
-		ini_write_real("achievements", "farm100_" + string(_m), global.achievement_farm100[_m] ? 1 : 0);
-		ini_write_real("achievements", "nodamage_" + string(_m), global.achievement_no_damage[_m] ? 1 : 0);
-		ini_write_real("achievements", "noaggro_" + string(_m), global.achievement_no_aggression[_m] ? 1 : 0);
+		SaveIniWriteReal("achievements", "farm100_" + string(_m), global.achievement_farm100[_m] ? 1 : 0);
+		SaveIniWriteReal("achievements", "nodamage_" + string(_m), global.achievement_no_damage[_m] ? 1 : 0);
+		SaveIniWriteReal("achievements", "noaggro_" + string(_m), global.achievement_no_aggression[_m] ? 1 : 0);
 	}
-	ini_close();
+	SaveIniClose();
 }
 
 /// @desc Reset per-run flags for level-based medals (call at level start)
@@ -129,24 +129,24 @@ function LevelRunRegisterAmmoAggressionIfPlayerProjectile(_inst) {
 
 /// @desc Persist per-level medal flags (100% farm, no damage, no aggression) to save.sav
 function AchievementFarm100Save() {
-	ini_open("save.sav");
+	SaveIniOpen();
 	for (var _i = 0; _i <= 15; _i += 1) {
-		ini_write_real("achievements", "farm100_" + string(_i), global.achievement_farm100[_i] ? 1 : 0);
-		ini_write_real("achievements", "nodamage_" + string(_i), global.achievement_no_damage[_i] ? 1 : 0);
-		ini_write_real("achievements", "noaggro_" + string(_i), global.achievement_no_aggression[_i] ? 1 : 0);
+		SaveIniWriteReal("achievements", "farm100_" + string(_i), global.achievement_farm100[_i] ? 1 : 0);
+		SaveIniWriteReal("achievements", "nodamage_" + string(_i), global.achievement_no_damage[_i] ? 1 : 0);
+		SaveIniWriteReal("achievements", "noaggro_" + string(_i), global.achievement_no_aggression[_i] ? 1 : 0);
 	}
-	ini_close();
+	SaveIniClose();
 }
 
 /// @desc Reload per-level medal flags from save.sav into globals (e.g. before drawing Achievements UI)
 function AchievementsLoadFromSave() {
-	ini_open("save.sav");
+	SaveIniOpen();
 	for (var _af = 0; _af <= 15; _af += 1) {
-		global.achievement_farm100[_af] = bool(ini_read_real("achievements", "farm100_" + string(_af), 0));
-		global.achievement_no_damage[_af] = bool(ini_read_real("achievements", "nodamage_" + string(_af), 0));
-		global.achievement_no_aggression[_af] = bool(ini_read_real("achievements", "noaggro_" + string(_af), 0));
+		global.achievement_farm100[_af] = bool(SaveIniReadReal("achievements", "farm100_" + string(_af), 0));
+		global.achievement_no_damage[_af] = bool(SaveIniReadReal("achievements", "nodamage_" + string(_af), 0));
+		global.achievement_no_aggression[_af] = bool(SaveIniReadReal("achievements", "noaggro_" + string(_af), 0));
 	}
-	ini_close();
+	SaveIniClose();
 }
 
 /// @desc Mark a medal unlocked for a story level and print a debug line.
@@ -228,17 +228,17 @@ function StoryRunReconcileCumulative() {
 
 function StoryRunSave(){
 	StoryRunReconcileCumulative();
-	ini_open("save.sav");
-	ini_write_real("story_run", "active", global.story_run_active ? 1 : 0);
-	ini_write_real("story_run", "cumulative", global.story_run_score_cumulative);
+	SaveIniOpen();
+	SaveIniWriteReal("story_run", "active", global.story_run_active ? 1 : 0);
+	SaveIniWriteReal("story_run", "cumulative", global.story_run_score_cumulative);
 	if (!is_string(global.story_run_initials)) global.story_run_initials = "";
-	ini_write_string("story_run", "initials", global.story_run_initials);
-	ini_write_real("story_run", "ever_coop", global.story_run_ever_coop ? 1 : 0);
+	SaveIniWriteString("story_run", "initials", global.story_run_initials);
+	SaveIniWriteReal("story_run", "ever_coop", global.story_run_ever_coop ? 1 : 0);
 	for (var i = 0; i <= 15; i += 1) {
-		ini_write_real("story_run", "level_score_" + string(i), global.story_run_level_scores[i]);
-		ini_write_real("story_run", "level_score_set_" + string(i), global.story_run_level_scores_set[i] ? 1 : 0);
+		SaveIniWriteReal("story_run", "level_score_" + string(i), global.story_run_level_scores[i]);
+		SaveIniWriteReal("story_run", "level_score_set_" + string(i), global.story_run_level_scores_set[i] ? 1 : 0);
 	}
-	ini_close();
+	SaveIniClose();
 }
 
 function StoryRunReset(){
@@ -627,18 +627,18 @@ function Profile() constructor{
 	}
 	
 	stat_load		= function(){
-		ini_open("save.sav");
-		stat.fortune = ini_read_real("stats", "fortune", 0);
-		stat.foresight = ini_read_real("stats", "foresight", 0);
-		stat.fortitude = ini_read_real("stats", "fortitude", 0);
-		ini_close();
+		SaveIniOpen();
+		stat.fortune = SaveIniReadReal("stats", "fortune", 0);
+		stat.foresight = SaveIniReadReal("stats", "foresight", 0);
+		stat.fortitude = SaveIniReadReal("stats", "fortitude", 0);
+		SaveIniClose();
 	}
 	stat_save		= function(){
-		ini_open("save.sav");
-		ini_write_real("stats", "fortune", stat.fortune);
-		ini_write_real("stats", "foresight", stat.foresight);
-		ini_write_real("stats", "fortitude", stat.fortitude);
-		ini_close();
+		SaveIniOpen();
+		SaveIniWriteReal("stats", "fortune", stat.fortune);
+		SaveIniWriteReal("stats", "foresight", stat.foresight);
+		SaveIniWriteReal("stats", "fortitude", stat.fortitude);
+		SaveIniClose();
 	}
 	stat_reset		= function(){
 		stat.fortune	= 0;

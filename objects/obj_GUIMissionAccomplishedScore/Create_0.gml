@@ -27,10 +27,10 @@ if (global.game_mode == GAMEMODE.FREE && score_total > global.highscore[global.l
 	_nm = string_upper(_nm);
 	if (string_length(_nm) > 3) _nm = string_copy(_nm, 1, 3);
 	global.highscore_initials[_lv] = _nm;
-	ini_open("save.sav");
-	ini_write_real("highscore", string(_lv), global.highscore[_lv]);
-	ini_write_string("highscore_initials", string(_lv), _nm);
-	ini_close();
+	SaveIniOpen();
+	SaveIniWriteReal("highscore", string(_lv), global.highscore[_lv]);
+	SaveIniWriteString("highscore_initials", string(_lv), _nm);
+	SaveIniClose();
 	new_highscore = true;
 }
 score_highscore = global.highscore[global.level_highscore];

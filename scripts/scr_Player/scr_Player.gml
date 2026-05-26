@@ -344,15 +344,15 @@ function StatsFortitudeRoll(){
 
 
 function CurrencySave(){
-	ini_open("save.sav");
-	ini_write_real("currency", "cloud", global.currency_cloud);
-	ini_write_real("currency", "blue", global.currency_feather_blue);
-	ini_write_real("currency", "brown", global.currency_feather_brown);
-	ini_write_real("currency", "black", global.currency_feather_black);
-	ini_write_real("currency", "purple", global.currency_feather_purple);
-	ini_write_real("currency", "hightop", global.currency_feather_hightop);
-	ini_write_real("currency", "bigred", global.currency_feather_bigred);
-	ini_write_real("currency", "goldgrip", global.currency_feather_goldgrip);
-	ini_write_real("currency", "twinhorn", global.currency_feather_twinhorn);
-	ini_close();
+	SaveIniOpen();
+	SaveIniWriteReal("currency", "cloud", global.currency_cloud);
+	SaveIniWriteReal("currency", "blue", global.currency_feather_blue);
+	SaveIniWriteReal("currency", "brown", global.currency_feather_brown);
+	SaveIniWriteReal("currency", "black", global.currency_feather_black);
+	SaveIniWriteReal("currency", "purple", global.currency_feather_purple);
+	SaveIniWriteReal("currency", "hightop", global.currency_feather_hightop);
+	SaveIniWriteReal("currency", "bigred", global.currency_feather_bigred);
+	SaveIniWriteReal("currency", "goldgrip", global.currency_feather_goldgrip);
+	SaveIniWriteReal("currency", "twinhorn", global.currency_feather_twinhorn);
+	SaveIniClose();
 }

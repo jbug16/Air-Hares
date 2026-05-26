@@ -198,7 +198,7 @@ if(alarm[1] > 0)
 			}
 			
 			// Save to file
-			ini_open("save.sav");
+			SaveIniOpen();
 			
 			var _input_string = "";
 			for(var i = 0; i < array_length(_current_keymap); i++)
@@ -206,7 +206,7 @@ if(alarm[1] > 0)
 				_input_string += string(_current_keymap[i]);
 				_input_string += "-";
 			}
-			ini_write_string("controls kb", string(input[menu_selected]), _input_string);
+			SaveIniWriteString("controls kb", string(input[menu_selected]), _input_string);
 			
 			_input_string = "";
 			for(var i = 0; i < array_length(_current_gpmap); i++)
@@ -214,7 +214,7 @@ if(alarm[1] > 0)
 				_input_string += string(_current_gpmap[i]);
 				_input_string += "-";
 			}
-			ini_write_string("controls gp", string(input[menu_selected]), _input_string);
+			SaveIniWriteString("controls gp", string(input[menu_selected]), _input_string);
 			
 			// Deleted keys
 			for(var i = 0; i < array_length(input); i++)
@@ -222,14 +222,14 @@ if(alarm[1] > 0)
 				if(i != menu_selected) 
 				{
 					if(array_length(global.keymap[? input[i]]) == 0)
-						ini_write_string("controls kb", string(input[i]), "-");
+						SaveIniWriteString("controls kb", string(input[i]), "-");
 				
 					if(array_length(global.gpmap[? input[i]]) == 0)
-						ini_write_string("controls gp", string(input[i]), "-");
+						SaveIniWriteString("controls gp", string(input[i]), "-");
 				}
 			}
 			
-			ini_close();
+			SaveIniClose();
 			
 			// Reset
 			input_captured = false;

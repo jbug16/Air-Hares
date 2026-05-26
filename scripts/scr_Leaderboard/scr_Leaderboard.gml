@@ -1,4 +1,4 @@
-/// @desc Local leaderboard (JSON file next to save.sav)
+/// @desc Local leaderboard (Windows: JSON file; Switch: embedded in airhares_save.json)
 
 /// @param {Array<Struct>} entries
 function LeaderboardSortEntriesDesc(entries) {
@@ -72,8 +72,17 @@ function LeaderboardEntriesToDisplayEntries(capped_sorted) {
 function LeaderboardReadRawData() {
 	var empty_sp = [];
 	var empty_co = [];
+
+	if (SavePlatformIsSwitch()) {
+		return SaveSwitchLeaderboardReadRaw();
+	}
+
+	if (!SavePlatformIsWindows()) {
+		return { singleplayer: empty_sp, coop: empty_co };
+	}
+
 	var fn = global.leaderboard_json_filename;
-	if (!file_exists(fn)) {
+	if (fn == "" || !file_exists(fn)) {
 		return { singleplayer: empty_sp, coop: empty_co };
 	}
 	var f = file_text_open_read(fn);
@@ -111,6 +120,15 @@ function LeaderboardReadRawData() {
 
 /// @param {Struct} data { singleplayer, coop } arrays of real
 function LeaderboardWriteRawData(data) {
+	if (SavePlatformIsSwitch()) {
+		SaveSwitchLeaderboardWriteRaw(data);
+		return;
+	}
+
+	if (!SavePlatformIsWindows()) {
+		return;
+	}
+
 	var fn = global.leaderboard_json_filename;
 	var payload = {
 		singleplayer: data.singleplayer,
@@ -128,6 +146,11 @@ function LeaderboardWriteRawData(data) {
 
 /// @desc Load from disk into global display arrays (rank + name + score)
 function LeaderboardDownloadTopScores() {
+	if (!SavePlatformHasPersistence()) {
+		global.leaderboard_singleplayer = [];
+		global.leaderboard_coop = [];
+		return;
+	}
 	var data = LeaderboardReadRawData();
 	var max_n = global.leaderboard_max_entries;
 	var sp = LeaderboardCapSortedEntries(data.singleplayer, max_n);
@@ -141,6 +164,9 @@ function LeaderboardDownloadTopScores() {
 /// @param {Bool} is_coop
 /// @param {String} name
 function LeaderboardUploadScore(score, is_coop, name) {
+	if (!SavePlatformHasPersistence()) {
+		return;
+	}
 	var data = LeaderboardReadRawData();
 	var max_n = global.leaderboard_max_entries;
 	var v = round(score);

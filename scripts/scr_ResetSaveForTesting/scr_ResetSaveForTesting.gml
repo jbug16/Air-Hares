@@ -110,10 +110,12 @@ function EraseAllSavedData() {
 	global.options_sfx = 1;
 	global.options_scanline = 1;
 	global.options_windowed = true;
-	global.options_res_w = 1280;
-	global.options_res_h = 720;
-	window_set_fullscreen(false);
-	window_set_size(global.options_res_w, global.options_res_h);
+	global.options_res_w = OPTIONS_DESIGN_W;
+	global.options_res_h = OPTIONS_DESIGN_H;
+	if (SavePlatformIsSwitch()) {
+		global.options_windowed = false;
+	}
+	OptionsDisplayApply();
 	audio_group_set_gain(audiogroup_default, global.options_sfx, 0);
 	audio_group_set_gain(audiogroup_music, global.options_music, 0);
 	

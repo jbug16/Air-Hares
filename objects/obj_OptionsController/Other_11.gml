@@ -58,31 +58,17 @@ if(in_controls)
 		menu_status[_i] = "";
 	}
 }
-// Create graphics
+// Create graphics (Switch: CRT + Back only; Windows: + Windowed + Resolution)
 else if(in_graphics)
 {
-	menu[0] = "CRT lines";
-	menu[1] = "Windowed";
-	menu[2] = "Resolution";
-	menu[3] = "Back";
-	
-	if(global.options_scanline) menu_status[0] = "ON";
-	else menu_status[0] = "OFF";
-	
-	if(global.options_windowed == window_get_fullscreen()) global.options_windowed = !window_get_fullscreen();
-	if(global.options_windowed) menu_status[1] = "ON";
-	else menu_status[1] = "OFF";
-	
-	// Which resolution is currently used
-	menu_status[2] = string(global.options_res_w) + " x " + string(global.options_res_h);
-	menu_status[3] = "";
-	
-	for(var i = 4; i <= 8; i++)
-	{
+	var _gfx = OptionsGraphicsMenuData();
+	menu = _gfx.menu;
+	menu_status = _gfx.status;
+	menu_count = _gfx.count;
+	for (var i = menu_count; i <= 8; i++) {
 		menu[i] = "";
 		menu_status[i] = "";
 	}
-	menu_count = 4;
 }
 // Create achievements (custom draw; menu is Back only)
 else if(in_achievements)

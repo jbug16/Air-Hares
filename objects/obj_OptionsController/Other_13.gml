@@ -26,17 +26,8 @@ switch(menu_selected)
 		}
 		else if(menu[1] == "Windowed")
 		{
-			if(window_get_fullscreen() == global.options_windowed) global.options_windowed = !window_get_fullscreen();
-			global.options_windowed = global.options_windowed xor 1;
-			window_set_fullscreen(!global.options_windowed);
-			window_center();
-			
-			if(global.options_windowed) menu_status[1] = "ON";
-			else menu_status[1] = "OFF";
-			
-			SaveIniOpen();
-			SaveIniWriteReal("options", "windowed", global.options_windowed);
-			SaveIniClose();
+			var _win_status = OptionsDisplayToggleWindowed();
+			if (_win_status != undefined) menu_status[1] = _win_status;
 		}
 		break;
 		
@@ -53,33 +44,8 @@ switch(menu_selected)
 		}
 		else if(menu[2] == "Resolution")
 		{
-			var _resolution = ["1280 x 720", "1920 x 1080", "2560 x 1440", "3840 x 2160"];
-			
-			// Find current resolution
-			var _current = -1;
-			for(var i = 0; i < array_length(_resolution); i++)
-			{
-				if(_resolution[i] == menu_status[2])
-				{
-					_current = i;
-					break;
-				}
-			}
-			// Change current resolution
-			_current--;
-			if(_current < 0) _current = array_length(_resolution) - 1;
-			else if(_current > array_length(_resolution) - 1) _current = 0;
-			menu_status[2] = _resolution[_current];
-			
-			_resolution = string_split(menu_status[2], " x ");
-			global.options_res_w = real(_resolution[0]);
-			global.options_res_h = real(_resolution[1]);
-			window_set_size(global.options_res_w, global.options_res_h);
-			
-			SaveIniOpen();
-			SaveIniWriteReal("options", "resolution height", global.options_res_h);
-			SaveIniWriteReal("options", "resolution width", global.options_res_w);
-			SaveIniClose();
+			var _res_label = OptionsDisplayCycleResolution(menu_status[2], -1);
+			if (_res_label != undefined) menu_status[2] = _res_label;
 		}
 		break;
 }	

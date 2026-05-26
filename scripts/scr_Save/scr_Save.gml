@@ -258,3 +258,123 @@ function SaveEraseAllFiles() {
 
 	return [_removed_save, _removed_lb];
 }
+
+// --- Display / window options (Windows: windowed + resolution; Switch: fixed 1280×720) ---
+
+#macro OPTIONS_DESIGN_W 1280
+#macro OPTIONS_DESIGN_H 720
+
+function OptionsDisplayAllowsWindowToggles() {
+	return SavePlatformIsWindows();
+}
+
+function OptionsDisplayResolutionList() {
+	return ["1280 x 720", "1920 x 1080", "2560 x 1440", "3840 x 2160"];
+}
+
+function OptionsDisplaySyncWindowedStateFromOS() {
+	if (!OptionsDisplayAllowsWindowToggles()) return;
+	if (global.options_windowed == window_get_fullscreen()) {
+		global.options_windowed = !window_get_fullscreen();
+	}
+}
+
+function OptionsDisplayApply() {
+	if (!OptionsDisplayAllowsWindowToggles()) return;
+	window_set_fullscreen(!global.options_windowed);
+	window_set_size(global.options_res_w, global.options_res_h);
+}
+
+/// @desc Load audio/CRT options and platform-appropriate display settings from save.
+function OptionsDisplayLoadFromSave() {
+	SaveIniOpen();
+	global.options_music = SaveIniReadReal("options", "music", 1);
+	global.options_sfx = SaveIniReadReal("options", "sfx", 1);
+	global.options_scanline = SaveIniReadReal("options", "scanline", 1);
+	if (OptionsDisplayAllowsWindowToggles()) {
+		global.options_windowed = bool(SaveIniReadReal("options", "windowed", 1));
+		global.options_res_h = SaveIniReadReal("options", "resolution height", OPTIONS_DESIGN_H);
+		global.options_res_w = SaveIniReadReal("options", "resolution width", OPTIONS_DESIGN_W);
+	} else {
+		global.options_windowed = false;
+		global.options_res_w = OPTIONS_DESIGN_W;
+		global.options_res_h = OPTIONS_DESIGN_H;
+	}
+	SaveIniClose();
+	OptionsDisplayApply();
+}
+
+/// @returns {Struct} { menu: Array, status: Array, count: Real } for the graphics submenu
+function OptionsGraphicsMenuData() {
+	OptionsDisplaySyncWindowedStateFromOS();
+	var _scan = global.options_scanline ? "ON" : "OFF";
+	if (OptionsDisplayAllowsWindowToggles()) {
+		var _win = global.options_windowed ? "ON" : "OFF";
+		var _res = string(global.options_res_w) + " x " + string(global.options_res_h);
+		return {
+			menu: ["CRT lines", "Windowed", "Resolution", "Back"],
+			status: [_scan, _win, _res, ""],
+			count: 4
+		};
+	}
+	return {
+		menu: ["CRT lines", "Back"],
+		status: [_scan, ""],
+		count: 2
+	};
+}
+
+/// @returns {String|undefined} New ON/OFF label, or undefined if not applicable
+function OptionsDisplayToggleWindowed() {
+	if (!OptionsDisplayAllowsWindowToggles()) return undefined;
+	OptionsDisplaySyncWindowedStateFromOS();
+	global.options_windowed = global.options_windowed xor 1;
+	OptionsDisplayApply();
+	window_center();
+	SaveIniOpen();
+	SaveIniWriteReal("options", "windowed", global.options_windowed);
+	SaveIniClose();
+	return global.options_windowed ? "ON" : "OFF";
+}
+
+/// @param {Bool} _toggle Non-zero to flip windowed (Step left/right)
+/// @returns {String|undefined}
+function OptionsDisplayToggleWindowedDirection(_toggle) {
+	if (!OptionsDisplayAllowsWindowToggles() || !_toggle) return undefined;
+	OptionsDisplaySyncWindowedStateFromOS();
+	global.options_windowed = global.options_windowed xor 1;
+	OptionsDisplayApply();
+	window_center();
+	SaveIniOpen();
+	SaveIniWriteReal("options", "windowed", global.options_windowed);
+	SaveIniClose();
+	return global.options_windowed ? "ON" : "OFF";
+}
+
+/// @param {String} _current_label e.g. "1920 x 1080"
+/// @param {Real} _step -1, 0, or +1
+/// @returns {String|undefined} New resolution label
+function OptionsDisplayCycleResolution(_current_label, _step) {
+	if (!OptionsDisplayAllowsWindowToggles() || _step == 0) return undefined;
+	var _resolution = OptionsDisplayResolutionList();
+	var _current = -1;
+	for (var i = 0; i < array_length(_resolution); i++) {
+		if (_resolution[i] == _current_label) {
+			_current = i;
+			break;
+		}
+	}
+	_current += _step;
+	if (_current < 0) _current = array_length(_resolution) - 1;
+	else if (_current > array_length(_resolution) - 1) _current = 0;
+	var _new_label = _resolution[_current];
+	var _parts = string_split(_new_label, " x ");
+	global.options_res_w = real(_parts[0]);
+	global.options_res_h = real(_parts[1]);
+	OptionsDisplayApply();
+	SaveIniOpen();
+	SaveIniWriteReal("options", "resolution height", global.options_res_h);
+	SaveIniWriteReal("options", "resolution width", global.options_res_w);
+	SaveIniClose();
+	return _new_label;
+}

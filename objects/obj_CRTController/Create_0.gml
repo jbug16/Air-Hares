@@ -15,7 +15,7 @@ view_visible[0] = true;
 view_enabled = true;
 view_wport[0] = 1280;
 view_hport[0] = 720;
-window_set_size(global.options_res_w, global.options_res_h);
+OptionsDisplayApply();
 
 ///_xx and _yy variables are used to move the views position around.
 ///Just for demonstration purposes, can be removed.

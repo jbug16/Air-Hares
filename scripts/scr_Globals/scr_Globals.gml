@@ -212,20 +212,9 @@ DemoApplyProgressCaps();
 
 LeaderboardDownloadTopScores();
 
-// Options
-// Load saved options value
-SaveIniOpen();
-global.options_music = SaveIniReadReal("options", "music", 1);
-global.options_sfx = SaveIniReadReal("options", "sfx", 1);
-global.options_scanline = SaveIniReadReal("options", "scanline", 1);
-global.options_windowed = bool(SaveIniReadReal("options", "windowed", 1));
-global.options_res_h = SaveIniReadReal("options", "resolution height", 720);
-global.options_res_w = SaveIniReadReal("options", "resolution width", 1280);
-SaveIniClose();
-// Setup loaded options
-window_set_fullscreen(!global.options_windowed);
-window_set_size(global.options_res_w, global.options_res_h);
-	
+// Options (music/sfx/CRT; windowed + resolution on Windows only)
+OptionsDisplayLoadFromSave();
+
 // Apply the options setting
 audio_group_load(audiogroup_music);
 audio_group_set_gain(audiogroup_default, global.options_sfx, 0);

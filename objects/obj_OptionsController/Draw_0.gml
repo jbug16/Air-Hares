@@ -49,10 +49,14 @@ else if(menu_draw and in_controls)
 	draw_set_font(fnt_Federo24);
 	draw_set_alpha(_oa);
 	
+	var _show_kb = InputControlsKeyboardRebindEnabled();
+	
 	// Draw titles
 	draw_text_transformed(0.07*room_width, 0.155*room_height, "Actions:", image_xscale, image_yscale, image_angle);
-	draw_text_transformed(0.37*room_width, 0.155*room_height, "Keyboard:", image_xscale, image_yscale, image_angle);
-	draw_text_transformed(0.7*room_width, 0.155*room_height, "Joypad:", image_xscale, image_yscale, image_angle);
+	if (_show_kb) {
+		draw_text_transformed(0.37*room_width, 0.155*room_height, "Keyboard:", image_xscale, image_yscale, image_angle);
+	}
+	draw_text_transformed((_show_kb ? 0.7 : 0.45) * room_width, 0.155*room_height, "Controller:", image_xscale, image_yscale, image_angle);
 	
 	// Draw action text
 	_x_left = room_width*0.07;
@@ -69,22 +73,24 @@ else if(menu_draw and in_controls)
 		draw_text_transformed(_x_left, _y_start + (45 * i), menu[i], image_xscale, image_yscale, image_angle);
 	}
 	
-	// Keyboard key text
-	_x_left = room_width*0.37;
-	for (var i = 0; i < array_length(menu); i++) 
-	{
-		if(i == menu_selected)
+	// Keyboard key text (desktop only)
+	if (_show_kb) {
+		_x_left = room_width*0.37;
+		for (var i = 0; i < array_length(menu); i++) 
 		{
-			draw_set_color(c_orange);
-			if(alarm[1] > 0) draw_set_alpha(control_alpha * _oa);
-			else draw_set_alpha(_oa);
+			if(i == menu_selected)
+			{
+				draw_set_color(c_orange);
+				if(alarm[1] > 0) draw_set_alpha(control_alpha * _oa);
+				else draw_set_alpha(_oa);
+			}
+			else { draw_set_color(c_white); draw_set_alpha(_oa); }
+			draw_text_transformed(_x_left, _y_start + (45 * i), key_keyboard[i], image_xscale, image_yscale, image_angle);
 		}
-		else { draw_set_color(c_white); draw_set_alpha(_oa); }
-		draw_text_transformed(_x_left, _y_start + (45 * i), key_keyboard[i], image_xscale, image_yscale, image_angle);
 	}
 	
-	// Gamepad key text
-	_x_left = room_width*0.7;
+	// Controller key text
+	_x_left = (_show_kb ? 0.7 : 0.45) * room_width;
 	for (var i = 0; i < array_length(menu); i++) 
 	{
 		if(i == menu_selected)

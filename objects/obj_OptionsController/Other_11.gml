@@ -31,23 +31,11 @@ if(in_controls)
 	
 	for(var i = 0; i < menu_count - 1; i++)
 	{
-		// Keyboard
-		var _keys = global.keymap[? input[i]];
 		key_keyboard[i] = "";
-		for(var j = 0; j < array_length(_keys); j++)
-		{
-			key_keyboard[i] += global.key_names[? _keys[j]];
-			if(j < array_length(_keys) - 1) key_keyboard[i] += " + ";
+		if (InputControlsKeyboardRebindEnabled()) {
+			key_keyboard[i] = InputFormatBindingList(global.keymap[? input[i]]);
 		}
-		
-		// Gamepad
-		_keys = global.gpmap[? input[i]];
-		key_joypad[i] = "";
-		for(var j = 0; j < array_length(_keys); j++)
-		{
-			key_joypad[i] += global.key_names[? _keys[j]];
-			if(j < array_length(_keys) - 1) key_joypad[i] += " + ";
-		}
+		key_joypad[i] = InputFormatBindingList(global.gpmap[? input[i]]);
 	}
 	
 	key_joypad[menu_count - 1] = "";

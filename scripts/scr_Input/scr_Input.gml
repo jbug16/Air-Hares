@@ -282,7 +282,7 @@ function InputGamepadGetJoinRequest(){
 	var _maxpads = gamepad_get_device_count();
 	for (var _gp = 0; _gp < _maxpads; _gp++) {
 		if (gamepad_is_connected(_gp)) {
-			if gamepad_button_check_pressed(_gp, gp_face1) {
+			if (gamepad_button_check_pressed(_gp, InputGpMenuConfirm())) {
 				return _gp;
 			}
         }
@@ -328,6 +328,178 @@ function InputGamepadButton(_key = noone){
 	}
 	
 	return -1;
+}
+
+// --- Platform controls (Switch: gamepad-only UI + Nintendo face labels) -----------------
+
+/// @desc Keyboard column / rebinding in Options → Controls (desktop only).
+function InputControlsKeyboardRebindEnabled() {
+	return !SavePlatformIsSwitch();
+}
+
+/// @desc GameMaker gp_face* constant for menu confirm / join (Nintendo A on Switch = gp_face2).
+function InputGpMenuConfirm() {
+	return SavePlatformIsSwitch() ? gp_face2 : gp_face1;
+}
+
+/// @desc Splash / logo screens: buttons that advance when pressed.
+function InputGpSplashAdvanceButtons() {
+	if (SavePlatformIsSwitch()) {
+		return [gp_face2, gp_face1, gp_start];
+	}
+	return [gp_face1, gp_face2, gp_start];
+}
+
+function InputApplyDefaultKeyboardMap() {
+	if (variable_global_exists("keymap") && ds_exists(global.keymap, ds_type_map)) {
+		ds_map_destroy(global.keymap);
+	}
+	global.keymap = ds_map_create();
+	global.keymap[? INPUT.ANY] = [vk_anykey];
+	global.keymap[? INPUT.DOWN] = [vk_down];
+	global.keymap[? INPUT.LEFT] = [vk_left];
+	global.keymap[? INPUT.PARRY] = [ord("Q")];
+	global.keymap[? INPUT.RIGHT] = [vk_right];
+	global.keymap[? INPUT.SEED] = [vk_space];
+	global.keymap[? INPUT.UP] = [vk_up];
+	global.keymap[? INPUT.SHIFT] = [vk_shift];
+	global.keymap[? INPUT.WATER] = [ord("E")];
+	global.keymap[? INPUT.PAUSE] = [vk_escape];
+	global.keymap[? INPUT.LOOP_DE_LOOP] = [ord("Q"), vk_shift];
+	global.keymap[? INPUT.ROLL_LEFT] = [vk_left, vk_shift];
+	global.keymap[? INPUT.ROLL_RIGHT] = [vk_right, vk_shift];
+	global.keymap[? INPUT.MENU_SELECT] = [vk_enter, vk_space];
+	global.keymap[? INPUT.MENU_UP] = [vk_up];
+	global.keymap[? INPUT.MENU_DOWN] = [vk_down];
+	global.keymap[? INPUT.MENU_LEFT] = [vk_left];
+	global.keymap[? INPUT.MENU_RIGHT] = [vk_right];
+	global.keymap[? INPUT.TOGGLE_AIM] = [vk_enter];
+}
+
+function InputApplyDesktopGamepadMap() {
+	global.gpmap[? INPUT.SEED] = [gp_face1];
+	global.gpmap[? INPUT.WATER] = [gp_face2];
+	global.gpmap[? INPUT.PARRY] = [gp_face3];
+	global.gpmap[? INPUT.UP] = [gp_padu];
+	global.gpmap[? INPUT.DOWN] = [gp_padd];
+	global.gpmap[? INPUT.LEFT] = [gp_padl];
+	global.gpmap[? INPUT.RIGHT] = [gp_padr];
+	global.gpmap[? INPUT.PAUSE] = [gp_start, gp_face2];
+	global.gpmap[? INPUT.LOOP_DE_LOOP] = [gp_face4];
+	global.gpmap[? INPUT.MENU_SELECT] = [gp_face1];
+	global.gpmap[? INPUT.MENU_UP] = [gp_padu];
+	global.gpmap[? INPUT.MENU_DOWN] = [gp_padd];
+	global.gpmap[? INPUT.MENU_LEFT] = [gp_padl];
+	global.gpmap[? INPUT.MENU_RIGHT] = [gp_padr];
+	global.gpmap[? INPUT.ROLL_RIGHT] = [gp_shoulderrb];
+	global.gpmap[? INPUT.ROLL_LEFT] = [gp_shoulderlb];
+	global.gpmap[? INPUT.TOGGLE_AIM] = [gp_shoulderr];
+}
+
+/// @desc Nintendo-first: A=gp_face2, B=gp_face1, Y=gp_face3, X=gp_face4 (GM Switch mapping).
+function InputApplySwitchGamepadMap() {
+	global.gpmap[? INPUT.SEED] = [gp_face2];
+	global.gpmap[? INPUT.WATER] = [gp_face1];
+	global.gpmap[? INPUT.PARRY] = [gp_face3];
+	global.gpmap[? INPUT.UP] = [gp_padu];
+	global.gpmap[? INPUT.DOWN] = [gp_padd];
+	global.gpmap[? INPUT.LEFT] = [gp_padl];
+	global.gpmap[? INPUT.RIGHT] = [gp_padr];
+	global.gpmap[? INPUT.PAUSE] = [gp_start, gp_face1];
+	global.gpmap[? INPUT.LOOP_DE_LOOP] = [gp_face4];
+	global.gpmap[? INPUT.MENU_SELECT] = [gp_face2];
+	global.gpmap[? INPUT.MENU_UP] = [gp_padu];
+	global.gpmap[? INPUT.MENU_DOWN] = [gp_padd];
+	global.gpmap[? INPUT.MENU_LEFT] = [gp_padl];
+	global.gpmap[? INPUT.MENU_RIGHT] = [gp_padr];
+	global.gpmap[? INPUT.ROLL_RIGHT] = [gp_shoulderrb];
+	global.gpmap[? INPUT.ROLL_LEFT] = [gp_shoulderlb];
+	global.gpmap[? INPUT.TOGGLE_AIM] = [gp_shoulderr];
+}
+
+function InputApplyDefaultGamepadMap() {
+	if (variable_global_exists("gpmap") && ds_exists(global.gpmap, ds_type_map)) {
+		ds_map_destroy(global.gpmap);
+	}
+	global.gpmap = ds_map_create();
+	if (SavePlatformIsSwitch()) {
+		InputApplySwitchGamepadMap();
+	} else {
+		InputApplyDesktopGamepadMap();
+	}
+}
+
+function InputInitDefaultMaps() {
+	InputApplyDefaultKeyboardMap();
+	InputApplyDefaultGamepadMap();
+}
+
+/// @desc After global.key_names is populated — use Nintendo labels on Switch.
+function InputInitBindingDisplayNames() {
+	if (!variable_global_exists("key_names") || !ds_exists(global.key_names, ds_type_map)) return;
+	if (!SavePlatformIsSwitch()) return;
+	global.key_names[? gp_face1] = "B";
+	global.key_names[? gp_face2] = "A";
+	global.key_names[? gp_face3] = "Y";
+	global.key_names[? gp_face4] = "X";
+	global.key_names[? gp_shoulderl] = "L";
+	global.key_names[? gp_shoulderlb] = "ZL";
+	global.key_names[? gp_shoulderr] = "R";
+	global.key_names[? gp_shoulderrb] = "ZR";
+	global.key_names[? gp_start] = "+";
+	global.key_names[? gp_select] = "-";
+}
+
+/// @param {Real} _code Key or gp_* constant
+function InputGetBindingDisplayName(_code) {
+	if (variable_global_exists("key_names") && ds_exists(global.key_names, ds_type_map) && ds_map_exists(global.key_names, _code)) {
+		return global.key_names[? _code];
+	}
+	return string(_code);
+}
+
+/// @param {Array<Real>} _keys
+function InputFormatBindingList(_keys) {
+	var _out = "";
+	for (var i = 0; i < array_length(_keys); i++) {
+		_out += InputGetBindingDisplayName(_keys[i]);
+		if (i < array_length(_keys) - 1) _out += " + ";
+	}
+	return _out;
+}
+
+function InputRebindableInputList() {
+	return [INPUT.LEFT, INPUT.RIGHT, INPUT.UP, INPUT.DOWN, INPUT.ROLL_LEFT, INPUT.ROLL_RIGHT, INPUT.PARRY, INPUT.SEED, INPUT.WATER, INPUT.LOOP_DE_LOOP, INPUT.TOGGLE_AIM];
+}
+
+function InputLoadBindingsFromSave() {
+	if (!SavePlatformHasPersistence()) return;
+	SaveIniOpen();
+	var _inputs = InputRebindableInputList();
+	for (var i = 0; i < array_length(_inputs); i++) {
+		var _inp = _inputs[i];
+		if (InputControlsKeyboardRebindEnabled()) {
+			var _kb = SaveIniReadString("controls kb", string(_inp), "");
+			if (_kb != "") {
+				_kb = string_split(_kb, "-");
+				var _keys_kb = [];
+				for (var j = 0; j < array_length(_kb); j++) {
+					if (_kb[j] != "") array_push(_keys_kb, real(_kb[j]));
+				}
+				global.keymap[? _inp] = _keys_kb;
+			}
+		}
+		var _gp = SaveIniReadString("controls gp", string(_inp), "");
+		if (_gp != "") {
+			_gp = string_split(_gp, "-");
+			var _keys_gp = [];
+			for (var j = 0; j < array_length(_gp); j++) {
+				if (_gp[j] != "") array_push(_keys_gp, real(_gp[j]));
+			}
+			global.gpmap[? _inp] = _keys_gp;
+		}
+	}
+	SaveIniClose();
 }
 
 // @func InputGamepadButtonReleased();

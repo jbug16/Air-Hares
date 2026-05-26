@@ -1,52 +1,5 @@
 function ResetControlsToDefaultMappings() {
-	if (variable_global_exists("keymap") && ds_exists(global.keymap, ds_type_map)) {
-		ds_map_destroy(global.keymap);
-	}
-	if (variable_global_exists("gpmap") && ds_exists(global.gpmap, ds_type_map)) {
-		ds_map_destroy(global.gpmap);
-	}
-	
-	// Keyboard defaults
-	global.keymap = ds_map_create();
-	global.keymap[? INPUT.ANY] = [vk_anykey];
-	global.keymap[? INPUT.DOWN] = [vk_down];
-	global.keymap[? INPUT.LEFT] = [vk_left];
-	global.keymap[? INPUT.PARRY] = [ord("Q")];
-	global.keymap[? INPUT.RIGHT] = [vk_right];
-	global.keymap[? INPUT.SEED] = [vk_space];
-	global.keymap[? INPUT.UP] = [vk_up];
-	global.keymap[? INPUT.SHIFT] = [vk_shift];
-	global.keymap[? INPUT.WATER] = [ord("E")];
-	global.keymap[? INPUT.PAUSE] = [vk_escape];
-	global.keymap[? INPUT.LOOP_DE_LOOP] = [ord("Q"), vk_shift];
-	global.keymap[? INPUT.ROLL_LEFT] = [vk_left, vk_shift];
-	global.keymap[? INPUT.ROLL_RIGHT] = [vk_right, vk_shift];
-	global.keymap[? INPUT.MENU_SELECT] = [vk_enter, vk_space];
-	global.keymap[? INPUT.MENU_UP] = [vk_up];
-	global.keymap[? INPUT.MENU_DOWN] = [vk_down];
-	global.keymap[? INPUT.MENU_LEFT] = [vk_left];
-	global.keymap[? INPUT.MENU_RIGHT] = [vk_right];
-	global.keymap[? INPUT.TOGGLE_AIM] = [vk_enter];
-	
-	// Gamepad defaults
-	global.gpmap = ds_map_create();
-	global.gpmap[? INPUT.SEED] = [gp_face1];
-	global.gpmap[? INPUT.WATER] = [gp_face2];
-	global.gpmap[? INPUT.PARRY] = [gp_face3];
-	global.gpmap[? INPUT.UP] = [gp_padu];
-	global.gpmap[? INPUT.DOWN] = [gp_padd];
-	global.gpmap[? INPUT.LEFT] = [gp_padl];
-	global.gpmap[? INPUT.RIGHT] = [gp_padr];
-	global.gpmap[? INPUT.PAUSE] = [gp_start, gp_face2];
-	global.gpmap[? INPUT.LOOP_DE_LOOP] = [gp_face4];
-	global.gpmap[? INPUT.MENU_SELECT] = [gp_face1];
-	global.gpmap[? INPUT.MENU_UP] = [gp_padu];
-	global.gpmap[? INPUT.MENU_DOWN] = [gp_padd];
-	global.gpmap[? INPUT.MENU_LEFT] = [gp_padl];
-	global.gpmap[? INPUT.MENU_RIGHT] = [gp_padr];
-	global.gpmap[? INPUT.ROLL_RIGHT] = [gp_shoulderrb];
-	global.gpmap[? INPUT.ROLL_LEFT] = [gp_shoulderlb];
-	global.gpmap[? INPUT.TOGGLE_AIM] = [gp_shoulderr];
+	InputInitDefaultMaps();
 }
 
 /// @desc Delete save files, reset in-memory save state, return to main menu.
@@ -119,7 +72,6 @@ function EraseAllSavedData() {
 	audio_group_set_gain(audiogroup_default, global.options_sfx, 0);
 	audio_group_set_gain(audiogroup_music, global.options_music, 0);
 	
-	// Ensure keyboard/gamepad input maps are valid after erase.
 	ResetControlsToDefaultMappings();
 	
 	show_debug_message("EraseAllSavedData: save_removed=" + string(_removed_save) + ", leaderboard_removed=" + string(_removed_lb));

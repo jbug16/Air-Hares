@@ -4,14 +4,14 @@ if(!in_controls) exit;
 
 if(alarm[10] > 0)
 {
-	keyboard_lastkey = vk_nokey;
+	if (InputControlsKeyboardRebindEnabled()) keyboard_lastkey = vk_nokey;
 	exit;
 }
 
 if(alarm[1] > 0)
 {
-	// Keyboard change
-	if(keyboard_lastkey != vk_nokey and !input_captured)
+	// Keyboard change (desktop only)
+	if(InputControlsKeyboardRebindEnabled() and keyboard_lastkey != vk_nokey and !input_captured)
 	{
 		var _key = [];
 		//array_push(_key, keyboard_lastkey);
@@ -33,12 +33,7 @@ if(alarm[1] > 0)
 		if(array_length(_key) > 0)
 		{
 			global.keymap[? input[menu_selected]] = _key;
-			key_keyboard[menu_selected] = "";
-			for(var i = 0; i < array_length(_key); i++)
-			{
-				key_keyboard[menu_selected] += global.key_names[? _key[i]];
-				if(i < array_length(_key) - 1) key_keyboard[menu_selected] += " + ";
-			}
+			key_keyboard[menu_selected] = InputFormatBindingList(_key);
 		}
 	}	
 	// Gamepad change
@@ -86,12 +81,7 @@ if(alarm[1] > 0)
 			if(array_length(_key) > 0)
 			{
 				global.gpmap[? input[menu_selected]] = _key;
-				key_joypad[menu_selected] = "";
-				for(var i = 0; i < array_length(_key); i++)
-				{
-					key_joypad[menu_selected] += global.key_names[? _key[i]];
-					if(i < array_length(_key) - 1) key_joypad[menu_selected] += " + ";
-				}
+				key_joypad[menu_selected] = InputFormatBindingList(_key);
 			}	
 		}
 		else
@@ -121,11 +111,13 @@ if(alarm[1] > 0)
 	else if(input_captured)
 	{
 		var _released = true;
-		// Keyboard release
-		var _keys = global.keymap[? input[menu_selected]];
-		for(var i = 0; i < array_length(_keys); i++)
-		{
-			if(keyboard_check(_keys[i])) _released = false;
+		// Keyboard release (desktop only)
+		if (InputControlsKeyboardRebindEnabled()) {
+			var _keys = global.keymap[? input[menu_selected]];
+			for(var i = 0; i < array_length(_keys); i++)
+			{
+				if(keyboard_check(_keys[i])) _released = false;
+			}
 		}
 		
 		// Gamepad release
@@ -162,20 +154,22 @@ if(alarm[1] > 0)
 					var _check_gpmap = global.gpmap[? input[i]];
 					var _same = true;
 					
-					// Check keyboard
-					if(array_length(_current_keymap) == array_length(_check_keymap))
-					{
-						for(var j = 0; j < array_length(_current_keymap); j++)
+					// Check keyboard (desktop only)
+					if (InputControlsKeyboardRebindEnabled()) {
+						if(array_length(_current_keymap) == array_length(_check_keymap))
 						{
-							if(_current_keymap[j] != _check_keymap[j]) _same = false;
+							for(var j = 0; j < array_length(_current_keymap); j++)
+							{
+								if(_current_keymap[j] != _check_keymap[j]) _same = false;
+							}
 						}
-					}
-					else _same = false;
-					
-					if(_same)
-					{
-						global.keymap[? input[i]] = [];
-						key_keyboard[i] = "";
+						else _same = false;
+						
+						if(_same)
+						{
+							global.keymap[? input[i]] = [];
+							key_keyboard[i] = "";
+						}
 					}
 					
 					// Check gamepad
@@ -200,15 +194,17 @@ if(alarm[1] > 0)
 			// Save to file
 			SaveIniOpen();
 			
-			var _input_string = "";
-			for(var i = 0; i < array_length(_current_keymap); i++)
-			{
-				_input_string += string(_current_keymap[i]);
-				_input_string += "-";
+			if (InputControlsKeyboardRebindEnabled()) {
+				var _input_string = "";
+				for(var i = 0; i < array_length(_current_keymap); i++)
+				{
+					_input_string += string(_current_keymap[i]);
+					_input_string += "-";
+				}
+				SaveIniWriteString("controls kb", string(input[menu_selected]), _input_string);
 			}
-			SaveIniWriteString("controls kb", string(input[menu_selected]), _input_string);
 			
-			_input_string = "";
+			var _input_string = "";
 			for(var i = 0; i < array_length(_current_gpmap); i++)
 			{
 				_input_string += string(_current_gpmap[i]);
@@ -221,8 +217,9 @@ if(alarm[1] > 0)
 			{
 				if(i != menu_selected) 
 				{
-					if(array_length(global.keymap[? input[i]]) == 0)
+					if (InputControlsKeyboardRebindEnabled() && array_length(global.keymap[? input[i]]) == 0) {
 						SaveIniWriteString("controls kb", string(input[i]), "-");
+					}
 				
 					if(array_length(global.gpmap[? input[i]]) == 0)
 						SaveIniWriteString("controls gp", string(input[i]), "-");

@@ -386,50 +386,8 @@ global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.DEATH] = spr_CandieId
 }
 
 
-// Input
-
-// Keyboard
-global.keymap = ds_map_create();
-global.keymap[? INPUT.ANY] = [vk_anykey];
-global.keymap[? INPUT.DOWN] = [vk_down];
-global.keymap[? INPUT.LEFT] = [vk_left];
-global.keymap[? INPUT.PARRY] = [ord("Q")];
-global.keymap[? INPUT.RIGHT] = [vk_right];
-global.keymap[? INPUT.SEED] = [vk_space];
-global.keymap[? INPUT.UP] = [vk_up];
-global.keymap[? INPUT.SHIFT] = [vk_shift];
-global.keymap[? INPUT.WATER] = [ord("E")];
-global.keymap[? INPUT.PAUSE] = [vk_escape];
-global.keymap[? INPUT.LOOP_DE_LOOP] = [ord("Q"), vk_shift];
-global.keymap[? INPUT.ROLL_LEFT] = [vk_left, vk_shift];
-global.keymap[? INPUT.ROLL_RIGHT] = [vk_right, vk_shift];
-global.keymap[? INPUT.MENU_SELECT] = [vk_enter, vk_space];
-global.keymap[? INPUT.MENU_UP] = [vk_up];
-global.keymap[? INPUT.MENU_DOWN] = [vk_down];
-global.keymap[? INPUT.MENU_LEFT] = [vk_left];
-global.keymap[? INPUT.MENU_RIGHT] = [vk_right];
-global.keymap[? INPUT.TOGGLE_AIM] = [vk_enter];
-
-// Gamepad
-global.gpmap = ds_map_create();
-global.gpmap[? INPUT.SEED] = [gp_face1];
-global.gpmap[? INPUT.WATER] = [gp_face2];
-global.gpmap[? INPUT.PARRY] = [gp_face3];
-global.gpmap[? INPUT.UP] = [gp_padu];
-global.gpmap[? INPUT.DOWN] = [gp_padd];
-global.gpmap[? INPUT.LEFT] = [gp_padl];
-global.gpmap[? INPUT.RIGHT] = [gp_padr];
-global.gpmap[? INPUT.PAUSE] = [gp_start, gp_face2];
-//global.gpmap[? INPUT.PAUSE] = [gp_start];
-global.gpmap[? INPUT.LOOP_DE_LOOP] = [gp_face4];
-global.gpmap[? INPUT.MENU_SELECT] = [gp_face1];
-global.gpmap[? INPUT.MENU_UP] = [gp_padu];
-global.gpmap[? INPUT.MENU_DOWN] = [gp_padd];
-global.gpmap[? INPUT.MENU_LEFT] = [gp_padl];
-global.gpmap[? INPUT.MENU_RIGHT] = [gp_padr];
-global.gpmap[? INPUT.ROLL_RIGHT] = [gp_shoulderrb];
-global.gpmap[? INPUT.ROLL_LEFT] = [gp_shoulderlb];
-global.gpmap[? INPUT.TOGGLE_AIM] = [gp_shoulderr];
+// Input (defaults + save overrides; Switch uses Nintendo-oriented gpmap)
+InputInitDefaultMaps();
 
 // Keyboard/gamepad names
 global.key_names = ds_map_create();
@@ -538,40 +496,5 @@ global.key_names[? ord("X")] = "X";
 global.key_names[? ord("Y")] = "Y";
 global.key_names[? ord("Z")] = "Z";
 
-// Gameplay input from ini file
-SaveIniOpen();
-
-var _input = [INPUT.LEFT, INPUT.RIGHT, INPUT.UP, INPUT.DOWN, INPUT.ROLL_LEFT, INPUT.ROLL_RIGHT, INPUT.PARRY, INPUT.SEED, INPUT.WATER, INPUT.LOOP_DE_LOOP, INPUT.TOGGLE_AIM];
-
-for(var i = 0; i < array_length(_input); i++)
-{
-	// Keyboard
-	var _input_string = SaveIniReadString("controls kb", string(_input[i]), "");
-	if(_input_string != "")
-	{
-		_input_string = string_split(_input_string, "-");
-		var _keys = [];
-		for(var j = 0; j < array_length(_input_string); j++)
-		{
-			if(_input_string[j] != "") array_push(_keys, real(_input_string[j]));
-		}
-		
-		global.keymap[? _input[i]] = _keys;
-	}
-	
-	// Gamepad
-	_input_string = SaveIniReadString("controls gp", string(_input[i]), "");
-	if(_input_string != "")
-	{
-		_input_string = string_split(_input_string, "-");
-		var _keys = [];
-		for(var j = 0; j < array_length(_input_string); j++)
-		{
-			if(_input_string[j] != "") array_push(_keys, real(_input_string[j]));
-		}
-		
-		global.gpmap[? _input[i]] = _keys;
-	}
-}
-
-SaveIniClose();
+InputInitBindingDisplayNames();
+InputLoadBindingsFromSave();

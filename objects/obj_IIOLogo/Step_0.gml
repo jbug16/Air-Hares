@@ -15,7 +15,7 @@ for(var i = 0; i < array_length(_mapped); i++)
 
 // Hardcoded input
 var _hardcoded_kb = [vk_enter, vk_escape];
-var _hardcoded_gp = [gp_face1, gp_face2, gp_start];
+var _hardcoded_gp = InputGpSplashAdvanceButtons();
 
 for(var i = 0; i < array_length(_hardcoded_kb); i++)
 {

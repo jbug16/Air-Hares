@@ -39,7 +39,7 @@ else if(_select)
 		TweenStart("control_alpha", control_alpha, 0, blink_dur, TWEENTYPE.LINEAR);
 		alarm[1] = blink_dur;
 		alarm[10] = 15;
-		keyboard_lastkey = vk_nokey;
+		if (InputControlsKeyboardRebindEnabled()) keyboard_lastkey = vk_nokey;
 	}
 	else event_user(0);
 	
@@ -168,7 +168,7 @@ if(mouse_prev_x != mouse_x or mouse_prev_y != mouse_y)
 						TweenStart("control_alpha", control_alpha, 0, blink_dur, TWEENTYPE.LINEAR);
 						alarm[1] = blink_dur;
 						alarm[10] = 5;
-						keyboard_lastkey = vk_nokey;
+						if (InputControlsKeyboardRebindEnabled()) keyboard_lastkey = vk_nokey;
 						exit;
 					}
 					else event_user(0);
@@ -215,7 +215,7 @@ else
 							TweenStart("control_alpha", control_alpha, 0, blink_dur, TWEENTYPE.LINEAR);
 							alarm[1] = blink_dur;
 							alarm[10] = 5;
-							keyboard_lastkey = vk_nokey;
+							if (InputControlsKeyboardRebindEnabled()) keyboard_lastkey = vk_nokey;
 							exit;
 						}
 						else event_user(0);

@@ -6,9 +6,10 @@ if (!_is_array) {
 
 // Check skip
 var _gp_valid = (global.gamepad_connected != noone && gamepad_is_connected(global.gamepad_connected));
-var _skip_press = keyboard_check(ord("F")) || (_gp_valid && gamepad_button_check(global.gamepad_connected, gp_face1));
-if (global.gamepad_debug && _gp_valid && gamepad_button_check(global.gamepad_connected, gp_face1)) {
-	show_debug_message("[Dialogue] Skip pressed via gamepad button (gp_face1) on index " + string(global.gamepad_connected));
+var _gp_confirm = InputGpMenuConfirm();
+var _skip_press = keyboard_check(ord("F")) || (_gp_valid && gamepad_button_check(global.gamepad_connected, _gp_confirm));
+if (global.gamepad_debug && _gp_valid && gamepad_button_check(global.gamepad_connected, _gp_confirm)) {
+	show_debug_message("[Dialogue] Skip pressed via gamepad button (" + string(_gp_confirm) + ") on index " + string(global.gamepad_connected));
 }
 
 if _skip_press {

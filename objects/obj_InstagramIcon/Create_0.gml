@@ -8,3 +8,5 @@ image_xscale = 0.31;
 image_yscale = 0.31;
 scale_normal = image_xscale;
 scale_big = image_xscale * 1.2; // Smaller scale increase for icons
+
+TitleSocialLinkInstanceInit();

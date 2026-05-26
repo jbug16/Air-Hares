@@ -1,5 +1,6 @@
 /// @desc Interaction and easeInOut
 if (parent_index == obj_TitlebBtnGeneralPAR and mode_on) exit;
+if (TitleMainIsSocialButtonId(button_id) && !TitleMainSocialLinksEnabled()) exit;
 
 
 // MOUSE hover-in
@@ -34,7 +35,7 @@ if (alarm[2] < 0 and focus) {
 				if (array_length(_ids) > 0) {
 					_sel = ModesBtnPopupStoryMainNavWrap(_ids, button_id, _movement);
 				}
-			} else if (parent_index == obj_TitlebBtnGeneralPAR && button_id >= 1 && button_id <= 7) {
+			} else if (parent_index == obj_TitlebBtnGeneralPAR && array_contains(TitleMainVisibleButtonIds(), button_id)) {
 				_sel = ModesBtnPopupStoryMainNavWrap(TitleMainVisibleButtonIds(), button_id, _movement);
 			} else {
 				if (_sel < 1) _sel = instance_number(parent_index);

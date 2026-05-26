@@ -55,9 +55,29 @@ function CoopPortraitSelectSlotAvailable(_slot) {
 	return _slot == 0;
 }
 
+/// @desc Comic / Instagram / Discord links (not on Nintendo Switch).
+function TitleMainSocialLinksEnabled() {
+	return !SavePlatformIsSwitch();
+}
+
+function TitleMainIsSocialButtonId(_button_id) {
+	return _button_id >= 5 && _button_id <= 7;
+}
+
+/// @desc Call from social icon Create after button_id is set.
+function TitleSocialLinkInstanceInit() {
+	if (TitleMainSocialLinksEnabled()) return;
+	visible = false;
+	focus = false;
+	instance_deactivate_object(true);
+}
+
 /// @desc Main menu: Story..Exit (1-4) then social icons (5-7), left-to-right wrap order.
 function TitleMainVisibleButtonIds() {
-	return [1, 2, 3, 4, 5, 6, 7];
+	if (TitleMainSocialLinksEnabled()) {
+		return [1, 2, 3, 4, 5, 6, 7];
+	}
+	return [1, 2, 3, 4];
 }
 
 // Save story mode progress

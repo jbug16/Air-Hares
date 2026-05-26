@@ -1,3 +1,5 @@
+if (TitleMainIsSocialButtonId(button_id) && !TitleMainSocialLinksEnabled()) exit;
+
 // Basic setup
 if (draw_get_font() != fnt_Federo37) draw_set_font(fnt_Federo37);
 if (draw_get_halign() != fa_center) draw_set_halign(fa_center);

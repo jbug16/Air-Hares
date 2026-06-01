@@ -3,7 +3,11 @@ var _is_boss = (global.tips_return_room == rm_Level1_3FightBoss) ||
 			   (global.tips_return_room == rm_Level2_3FightBoss) || 
 			   (global.tips_return_room == rm_Level3_3FightBoss) || 
 			   (global.tips_return_room == rm_Level4_3FightBoss);
-sprite_index = _is_boss ? spr_TipsAndTricks_Boss : spr_TipsAndTricks_Farm;
+if (SavePlatformIsSwitch()) {
+	sprite_index = _is_boss ? spr_TipsAndTricks_Boss_Switch : spr_TipsAndTricks_Farm_Switch;
+} else {
+	sprite_index = _is_boss ? spr_TipsAndTricks_Boss : spr_TipsAndTricks_Farm;
+}
 image_index = global.current_level div 4;
 
 // Audio - only play if not from mission failed (where music already playing)

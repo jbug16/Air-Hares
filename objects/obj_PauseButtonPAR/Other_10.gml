@@ -9,7 +9,8 @@ if !focus {
 	audio_play_sound(snd_ProjSeedShot, 1, false);
 	focus = true;
 	if (object_index == obj_PauseButtonResume)obj_ControllerPause.menu_selected = 0;
-	if (object_index == obj_PauseButtonExit)obj_ControllerPause.menu_selected = 1;
+	if (object_index == obj_PauseButtonMMenu)obj_ControllerPause.menu_selected = 1;
+	if (object_index == obj_PauseButtonExit)obj_ControllerPause.menu_selected = 2;
 	
 	//scale
 	TweenStart("image_xscale", image_xscale, 1.5, 0.5*GAMESPD, TWEENTYPE.CIRC_OUT);

@@ -60,6 +60,11 @@ function TitleMainSocialLinksEnabled() {
 	return !SavePlatformIsSwitch();
 }
 
+/// @desc Quit-to-desktop exit buttons (not on Nintendo Switch).
+function MenuExitButtonEnabled() {
+	return !SavePlatformIsSwitch();
+}
+
 function TitleMainIsSocialButtonId(_button_id) {
 	return _button_id >= 5 && _button_id <= 7;
 }
@@ -72,12 +77,24 @@ function TitleSocialLinkInstanceInit() {
 	instance_deactivate_object(true);
 }
 
+/// @desc Call from main-menu exit button Create after button_id is set.
+function TitleMainExitInstanceInit() {
+	if (MenuExitButtonEnabled()) return;
+	visible = false;
+	focus = false;
+	instance_deactivate_object(true);
+}
+
 /// @desc Main menu: Story..Exit (1-4) then social icons (5-7), left-to-right wrap order.
 function TitleMainVisibleButtonIds() {
+	var _ids = [1, 2, 3];
+	if (MenuExitButtonEnabled()) array_push(_ids, 4);
 	if (TitleMainSocialLinksEnabled()) {
-		return [1, 2, 3, 4, 5, 6, 7];
+		array_push(_ids, 5);
+		array_push(_ids, 6);
+		array_push(_ids, 7);
 	}
-	return [1, 2, 3, 4];
+	return _ids;
 }
 
 // Save story mode progress

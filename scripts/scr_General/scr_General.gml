@@ -359,6 +359,7 @@ function ModesBtnPopupStoryMainNavWrap(_ids, _cur, _dir) {
 function StoryPopupExitNewGameScreen() {
 	global.story_popup_screen = 0;
 	global.story_new_initials = "";
+	VirtualKeyboardForceClose();
 	with (obj_StoryBtnPlay) visible = true;
 	with (obj_StoryBtnContinue) visible = StoryHasMainMenuContinue();
 	
@@ -512,6 +513,7 @@ function StoryNewGameFocusBack() {
 function ArcadePopupExitInitialsScreen() {
 	global.arcade_popup_screen = 0;
 	global.arcade_new_initials = "";
+	VirtualKeyboardForceClose();
 	with (obj_FreeModeBtnPlay) text = "PLAY";
 	ArcadePopupFocusPlayButton();
 }

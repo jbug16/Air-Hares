@@ -1,3 +1,6 @@
+// Keyboard open: popup is hidden; obj_VirtualKeyboard draws the full screen
+if (global.story_popup_screen == 1 && VirtualKeyboardIsActive()) exit;
+
 // init & frame
 draw_self();
 draw_set_color(c_white);
@@ -13,12 +16,9 @@ var _scale_y = image_yscale/2;
 draw_sprite_ext(spr_PlayerIcon, 0, x - 130*image_xscale, y - 5*image_yscale, _scale_x, _scale_y, 0, c_white, 1);
 
 if (global.story_popup_screen == 1) {
-	// New Story Game: same frame, different body (initials instead of stage/lives block)
 	draw_text_transformed(x, y - 20*image_yscale, "New Story Game", _scale_x, _scale_y, 0);
 	draw_set_font(fnt_Federo24);
 	draw_set_color(c_orange);
-
-	// Three slots: typed letters + underscores for empty slots (e.g. A__, AB_, ABC)
 	var _s = global.story_new_initials;
 	var _n = string_length(_s);
 	var _initials_text = "";
@@ -27,6 +27,9 @@ if (global.story_popup_screen == 1) {
 		else _initials_text += "_";
 	}
 	draw_text_transformed(x, y + 8*image_yscale, _initials_text, _scale_x, _scale_y, 0);
+	draw_set_font(fnt_Federo16);
+	draw_set_color(c_white);
+	draw_text_transformed(x, y + 28*image_yscale, "Select to edit initials", _scale_x * 0.85, _scale_y * 0.85, 0);
 	exit;
 }
 

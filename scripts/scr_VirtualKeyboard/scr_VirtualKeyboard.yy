@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_VirtualKeyboard",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_VirtualKeyboard",
+  "parent":{
+    "name":"General",
+    "path":"folders/Scripts/General.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

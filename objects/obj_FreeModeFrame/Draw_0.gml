@@ -1,3 +1,6 @@
+// Keyboard open: popup is hidden; obj_VirtualKeyboard draws the full screen
+if (global.arcade_popup_screen == 1 && VirtualKeyboardIsActive()) exit;
+
 // init & frame
 draw_self();
 draw_set_color(c_white);
@@ -29,6 +32,9 @@ if (global.arcade_popup_screen == 1) {
 		else _initials_text += "_";
 	}
 	draw_text_transformed(x, y + 8 * image_yscale, _initials_text, _body_sx, _body_sy, 0);
+	draw_set_font(fnt_Federo16);
+	draw_set_color(c_white);
+	draw_text_transformed(x, y + 28 * image_yscale, "Select to edit initials", _body_sx * 0.85, _body_sy * 0.85, 0);
 	exit;
 }
 

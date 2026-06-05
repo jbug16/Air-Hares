@@ -1,6 +1,8 @@
-/// @desc Arcade popup screen 1: initials in the center; left/right moves Play — initials — Back
+/// @desc Arcade popup screen 1: initials; open keyboard to edit; Play/Back when keyboard is closed
 
 if (global.arcade_popup_screen != 1) exit;
+
+if (VirtualKeyboardIsActive()) exit;
 
 if (keyboard_check_pressed(vk_escape) || InputGet(INPUT.PAUSE)) {
 	ArcadePopupExitInitialsScreen();
@@ -20,7 +22,6 @@ if (_left || _right) {
 	}
 
 	if (!_on_play && !_on_back) {
-		// Center: initials field
 		if (_left) {
 			ArcadePopupFocusPlayButton();
 			exit;
@@ -57,31 +58,13 @@ if (!global.mouse_disable && mouse_check_button_pressed(mb_left)) {
 	var _hh = 28 * image_yscale;
 	if (point_in_rectangle(mouse_x, mouse_y, _ix - _hw, _iy - _hh, _ix + _hw, _iy + _hh)) {
 		ArcadePopupUnfocusButtons();
+		VirtualKeyboardOpen("arcade");
+		exit;
 	}
 }
 
 if (ArcadePopupAnyButtonFocused()) exit;
 
-if (keyboard_check_pressed(vk_backspace) && string_length(global.arcade_new_initials) > 0) {
-	global.arcade_new_initials = string_copy(global.arcade_new_initials, 1, string_length(global.arcade_new_initials) - 1);
-}
-
-if (string_length(global.arcade_new_initials) < 3) {
-	var _alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	var _c = 0;
-	for (var _k = ord("A"); _k <= ord("Z"); _k++) {
-		if (keyboard_check_pressed(_k)) {
-			_c = _k - ord("A") + 1;
-			break;
-		}
-	}
-	if (_c == 0) {
-		for (var _k2 = ord("a"); _k2 <= ord("z"); _k2++) {
-			if (keyboard_check_pressed(_k2)) {
-				_c = _k2 - ord("a") + 1;
-				break;
-			}
-		}
-	}
-	if (_c > 0) global.arcade_new_initials += string_copy(_alpha, _c, 1);
+if (InputGet(INPUT.MENU_SELECT)) {
+	VirtualKeyboardOpen("arcade");
 }

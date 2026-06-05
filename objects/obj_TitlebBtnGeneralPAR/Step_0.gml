@@ -1,4 +1,5 @@
 /// @desc Interaction and easeInOut
+if (VirtualKeyboardIsActive()) exit;
 if (parent_index == obj_TitlebBtnGeneralPAR and mode_on) exit;
 if (TitleMainIsSocialButtonId(button_id) && !TitleMainSocialLinksEnabled()) exit;
 
@@ -21,8 +22,8 @@ if (!global.mouse_disable and visible and !focus and (mouse_prev_x != mouse_x or
 
 // KEYBOARD
 if (alarm[2] < 0 and focus) {
-	// Initials sub-screen: obj_StoryModeFrame / obj_FreeModeFrame Step owns MENU_LEFT/RIGHT.
-	if (global.story_popup_screen == 1 || global.arcade_popup_screen == 1) {
+	// Initials sub-screen: frame Step owns nav; keyboard owns input when open.
+	if ((global.story_popup_screen == 1 || global.arcade_popup_screen == 1) && !VirtualKeyboardIsActive()) {
 		if (InputGet(INPUT.MENU_SELECT) && visible) event_user(0);
 	} else {
 		var _movement = InputGet(INPUT.MENU_RIGHT) - InputGet(INPUT.MENU_LEFT);

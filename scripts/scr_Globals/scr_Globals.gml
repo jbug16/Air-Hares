@@ -38,6 +38,9 @@ global.main_menu_open_options_tutorial_fade = false;
 // Arcade level popup: 0 = level + Play/Back, 1 = initials + Continue/Back
 global.arcade_popup_screen = 0;
 global.arcade_new_initials = "";
+global.virtual_keyboard_active = false;
+global.virtual_keyboard_context = "";
+global.virtual_keyboard_saved = "";
 
 // Co-op drop-in: portrait select (obj_Pause freeze + obj_ControllerPAR UI)
 global.pause_coop_portrait_select = false;

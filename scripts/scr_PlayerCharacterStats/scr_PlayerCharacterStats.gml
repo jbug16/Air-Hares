@@ -5,6 +5,7 @@ function PlayerApplyCharacterStats() {
 	var _loop = 1;
 	var _wind = 1;
 	var _hp = 1;
+	var _damage_taken = 1;
 	lightning_immune = false;
 	has_last_stand = false;
 	last_stand_used = false;
@@ -20,7 +21,7 @@ function PlayerApplyCharacterStats() {
 			_bank = 1.15;
 			_roll = 1.15;
 			_loop = 1.25;
-			_hp = 0.75;
+			_damage_taken = 4 / 3; // ~25% more damage per hit (replaces old 0.75 max HP)
 			_wind = 1.15;
 			break;
 		case CHARACTER.BETTY:
@@ -45,6 +46,8 @@ function PlayerApplyCharacterStats() {
 	stat_loop_dist_mult = _loop;
 	stat_wind_mult = _wind;
 	stat_max_hp_mult = _hp;
+	stat_damage_taken_mult = _damage_taken;
+	stat_damage_taken_debt = 0;
 	loop_parallax_target = -6 * stat_loop_dist_mult;
 	hp = max(1, floor(PlayerStatsArmorLoad() * stat_max_hp_mult));
 }

@@ -342,6 +342,11 @@ function InputGpMenuConfirm() {
 	return SavePlatformIsSwitch() ? gp_face2 : gp_face1;
 }
 
+/// @desc GameMaker gp_face* constant for menu back / cancel (Nintendo B on Switch = gp_face1).
+function InputGpMenuCancel() {
+	return SavePlatformIsSwitch() ? gp_face1 : gp_face2;
+}
+
 /// @desc Splash / logo screens: buttons that advance when pressed.
 function InputGpSplashAdvanceButtons() {
 	if (SavePlatformIsSwitch()) {

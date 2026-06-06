@@ -79,16 +79,49 @@ function TitleSocialLinkInstanceInit() {
 
 /// @desc Call from main-menu exit button Create after button_id is set.
 function TitleMainExitInstanceInit() {
+	if (SavePlatformIsSwitch()) {
+		text = "LEADERBOARDS";
+		return;
+	}
 	if (MenuExitButtonEnabled()) return;
 	visible = false;
 	focus = false;
 	instance_deactivate_object(true);
 }
 
+/// @desc Switch: Leaderboards at Options slot (960), Options at exit slot (1170).
+function TitleMainApplySwitchPosition() {
+	if (!SavePlatformIsSwitch()) return;
+	if (button_id == 3) x = 1170;
+	else if (button_id == 4) x = 960;
+}
+
+/// @desc Open the leaderboard screen from the main menu (Switch slot 4).
+function TitleMainOpenLeaderboards() {
+	with (all) {
+		if (!persistent) instance_deactivate_object(id);
+	}
+	layer_set_visible("Background_Options", true);
+	var _ctrl = instance_create_layer(0.3 * room_width, 0.5 * room_height, "Instances", obj_OptionsController);
+	with (_ctrl) {
+		from_title_menu = true;
+		in_leaderboards = true;
+		menu_selected = 0;
+		event_user(1);
+	}
+	instance_create_layer(0.5 * room_width, 0.1 * room_height, "Instances", obj_OptionsTitle);
+}
+
 /// @desc Main menu: Story..Exit (1-4) then social icons (5-7), left-to-right wrap order.
 function TitleMainVisibleButtonIds() {
-	var _ids = [1, 2, 3];
-	if (MenuExitButtonEnabled()) array_push(_ids, 4);
+	var _ids = [1, 2];
+	if (SavePlatformIsSwitch()) {
+		array_push(_ids, 4);
+		array_push(_ids, 3);
+	} else {
+		array_push(_ids, 3);
+		if (MenuExitButtonEnabled()) array_push(_ids, 4);
+	}
 	if (TitleMainSocialLinksEnabled()) {
 		array_push(_ids, 5);
 		array_push(_ids, 6);

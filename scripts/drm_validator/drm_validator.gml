@@ -13,6 +13,7 @@
 ///
 
 function drm_validator() {
+	if (!BUILD_INDIEPASS) return;
 
 	// Configuration
 	global.drm_validation_url = "https://api.indiepass.gg/api/auth/verification/hasActiveSubscription";
@@ -41,6 +42,7 @@ function drm_validator() {
 	// If no token found, quit
 	if (token == "") {
 	    game_end();
+	    return;
 	}
 
 	// Make HTTP request with Bearer token
@@ -48,5 +50,4 @@ function drm_validator() {
 	ds_map_add(headers, "Authorization", "Bearer " + token);
 	global.drm_http_request = http_request(global.drm_validation_url, "GET", headers, "");
 	ds_map_destroy(headers);
-
 }

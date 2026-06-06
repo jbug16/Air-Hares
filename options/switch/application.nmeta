@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NintendoSdkMeta>
+    <Core>
+        <Name>Application</Name>
+        <!-- PENDING: Replace ApplicationId with Nintendo Developer Portal title ID (0x0100XXXXXXXXXXXX) -->
+        <ApplicationId>0x0100000000000000</ApplicationId>
+        <Is64BitInstruction>True</Is64BitInstruction>
+        <ProcessAddressSpace>AddressSpace64Bit</ProcessAddressSpace>
+    </Core>
+    <Application>
+        <Title>
+            <Language>AmericanEnglish</Language>
+            <Name>Air Hares</Name>
+            <Publisher>Wondoro Production</Publisher>
+        </Title>
+        <Icon>
+            <Language>AmericanEnglish</Language>
+            <IconPath>./icon.bmp</IconPath>
+        </Icon>
+        <DisplayVersion>0.21.8.0</DisplayVersion>
+        <SupportedLanguage>AmericanEnglish</SupportedLanguage>
+        <Rating>
+            <Organization>ESRB</Organization>
+            <Age>10</Age>
+        </Rating>
+        <UserAccountSaveDataSize>0x0000000000400000</UserAccountSaveDataSize>
+        <UserAccountSaveDataJournalSize>0x0000000000100000</UserAccountSaveDataJournalSize>
+        <LogoType>LicensedByNintendo</LogoType>
+        <ReleaseVersion>0</ReleaseVersion>
+        <StartupUserAccount>Required</StartupUserAccount>
+        <!-- PENDING: Set SaveDataOwnerId to the same value as ApplicationId -->
+        <SaveDataOwnerId>0x0100000000000000</SaveDataOwnerId>
+        <UserAccountSwitchLock>Disable</UserAccountSwitchLock>
+        <CardSpec>Normal</CardSpec>
+        <HtmlDocumentPath></HtmlDocumentPath>
+    </Application>
+</NintendoSdkMeta>

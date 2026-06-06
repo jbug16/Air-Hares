@@ -88,6 +88,7 @@
     {"name":"fnt_Federo30","order":8,"path":"fonts/fnt_Federo30/fnt_Federo30.yy",},
     {"name":"fnt_Federo37","order":10,"path":"fonts/fnt_Federo37/fnt_Federo37.yy",},
     {"name":"nt_Credits","order":1,"path":"notes/nt_Credits/nt_Credits.yy",},
+    {"name":"nt_SwitchBuild","order":2,"path":"notes/nt_SwitchBuild/nt_SwitchBuild.yy",},
     {"name":"obj_BossBackground","order":7,"path":"objects/obj_BossBackground/obj_BossBackground.yy",},
     {"name":"obj_BossBigRed","order":2,"path":"objects/obj_BossBigRed/obj_BossBigRed.yy",},
     {"name":"obj_BossHighTop","order":2,"path":"objects/obj_BossHighTop/obj_BossHighTop.yy",},

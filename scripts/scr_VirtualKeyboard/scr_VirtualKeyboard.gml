@@ -244,6 +244,16 @@ function VirtualKeyboardInitialsDisplay(_buf) {
 	return _text;
 }
 
+/// @desc Footer action label (same on all platforms).
+function VirtualKeyboardFooterLabel(_focus) {
+	switch (_focus) {
+		case VK_FOCUS.CANCEL: return "CANCEL";
+		case VK_FOCUS.BACKSPACE: return "DEL";
+		case VK_FOCUS.OK: return "OK";
+	}
+	return "";
+}
+
 /// @desc Draw the full keyboard screen (replaces hidden Story/Arcade initials popup).
 function VirtualKeyboardDrawPanel(_inst) {
 	var _buf = VirtualKeyboardGetBuffer();
@@ -276,15 +286,15 @@ function VirtualKeyboardDrawPanel(_inst) {
 
 	var _cancel_r = VirtualKeyboardFooterRect(_inst, VK_FOCUS.CANCEL);
 	VirtualKeyboardDrawLabel((_cancel_r[0] + _cancel_r[2]) * 0.5, (_cancel_r[1] + _cancel_r[3]) * 0.5,
-		"CANCEL", _inst.focus == VK_FOCUS.CANCEL, _ksx, _ksy);
+		VirtualKeyboardFooterLabel(VK_FOCUS.CANCEL), _inst.focus == VK_FOCUS.CANCEL, _ksx, _ksy);
 
 	var _del_r = VirtualKeyboardFooterRect(_inst, VK_FOCUS.BACKSPACE);
 	VirtualKeyboardDrawLabel((_del_r[0] + _del_r[2]) * 0.5, (_del_r[1] + _del_r[3]) * 0.5,
-		"DEL", _inst.focus == VK_FOCUS.BACKSPACE, _ksx, _ksy, _len > 0);
+		VirtualKeyboardFooterLabel(VK_FOCUS.BACKSPACE), _inst.focus == VK_FOCUS.BACKSPACE, _ksx, _ksy, _len > 0);
 
 	var _ok_r = VirtualKeyboardFooterRect(_inst, VK_FOCUS.OK);
 	VirtualKeyboardDrawLabel((_ok_r[0] + _ok_r[2]) * 0.5, (_ok_r[1] + _ok_r[3]) * 0.5,
-		"OK", _inst.focus == VK_FOCUS.OK, _ksx, _ksy, _len > 0);
+		VirtualKeyboardFooterLabel(VK_FOCUS.OK), _inst.focus == VK_FOCUS.OK, _ksx, _ksy, _len > 0);
 
 	DrawReset(fnt_Federo16);
 }

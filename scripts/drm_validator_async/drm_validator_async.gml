@@ -1,4 +1,4 @@
-	/// DrmValidator_AsyncHTTP.gml
+/// DrmValidator_AsyncHTTP.gml
 /// IndiePass DRM async HTTP response handler for GameMaker Studio
 ///
 /// INTEGRATION INSTRUCTIONS:
@@ -7,6 +7,7 @@
 /// See drm.gml for full integration and testing instructions.
 
 function drm_validator_async() {
+	if (!BUILD_INDIEPASS) return;
 
 	// Check if this is our DRM validation request
 	if (async_load[? "id"] == global.drm_http_request) {
@@ -28,5 +29,4 @@ function drm_validator_async() {
 
 	    // If we reach here, validation passed - game continues
 	}
-
 }

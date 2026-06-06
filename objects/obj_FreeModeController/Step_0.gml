@@ -58,7 +58,7 @@ if(instance_exists(obj_FreeModeFrame))
 	{
 		if(gamepad_is_connected(i))
 		{
-			if(gamepad_button_check_pressed(i, gp_face2)) _to_levels = true;
+			if(gamepad_button_check_pressed(i, InputGpMenuCancel())) _to_levels = true;
 			if(gamepad_button_check_pressed(i, gp_start)) _to_mmenu = true;
 		}
 	}

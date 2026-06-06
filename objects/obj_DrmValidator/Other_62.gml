@@ -1,1 +1,3 @@
-drm_validator_async();
+if (BUILD_INDIEPASS) {
+	drm_validator_async();
+}

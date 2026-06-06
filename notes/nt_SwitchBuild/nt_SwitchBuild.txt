@@ -1,0 +1,33 @@
+Switch devkit test checklist (run after Application ID is in application.nmeta)
+================================================================================
+
+Environment
+  [ ] GameMaker Switch export module active
+  [ ] Nintendo SDK path set; firmware matches SDK
+  [ ] Switch target enabled in Game Options > Platforms
+  [ ] BUILD_INDIEPASS = false (Default config)
+
+Boot & menus
+  [ ] Splash -> main menu (no instant quit)
+  [ ] Gamepad-only: Story, Arcade, Options, no social/exit buttons
+  [ ] A confirms, B backs in all menus and virtual keyboard
+
+Save data
+  [ ] Story progress persists after quit/relaunch
+  [ ] Options > Erase all saved data works
+  [ ] Leaderboard scores persist in airhares_save.json
+
+Gameplay
+  [ ] Full stage 1 farm + boss 1-3
+  [ ] Pause (+) -> Resume / Main menu
+  [ ] HOME suspend -> resume mid-level
+  [ ] Stage 4 boss + CRT scanlines ON/OFF in Options
+
+Co-op (if shipping)
+  [ ] P2 join mid-level (A on second pad)
+  [ ] Portrait select; B cancels
+  [ ] Handheld + docked + Joy-Con configurations
+
+Performance
+  [ ] Stable 60fps handheld in heaviest weather/boss scene
+  [ ] CRT off vs on comparison acceptable

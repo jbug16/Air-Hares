@@ -2,4 +2,5 @@
 
 event_inherited();	// unhover
 
-game_end();
+if (SavePlatformIsSwitch()) TitleMainOpenLeaderboards();
+else game_end();

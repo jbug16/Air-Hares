@@ -6,7 +6,7 @@ if (!global.pause_coop_portrait_select || !instance_exists(obj_Pause)) {
 
 var _dev = global.coop_portrait_select_device;
 
-if (gamepad_is_connected(_dev) && gamepad_button_check_pressed(_dev, gp_face2)) {
+if (gamepad_is_connected(_dev) && gamepad_button_check_pressed(_dev, InputGpMenuCancel())) {
 	global.pause_coop_portrait_select = false;
 	global.coop_portrait_select_ignore_confirm = 0;
 	instance_activate_all();

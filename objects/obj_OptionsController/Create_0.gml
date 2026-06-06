@@ -20,6 +20,7 @@ in_graphics = false;
 in_achievements = false;
 in_saves = false;
 in_leaderboards = false;
+from_title_menu = false;
 alarm[0] = 30;
 control_alpha = 1;
 blink_dur = 0.5*GAMESPD;

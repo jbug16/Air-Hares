@@ -1,7 +1,7 @@
 /// @desc Back pressed
 
 //if(menu_count < 8){ //back from options to menu
-if(!in_controls and !in_saves and !in_achievements and !in_graphics and !in_leaderboards) //back from options to menu
+if(!in_controls and !in_saves and !in_achievements and !in_graphics and (!in_leaderboards or from_title_menu)) //back from options to menu
 { 
 	layer_set_visible("Background_Options", false); //bring back the background
 
@@ -11,8 +11,12 @@ if(!in_controls and !in_saves and !in_achievements and !in_graphics and !in_lead
 
 	instance_activate_all(); //bring back main menu buttons
 	
-	with(obj_TitlebBtnGeneralPAR){
-		if (button_id == 3) event_user(1);
+	var _from_title = from_title_menu;
+	with (obj_TitlebBtnGeneralPAR) {
+		if (focus) event_user(2);
+	}
+	with (obj_TitlebBtnGeneralPAR) {
+		if (button_id == (_from_title ? 4 : 3)) event_user(1);
 	}
 } 
 else //back from controls to options

@@ -10,7 +10,8 @@ function SavePlatformIsWindows() {
 }
 
 function SavePlatformIsSwitch() {
-	return os_type == os_switch;
+	//return os_type == os_switch;
+	return true;
 }
 
 function SavePlatformHasPersistence() {
@@ -268,6 +269,11 @@ function OptionsDisplayAllowsWindowToggles() {
 	return SavePlatformIsWindows();
 }
 
+/// @desc Default CRT scanlines for first launch (off on Switch for handheld performance).
+function OptionsDefaultScanline() {
+	return SavePlatformIsSwitch() ? 0 : 1;
+}
+
 function OptionsDisplayResolutionList() {
 	return ["1280 x 720", "1920 x 1080", "2560 x 1440", "3840 x 2160"];
 }
@@ -290,7 +296,7 @@ function OptionsDisplayLoadFromSave() {
 	SaveIniOpen();
 	global.options_music = SaveIniReadReal("options", "music", 1);
 	global.options_sfx = SaveIniReadReal("options", "sfx", 1);
-	global.options_scanline = SaveIniReadReal("options", "scanline", 1);
+	global.options_scanline = SaveIniReadReal("options", "scanline", OptionsDefaultScanline());
 	if (OptionsDisplayAllowsWindowToggles()) {
 		global.options_windowed = bool(SaveIniReadReal("options", "windowed", 1));
 		global.options_res_h = SaveIniReadReal("options", "resolution height", OPTIONS_DESIGN_H);

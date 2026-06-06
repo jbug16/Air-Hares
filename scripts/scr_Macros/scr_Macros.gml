@@ -7,6 +7,10 @@
                                                                 
 */
 
+// Set true only for IndiePass distribution builds (Game Options > Configs > IndiePass, or override here).
+// Switch / retail builds must keep this false.
+#macro BUILD_INDIEPASS false
+
 #macro GAMESPD game_get_speed(gamespeed_fps)
 
 // Level stuff

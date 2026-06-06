@@ -22,7 +22,7 @@ switch(async_load[? "event_type"])
 		// Immediately re-check all gamepads and update global.gamepad_connected
 		event_perform(ev_alarm, 0);
 		
-		window_set_cursor(cr_none);
+		if (os_type != os_switch) window_set_cursor(cr_none);
 		global.mouse_disable = true;
 		if (global.gamepad_debug) {
 			show_debug_message("Cursor disabled, mouse disabled");
@@ -64,7 +64,7 @@ switch(async_load[? "event_type"])
 				show_debug_message("All gamepads disconnected - re-enabling cursor");
 			}
 			global.mouse_disable = false;
-			window_set_cursor(cr_default);
+			if (os_type != os_switch) window_set_cursor(cr_default);
 		} else {
 			if (global.gamepad_debug) {
 				show_debug_message("Other gamepads still connected - keeping cursor disabled");

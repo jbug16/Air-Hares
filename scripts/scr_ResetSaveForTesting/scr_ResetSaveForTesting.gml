@@ -61,7 +61,7 @@ function EraseAllSavedData() {
 	// Restore options defaults and apply immediately.
 	global.options_music = 1;
 	global.options_sfx = 1;
-	global.options_scanline = 1;
+	global.options_scanline = OptionsDefaultScanline();
 	global.options_windowed = true;
 	global.options_res_w = OPTIONS_DESIGN_W;
 	global.options_res_h = OPTIONS_DESIGN_H;

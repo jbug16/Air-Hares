@@ -3,3 +3,4 @@ event_inherited();
 
 text = "OPTIONS";
 button_id = 3;
+TitleMainApplySwitchPosition();

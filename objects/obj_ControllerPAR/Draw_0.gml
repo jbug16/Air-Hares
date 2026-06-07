@@ -35,6 +35,10 @@ DrawText3(640,  gui_text_anchor_y + 40*_scale, string(_throttle) + " kts", fa_ce
 
 // Story: level score on same row as lives/combo; cumulative run total drawn on the line below
 var _peace_intro = StoryPeacefulIntroFarmActive();
+if (_peace_intro) {
+	DrawText3(640, gui_text_anchor_y + 80 * _scale, "Line up plane's shadow to aim reticle",
+		fa_center, fa_middle, c_white, fnt_Federo24, -1, 1100, 0, _scale);
+}
 var _sc_round = round(global.score_current);
 var _score_level = string(_sc_round);
 var _score_cumulative = (!_peace_intro && global.game_mode == GAMEMODE.STORY)

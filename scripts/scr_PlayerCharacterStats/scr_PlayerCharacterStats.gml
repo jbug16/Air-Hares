@@ -1,3 +1,8 @@
+/// @desc Max HP for the current player instance (armor load × character multiplier).
+function PlayerCharacterMaxHp() {
+	return max(1, floor(PlayerStatsArmorLoad() * stat_max_hp_mult));
+}
+
 /// @desc Per-character combat/movement modifiers (applied after spawner sets `character`).
 function PlayerApplyCharacterStats() {
 	var _bank = 1;
@@ -21,21 +26,21 @@ function PlayerApplyCharacterStats() {
 			_bank = 1.15;
 			_roll = 1.15;
 			_loop = 1.25;
-			_damage_taken = 4 / 3; // ~25% more damage per hit (replaces old 0.75 max HP)
+			_damage_taken = 3 / 2; // same max HP as Rabbo; 1.5 dmg/hit → 2 hits to down
 			_wind = 1.15;
 			break;
 		case CHARACTER.BETTY:
 			_bank = 0.85;
 			_roll = 0.85;
 			_loop = 0.75;
-			_hp = 1.25;
-			_wind = 0.85;
+			_hp = 4 / 3; // floor(3 × 4/3) = 4 hits at stage-one armor
+			_wind = 0.3; // strong wind resistance — pushed far less than other pilots
 			break;
 		case CHARACTER.CANDIE:
 			_bank = 0.75;
 			_roll = 0.75;
 			_loop = 0.65;
-			_hp = 1.35;
+			_hp = 4 / 3; // floor(3 × 4/3) = 4 hits at stage-one armor
 			_wind = 1;
 			lightning_immune = true;
 			break;
@@ -49,7 +54,7 @@ function PlayerApplyCharacterStats() {
 	stat_damage_taken_mult = _damage_taken;
 	stat_damage_taken_debt = 0;
 	loop_parallax_target = -6 * stat_loop_dist_mult;
-	hp = max(1, floor(PlayerStatsArmorLoad() * stat_max_hp_mult));
+	hp = PlayerCharacterMaxHp();
 }
 
 /// @desc Pick a player for enemies to chase. Any living Dirk is always chosen unless _neutral (actual boss AI).

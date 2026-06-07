@@ -144,29 +144,33 @@ if instance_exists(obj_PlayerPAR) {
 		var _x2 = _x1 + _scale_ui*0.63*sprite_get_width(spr_HPFrame);
 		var _y2 = _y1 + 12*_scale_ui;
 		var _max_hp = 0;
+		var _char_max_hp = 0;
 		var _max_armor = 0;
 		var _armor = 0;
 		with _p1
 		{
+			_char_max_hp = PlayerCharacterMaxHp();
 			_max_hp = PlayerStatsArmorLoad();
-			_max_armor = _max_hp - global.armor_strength;
-			_armor = clamp(hp - global.armor_strength, 0, 5000);
+			_max_armor = max(0, _max_hp - global.armor_strength) + max(0, _char_max_hp - global.armor_strength);
+			_armor = clamp(hp - global.armor_strength, 0, _max_armor);
 		}
 		
 		// Armor bar
-		draw_healthbar(_x1, _y1, _x2, _y2, (_armor/_max_armor)*100, c_black, c_ltgray, c_dkgray, 0, false, false);
+		if (_max_armor > 0) {
+			draw_healthbar(_x1, _y1, _x2, _y2, (_armor/_max_armor)*100, c_black, c_ltgray, c_dkgray, 0, false, false);
+		}
 		
 		// hp flash if hit
 		if (hp_prev1 > _p1.hp) alarm[8] = 0.1*GAMESPD;
-		if hp_flash_on1 draw_healthbar(_x1, _y1, _x2, _y2, (_armor/_max_armor)*100, c_black, c_white, c_white, 0, false, false);
+		if (hp_flash_on1 and _max_armor > 0) draw_healthbar(_x1, _y1, _x2, _y2, (_armor/_max_armor)*100, c_black, c_white, c_white, 0, false, false);
 		
 		// HP bar
 		_y1 = _y2 + _scale_ui*0.1*sprite_get_height(spr_HPFrame);
 		_y2 = _y1 + _scale_ui*12;
 		var _hp_col1 = PlayerHpFillColors(_p1.character);
-		draw_healthbar(_x1, _y1, _x2, _y2, (_p1.hp/global.armor_strength)*100, c_black, _hp_col1[0], _hp_col1[1], 0, false, false);
+		draw_healthbar(_x1, _y1, _x2, _y2, (_p1.hp/_char_max_hp)*100, c_black, _hp_col1[0], _hp_col1[1], 0, false, false);
 		if (hp_flash_on1 and _armor <= 0)
-			draw_healthbar(_x1, _y1, _x2, _y2, (_p1.hp/global.armor_strength)*100, c_black, c_white, c_white, 0, false, false);
+			draw_healthbar(_x1, _y1, _x2, _y2, (_p1.hp/_char_max_hp)*100, c_black, c_white, c_white, 0, false, false);
 		hp_prev1 = _p1.hp;
 		
 		// Draw target icon when toggle is on (aim_at_crops) — hidden on peaceful intro (no falcons)
@@ -251,29 +255,33 @@ if instance_exists(obj_PlayerPAR) {
 		var _x2 = _x1 + _scale_ui*0.63*sprite_get_width(spr_HPFrame);
 		var _y2 = _y1 + 12*_scale_ui;
 		var _max_hp = 0;
+		var _char_max_hp = 0;
 		var _max_armor = 0;
 		var _armor = 0;
 		with _p2
 		{
+			_char_max_hp = PlayerCharacterMaxHp();
 			_max_hp = PlayerStatsArmorLoad();
-			_max_armor = _max_hp - global.armor_strength;
-			_armor = clamp(hp - global.armor_strength, 0, 5000);
+			_max_armor = max(0, _max_hp - global.armor_strength) + max(0, _char_max_hp - global.armor_strength);
+			_armor = clamp(hp - global.armor_strength, 0, _max_armor);
 		}
 		
 		// hp flash if hit
 		if (hp_prev2 > _p2.hp) alarm[9] = 0.1*GAMESPD;
-		if hp_flash_on2 draw_healthbar(_x1, _y1, _x2, _y2, (_armor/_max_armor)*100, c_black, c_white, c_white, 0, false, false);
+		if (hp_flash_on2 and _max_armor > 0) draw_healthbar(_x1, _y1, _x2, _y2, (_armor/_max_armor)*100, c_black, c_white, c_white, 0, false, false);
 		
 		// Armor bar
-		draw_healthbar(_x1, _y1, _x2, _y2, (_armor/_max_armor)*100, c_black, c_ltgray, c_dkgray, 0, false, false);
+		if (_max_armor > 0) {
+			draw_healthbar(_x1, _y1, _x2, _y2, (_armor/_max_armor)*100, c_black, c_ltgray, c_dkgray, 0, false, false);
+		}
 		
 		// HP bar
 		_y1 = _y2 + _scale_ui*0.1*sprite_get_height(spr_HPFrame);
 		_y2 = _y1 + _scale_ui*12;
 		var _hp_col2 = PlayerHpFillColors(_p2.character);
-		draw_healthbar(_x1, _y1, _x2, _y2, (_p2.hp/global.armor_strength)*100, c_black, _hp_col2[0], _hp_col2[1], 0, false, false);
+		draw_healthbar(_x1, _y1, _x2, _y2, (_p2.hp/_char_max_hp)*100, c_black, _hp_col2[0], _hp_col2[1], 0, false, false);
 		if (hp_flash_on2 and _armor <= 0)
-			draw_healthbar(_x1, _y1, _x2, _y2, (_p2.hp/global.armor_strength)*100, c_black, c_white, c_white, 0, false, false);
+			draw_healthbar(_x1, _y1, _x2, _y2, (_p2.hp/_char_max_hp)*100, c_black, c_white, c_white, 0, false, false);
 		hp_prev2 = _p2.hp;
 		
 		// Draw target icon when toggle is on

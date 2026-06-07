@@ -9,7 +9,7 @@ else if(object_index == obj_PropFeatherBrown) _hp = 0.75;
 else if(object_index == obj_PropFeatherPurple) _hp = 1;
 else _hp = 2;
 
-other.hp = clamp(other.hp + _hp, 0, PlayerStatsArmorLoad());
+with (other) hp = clamp(hp + _hp, 0, PlayerCharacterMaxHp());
 
 var _scr = instance_create_layer(other.x, other.y - 64, "GUI", obj_GUITextFlying);
 _scr.z = 0;

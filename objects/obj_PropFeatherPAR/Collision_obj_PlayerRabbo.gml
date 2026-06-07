@@ -11,6 +11,10 @@ else _hp = 2;
 
 other.hp = clamp(other.hp + _hp, 0, PlayerStatsArmorLoad());
 
+var _scr = instance_create_layer(other.x, other.y - 64, "GUI", obj_GUITextFlying);
+_scr.z = 0;
+_scr.text = "+ HP";
+
 audio_play_sound(snd_CarrotPickup, 1, false);
 VfxPickup(sprite_index, image_angle);
 instance_destroy();

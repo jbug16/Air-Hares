@@ -112,7 +112,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.4.222",
+    "IDEVersion":"2026.0.0.16",
   },
   "name":"AirHares",
   "resources":[
@@ -621,6 +621,7 @@
     {"id":{"name":"spr_TitleBg","path":"sprites/spr_TitleBg/spr_TitleBg.yy",},},
     {"id":{"name":"spr_TitleButton","path":"sprites/spr_TitleButton/spr_TitleButton.yy",},},
     {"id":{"name":"spr_TitleSelectionFrame","path":"sprites/spr_TitleSelectionFrame/spr_TitleSelectionFrame.yy",},},
+    {"id":{"name":"spr_Tutorial_Switch","path":"sprites/spr_Tutorial_Switch/spr_Tutorial_Switch.yy",},},
     {"id":{"name":"spr_Tutorial","path":"sprites/spr_Tutorial/spr_Tutorial.yy",},},
     {"id":{"name":"spr_TwinHornFeatherAsset","path":"sprites/spr_TwinHornFeatherAsset/spr_TwinHornFeatherAsset.yy",},},
     {"id":{"name":"spr_TwinHornsDeepBreathe","path":"sprites/spr_TwinHornsDeepBreathe/spr_TwinHornsDeepBreathe.yy",},},

@@ -530,6 +530,7 @@
     {"name":"spr_Title","order":4,"path":"sprites/spr_Title/spr_Title.yy",},
     {"name":"spr_TitleBg","order":2,"path":"sprites/spr_TitleBg/spr_TitleBg.yy",},
     {"name":"spr_TitleSelectionFrame","order":3,"path":"sprites/spr_TitleSelectionFrame/spr_TitleSelectionFrame.yy",},
+    {"name":"spr_Tutorial_Switch","order":13,"path":"sprites/spr_Tutorial_Switch/spr_Tutorial_Switch.yy",},
     {"name":"spr_Tutorial","order":6,"path":"sprites/spr_Tutorial/spr_Tutorial.yy",},
     {"name":"spr_TwinHornFeatherAsset","order":1,"path":"sprites/spr_TwinHornFeatherAsset/spr_TwinHornFeatherAsset.yy",},
     {"name":"spr_TwinHornsDeepBreathe","order":2,"path":"sprites/spr_TwinHornsDeepBreathe/spr_TwinHornsDeepBreathe.yy",},

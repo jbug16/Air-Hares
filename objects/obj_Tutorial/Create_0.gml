@@ -1,5 +1,9 @@
 /// @desc
 
+if (SavePlatformIsSwitch()) {
+	sprite_index = spr_Tutorial_Switch;
+}
+
 // =========================
 // ====== ADJUSTABLE =======
 // =========================

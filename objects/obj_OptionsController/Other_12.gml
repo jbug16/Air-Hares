@@ -1,7 +1,7 @@
 /// @desc Back pressed
 
 //if(menu_count < 8){ //back from options to menu
-if(!in_controls and !in_saves and !in_achievements and !in_graphics and (!in_leaderboards or from_title_menu)) //back from options to menu
+if(!in_controls and !in_saves and !in_achievements and !in_graphics and !in_leaderboards and (!in_scores or from_title_menu)) //back from options to menu
 { 
 	layer_set_visible("Background_Options", false); //bring back the background
 
@@ -27,45 +27,63 @@ else //back from controls to options
 	menu = [];
 	menu_status = [];
 	
-	//bring back options buttons
-	menu[0] = "Controls";
-	menu[1] = "Music Volume";
-	menu[2] = "SFX Volume";
-	menu[3] = "Graphics";
-	menu[4] = "Tutorial";
-	menu[5] = "Squadron";
-	menu[6] = "Achievements";
-	menu[7] = "Leaderboards";
-	menu[8] = "Saves";
-	menu[9] = "Credits";
-	menu[10] = "Back";
+	var _return_to_scores = in_achievements or in_leaderboards or in_saves;
 	
-	//return status bar
-	menu_status[0] = "";
-	menu_status[1] = string(round(global.options_music * 100));
-	menu_status[2] = string(round(global.options_sfx * 100));
-	menu_status[3] = "";
-	menu_status[4] = "";
-	menu_status[5] = "";
-	menu_status[6] = "";
-	menu_status[7] = "";
-	menu_status[8] = "";
-	menu_status[9] = "";
-	menu_status[10] = "";
-	
-	menu_count = array_length(menu);
-	
-	if(in_controls) menu_selected = 0;
-	if(in_achievements) menu_selected = 6;
-	if(in_leaderboards) menu_selected = 7;
-	if(in_saves) menu_selected = 8;
-	if(in_graphics) menu_selected = 3;
+	if (_return_to_scores)
+	{
+		menu[0] = "Squadron";
+		menu[1] = "Achievements";
+		menu[2] = "Leaderboards";
+		menu[3] = "Saves";
+		menu[4] = "Back";
+		
+		menu_status[0] = "";
+		menu_status[1] = "";
+		menu_status[2] = "";
+		menu_status[3] = "";
+		menu_status[4] = "";
+		
+		menu_count = 5;
+		
+		if(in_achievements) menu_selected = 1;
+		if(in_leaderboards) menu_selected = 2;
+		if(in_saves) menu_selected = 3;
+		
+		in_scores = true;
+	}
+	else
+	{
+		//bring back options buttons
+		menu[0] = "Controls";
+		menu[1] = "Music Volume";
+		menu[2] = "SFX Volume";
+		menu[3] = "Graphics";
+		menu[4] = "Tutorial";
+		menu[5] = "Credits";
+		menu[6] = "Back";
+		
+		//return status bar
+		menu_status[0] = "";
+		menu_status[1] = string(round(global.options_music * 100));
+		menu_status[2] = string(round(global.options_sfx * 100));
+		menu_status[3] = "";
+		menu_status[4] = "";
+		menu_status[5] = "";
+		menu_status[6] = "";
+		
+		menu_count = array_length(menu);
+		
+		if(in_controls) menu_selected = 0;
+		if(in_graphics) menu_selected = 3;
+	}
 	
 	in_controls = false;
 	in_graphics = false;
 	in_achievements = false;
 	in_saves = false;
 	in_leaderboards = false;
+	
+	if (!_return_to_scores) in_scores = false;
 	
 	//delete keyboard and joypad arrays from controls
 	array_delete(key_keyboard, 1, array_length(key_keyboard) - 1);

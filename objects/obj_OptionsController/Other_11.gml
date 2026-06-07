@@ -58,6 +58,23 @@ else if(in_graphics)
 		menu_status[i] = "";
 	}
 }
+// Create scores submenu
+else if(in_scores)
+{
+	menu[0] = "Squadron";
+	menu[1] = "Achievements";
+	menu[2] = "Leaderboards";
+	menu[3] = "Saves";
+	menu[4] = "Back";
+	
+	menu_status[0] = "";
+	menu_status[1] = "";
+	menu_status[2] = "";
+	menu_status[3] = "";
+	menu_status[4] = "";
+	
+	menu_count = 5;
+}
 // Create achievements (custom draw; menu is Back only)
 else if(in_achievements)
 {

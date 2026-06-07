@@ -55,9 +55,14 @@ function CoopPortraitSelectSlotAvailable(_slot) {
 	return _slot == 0;
 }
 
-/// @desc Comic / Instagram / Discord links (not on Nintendo Switch).
+/// @desc Comic / Instagram / Discord links (all platforms except Nintendo Switch).
 function TitleMainSocialLinksEnabled() {
 	return !SavePlatformIsSwitch();
+}
+
+/// @desc Scores at 960 + Options at 1170 (all platforms; Switch omits social links).
+function TitleMainUseSwitchMenuLayout() {
+	return true;
 }
 
 /// @desc Quit-to-desktop exit buttons (not on Nintendo Switch).
@@ -66,7 +71,7 @@ function MenuExitButtonEnabled() {
 }
 
 function TitleMainIsSocialButtonId(_button_id) {
-	return _button_id >= 5 && _button_id <= 7;
+	return _button_id >= 5 && _button_id <= 8;
 }
 
 /// @desc Call from social icon Create after button_id is set.
@@ -77,10 +82,18 @@ function TitleSocialLinkInstanceInit() {
 	instance_deactivate_object(true);
 }
 
+/// @desc Call from main-menu exit icon Create after button_id is set.
+function TitleMainExitIconInstanceInit() {
+	if (MenuExitButtonEnabled()) return;
+	visible = false;
+	focus = false;
+	instance_deactivate_object(true);
+}
+
 /// @desc Call from main-menu exit button Create after button_id is set.
 function TitleMainExitInstanceInit() {
-	if (SavePlatformIsSwitch()) {
-		text = "LEADERBOARDS";
+	if (TitleMainUseSwitchMenuLayout()) {
+		text = "SCORES";
 		return;
 	}
 	if (MenuExitButtonEnabled()) return;
@@ -89,15 +102,15 @@ function TitleMainExitInstanceInit() {
 	instance_deactivate_object(true);
 }
 
-/// @desc Switch: Leaderboards at Options slot (960), Options at exit slot (1170).
+/// @desc Scores at Options slot (960), Options at exit slot (1170).
 function TitleMainApplySwitchPosition() {
-	if (!SavePlatformIsSwitch()) return;
+	if (!TitleMainUseSwitchMenuLayout()) return;
 	if (button_id == 3) x = 1170;
 	else if (button_id == 4) x = 960;
 }
 
-/// @desc Open the leaderboard screen from the main menu (Switch slot 4).
-function TitleMainOpenLeaderboards() {
+/// @desc Open the scores screen from the main menu (Switch slot 4).
+function TitleMainOpenScores() {
 	with (all) {
 		if (!persistent) instance_deactivate_object(id);
 	}
@@ -105,17 +118,17 @@ function TitleMainOpenLeaderboards() {
 	var _ctrl = instance_create_layer(0.3 * room_width, 0.5 * room_height, "Instances", obj_OptionsController);
 	with (_ctrl) {
 		from_title_menu = true;
-		in_leaderboards = true;
+		in_scores = true;
 		menu_selected = 0;
 		event_user(1);
 	}
 	instance_create_layer(0.5 * room_width, 0.1 * room_height, "Instances", obj_OptionsTitle);
 }
 
-/// @desc Main menu: Story..Exit (1-4) then social icons (5-7), left-to-right wrap order.
+/// @desc Main menu: Story..Scores (1-4) then side icons (5-8), left-to-right wrap order.
 function TitleMainVisibleButtonIds() {
 	var _ids = [1, 2];
-	if (SavePlatformIsSwitch()) {
+	if (TitleMainUseSwitchMenuLayout()) {
 		array_push(_ids, 4);
 		array_push(_ids, 3);
 	} else {
@@ -127,6 +140,7 @@ function TitleMainVisibleButtonIds() {
 		array_push(_ids, 6);
 		array_push(_ids, 7);
 	}
+	if (MenuExitButtonEnabled()) array_push(_ids, 8);
 	return _ids;
 }
 

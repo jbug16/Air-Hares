@@ -14,6 +14,7 @@
     {"name":"inst_370EAA8C","path":"rooms/rm_MainMenu/rm_MainMenu.yy",},
     {"name":"inst_BC9F53","path":"rooms/rm_MainMenu/rm_MainMenu.yy",},
     {"name":"inst_1A53AA41","path":"rooms/rm_MainMenu/rm_MainMenu.yy",},
+    {"name":"inst_9C4E2A71","path":"rooms/rm_MainMenu/rm_MainMenu.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -21,6 +22,7 @@
         {"$GMRInstance":"v4","%Name":"inst_370EAA8C","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_370EAA8C","objectId":{"name":"obj_ComicIcon","path":"objects/obj_ComicIcon/obj_ComicIcon.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":0.35,"scaleY":0.35,"x":1229.0,"y":40.0,},
         {"$GMRInstance":"v4","%Name":"inst_BC9F53","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_BC9F53","objectId":{"name":"obj_InstagramIcon","path":"objects/obj_InstagramIcon/obj_InstagramIcon.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":0.31,"scaleY":0.31,"x":1228.9999,"y":116.0,},
         {"$GMRInstance":"v4","%Name":"inst_1A53AA41","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_1A53AA41","objectId":{"name":"obj_DiscordIcon","path":"objects/obj_DiscordIcon/obj_DiscordIcon.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":0.02,"scaleY":0.02,"x":1228.9999,"y":194.0,},
+        {"$GMRInstance":"v4","%Name":"inst_9C4E2A71","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_9C4E2A71","objectId":{"name":"obj_ExitIcon","path":"objects/obj_ExitIcon/obj_ExitIcon.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":0.35,"scaleY":0.35,"x":1229.0,"y":272.0,},
       ],"layers":[],"name":"Instances_PopUp","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMREffectLayer":"","%Name":"Effect_Grayscale","depth":100,"effectEnabled":true,"effectType":"_filter_colourise","gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"Effect_Grayscale","properties":[
         {"name":"g_Intensity","type":0,"value":"1",},

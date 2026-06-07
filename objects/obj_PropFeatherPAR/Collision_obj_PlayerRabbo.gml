@@ -13,6 +13,7 @@ other.hp = clamp(other.hp + _hp, 0, PlayerStatsArmorLoad());
 
 var _scr = instance_create_layer(other.x, other.y - 64, "GUI", obj_GUITextFlying);
 _scr.z = 0;
+_scr.color = PlayerHpFillColors(other.character)[1];
 _scr.text = "+ HP";
 
 audio_play_sound(snd_CarrotPickup, 1, false);

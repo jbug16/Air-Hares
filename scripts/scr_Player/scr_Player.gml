@@ -76,6 +76,8 @@ function PlayerCreateBossEndingProp(_player_inst) {
 	with (_prop) {
 		PlayerAssignSprite(character);
 		sprite_index = s_idle;
+		PlayerApplyCharacterStats();
+		hp = _player_inst.hp;
 	}
 	return _prop;
 }

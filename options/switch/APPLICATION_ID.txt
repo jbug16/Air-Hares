@@ -1,17 +1,17 @@
 Switch build — Application ID checklist
 ======================================
 
-When your client provides the Nintendo Developer Portal Application ID:
+Application ID (set in application.nmeta):
+  0x0100d470280e0000
 
-1. Open options/switch/application.nmeta
-2. Replace BOTH placeholder values with the real ID (same hex string in each):
-   - <ApplicationId>
-   - <SaveDataOwnerId>
-3. Format: 0x0100XXXXXXXXXXXX (16 hex digits after 0x)
+Both of these tags must use the same value:
+  - <ApplicationId>
+  - <SaveDataOwnerId>
 
-Assets in this folder (ready for build):
-- application.nmeta  (metadata — IDs pending)
-- icon.bmp             (256x256, 24-bit BMP — verified)
-- banner.jpg           (eShop marketing — optional for first devkit install)
+Assets in this folder:
+- application.nmeta                              (merged build metadata)
+- legal_info_0100d470280e0000_c0ff_hac.zip       (SLIM legal info from publisher)
+- icon.bmp                                       (256x256, 24-bit BMP)
+- banner.jpg                                     (eShop marketing — optional for devkit install)
 
 GameMaker: confirm Switch SDK path under Platform Settings before exporting.

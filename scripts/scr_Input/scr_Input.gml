@@ -415,17 +415,18 @@ function InputApplyDesktopGamepadMap() {
 	global.gpmap[? INPUT.TOGGLE_AIM] = [gp_shoulderr];
 }
 
-/// @desc Nintendo-first: A=gp_face2, B=gp_face1, Y=gp_face3, X=gp_face4 (GM Switch mapping).
+/// @desc Match Xbox layout by physical position on Switch Pro / Joy-Con (GM constants):
+/// B=gp_face1, A=gp_face2, Y=gp_face4 (left), X=gp_face3 (top). Face3/face4 differ from desktop gpmap.
 function InputApplySwitchGamepadMap() {
-	global.gpmap[? INPUT.SEED] = [gp_face2];
-	global.gpmap[? INPUT.WATER] = [gp_face1];
-	global.gpmap[? INPUT.PARRY] = [gp_face3];
+	global.gpmap[? INPUT.SEED] = [gp_face1];
+	global.gpmap[? INPUT.WATER] = [gp_face2];
+	global.gpmap[? INPUT.PARRY] = [gp_face4];
 	global.gpmap[? INPUT.UP] = [gp_padu];
 	global.gpmap[? INPUT.DOWN] = [gp_padd];
 	global.gpmap[? INPUT.LEFT] = [gp_padl];
 	global.gpmap[? INPUT.RIGHT] = [gp_padr];
 	global.gpmap[? INPUT.PAUSE] = [gp_start, gp_face1];
-	global.gpmap[? INPUT.LOOP_DE_LOOP] = [gp_face4];
+	global.gpmap[? INPUT.LOOP_DE_LOOP] = [gp_face3];
 	global.gpmap[? INPUT.MENU_SELECT] = [gp_face2];
 	global.gpmap[? INPUT.MENU_UP] = [gp_padu];
 	global.gpmap[? INPUT.MENU_DOWN] = [gp_padd];
@@ -459,8 +460,8 @@ function InputInitBindingDisplayNames() {
 	if (!SavePlatformIsSwitch()) return;
 	global.key_names[? gp_face1] = "B";
 	global.key_names[? gp_face2] = "A";
-	global.key_names[? gp_face3] = "Y";
-	global.key_names[? gp_face4] = "X";
+	global.key_names[? gp_face3] = "X";
+	global.key_names[? gp_face4] = "Y";
 	global.key_names[? gp_shoulderl] = "L";
 	global.key_names[? gp_shoulderlb] = "ZL";
 	global.key_names[? gp_shoulderr] = "R";
@@ -508,14 +509,17 @@ function InputLoadBindingsFromSave() {
 				global.keymap[? _inp] = _keys_kb;
 			}
 		}
-		var _gp = SaveIniReadString("controls gp", string(_inp), "");
-		if (_gp != "") {
-			_gp = string_split(_gp, "-");
-			var _keys_gp = [];
-			for (var j = 0; j < array_length(_gp); j++) {
-				if (_gp[j] != "") array_push(_keys_gp, real(_gp[j]));
+		// Switch: always use platform gpmap — saved desktop-style face bindings swap X/Y in-game.
+		if (!SavePlatformIsSwitch()) {
+			var _gp = SaveIniReadString("controls gp", string(_inp), "");
+			if (_gp != "") {
+				_gp = string_split(_gp, "-");
+				var _keys_gp = [];
+				for (var j = 0; j < array_length(_gp); j++) {
+					if (_gp[j] != "") array_push(_keys_gp, real(_gp[j]));
+				}
+				global.gpmap[? _inp] = _keys_gp;
 			}
-			global.gpmap[? _inp] = _keys_gp;
 		}
 	}
 	SaveIniClose();

@@ -337,6 +337,20 @@ function InputControlsKeyboardRebindEnabled() {
 	return !SavePlatformIsSwitch();
 }
 
+/// @desc If a gamepad confirmed a menu action, assign it as P1's control device (else use connected pad).
+function ControlDeviceAssignPrimaryFromGamepad() {
+	var _maxpads = gamepad_get_device_count();
+	for (var _gp = 0; _gp < _maxpads; _gp++) {
+		if (gamepad_is_connected(_gp) && InputGet(INPUT.MENU_SELECT, , _gp)) {
+			global.control_device[0] = _gp;
+			return;
+		}
+	}
+	if (global.control_device[0] == -1 && global.gamepad_connected != noone && gamepad_is_connected(global.gamepad_connected)) {
+		global.control_device[0] = global.gamepad_connected;
+	}
+}
+
 /// @desc GameMaker gp_face* constant for menu confirm / join (Nintendo A on Switch = gp_face2).
 function InputGpMenuConfirm() {
 	return SavePlatformIsSwitch() ? gp_face2 : gp_face1;

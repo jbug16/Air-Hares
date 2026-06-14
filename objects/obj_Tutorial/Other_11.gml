@@ -6,7 +6,13 @@ if (global.tutorial_from_options) {
 	global.peaceful_practice_saved_level = global.current_level;
 	global.peaceful_practice_saved_progress = global.story_mode_progress;
 	global.current_level = 0;
+	global.game_mode = GAMEMODE.STORY;
 	global.story_peaceful_intro_farm = true;
+	// P1 may still be on keyboard default after Options; bind active pad before farm practice.
+	if (global.control_device[0] == -1 && global.gamepad_connected != noone && gamepad_is_connected(global.gamepad_connected)) {
+		global.control_device[0] = global.gamepad_connected;
+	}
+	global.control_device[1] = noone;
 	instance_destroy();
 	room_goto(rm_LevelX1Farm);
 	exit;

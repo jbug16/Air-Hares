@@ -127,7 +127,12 @@ switch(menu_selected)
 	case 4:
 		if(menu[4] == "Tutorial")
 		{
+			ControlDeviceAssignPrimaryFromGamepad();
+			global.game_mode = GAMEMODE.STORY;
 			global.tutorial_from_options = true;
+			with (all) {
+				if (!persistent) instance_deactivate_object(id);
+			}
 			instance_create_depth(0.5*room_width, 0.5*room_height, depth - 100, obj_Tutorial);
 			instance_deactivate_object(id);
 			instance_deactivate_object(obj_OptionsTitle);

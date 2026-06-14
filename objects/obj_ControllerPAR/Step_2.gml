@@ -75,7 +75,7 @@ if _player_alive == 0 {
 			exit;
 		}
 	exit;
-} else if (_player_alive == 1) { // Check join request
+} else if (_player_alive == 1 && !StoryPeacefulIntroFarmActive()) { // Check join request
 	var _join_requestor = InputGamepadGetJoinRequest();
 	if (_join_requestor != noone) {
 		var _p1_can_join = multiplayer_status[0][MPPROP.COOLDOWN] <= 0;

@@ -35,7 +35,11 @@ if(in_controls)
 		if (InputControlsKeyboardRebindEnabled()) {
 			key_keyboard[i] = InputFormatBindingList(global.keymap[? input[i]]);
 		}
-		key_joypad[i] = InputFormatBindingList(global.gpmap[? input[i]]);
+		if (SavePlatformIsSwitch()) {
+			key_joypad[i] = InputSwitchControlsScreenLabel(i);
+		} else {
+			key_joypad[i] = InputFormatBindingList(global.gpmap[? input[i]]);
+		}
 	}
 	
 	key_joypad[menu_count - 1] = "";

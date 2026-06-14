@@ -35,11 +35,13 @@ else if(_select)
 	if(in_controls and alarm[1] > 0) exit;
 	if(in_controls and menu[menu_selected] != "Back")
 	{
-		// Start blinking
-		TweenStart("control_alpha", control_alpha, 0, blink_dur, TWEENTYPE.LINEAR);
-		alarm[1] = blink_dur;
-		alarm[10] = 15;
-		if (InputControlsKeyboardRebindEnabled()) keyboard_lastkey = vk_nokey;
+		if (InputControlsRebindEnabled()) {
+			// Start blinking
+			TweenStart("control_alpha", control_alpha, 0, blink_dur, TWEENTYPE.LINEAR);
+			alarm[1] = blink_dur;
+			alarm[10] = 15;
+			if (InputControlsKeyboardRebindEnabled()) keyboard_lastkey = vk_nokey;
+		}
 	}
 	else event_user(0);
 	
@@ -166,12 +168,14 @@ if(mouse_prev_x != mouse_x or mouse_prev_y != mouse_y)
 				{
 					if(in_controls and menu[_i] != "Back")
 					{
-						// Start blinking
-						TweenStart("control_alpha", control_alpha, 0, blink_dur, TWEENTYPE.LINEAR);
-						alarm[1] = blink_dur;
-						alarm[10] = 5;
-						if (InputControlsKeyboardRebindEnabled()) keyboard_lastkey = vk_nokey;
-						exit;
+						if (InputControlsRebindEnabled()) {
+							// Start blinking
+							TweenStart("control_alpha", control_alpha, 0, blink_dur, TWEENTYPE.LINEAR);
+							alarm[1] = blink_dur;
+							alarm[10] = 5;
+							if (InputControlsKeyboardRebindEnabled()) keyboard_lastkey = vk_nokey;
+							exit;
+						}
 					}
 					else event_user(0);
 				}
@@ -215,12 +219,14 @@ else
 					{
 						if(in_controls and menu_selected < menu_count - 1)
 						{
-							// Start blinking
-							TweenStart("control_alpha", control_alpha, 0, blink_dur, TWEENTYPE.LINEAR);
-							alarm[1] = blink_dur;
-							alarm[10] = 5;
-							if (InputControlsKeyboardRebindEnabled()) keyboard_lastkey = vk_nokey;
-							exit;
+							if (InputControlsRebindEnabled()) {
+								// Start blinking
+								TweenStart("control_alpha", control_alpha, 0, blink_dur, TWEENTYPE.LINEAR);
+								alarm[1] = blink_dur;
+								alarm[10] = 5;
+								if (InputControlsKeyboardRebindEnabled()) keyboard_lastkey = vk_nokey;
+								exit;
+							}
 						}
 						else event_user(0);
 					}

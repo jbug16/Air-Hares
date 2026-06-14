@@ -337,6 +337,21 @@ function InputControlsKeyboardRebindEnabled() {
 	return !SavePlatformIsSwitch();
 }
 
+/// @desc Options → Controls rebinding (desktop only; Switch is a fixed reference screen).
+function InputControlsRebindEnabled() {
+	return !SavePlatformIsSwitch();
+}
+
+/// @desc Fixed Nintendo labels for Options → Controls on Switch (index matches input[] order).
+function InputSwitchControlsScreenLabel(_index) {
+	var _labels = [
+		"L Stick Left", "L Stick Right", "R Stick Up", "R Stick Down",
+		"ZL", "ZR", "Y", "B", "A", "X", "R"
+	];
+	if (_index < 0 || _index >= array_length(_labels)) return "";
+	return _labels[_index];
+}
+
 /// @desc If a gamepad confirmed a menu action, assign it as P1's control device (else use connected pad).
 function ControlDeviceAssignPrimaryFromGamepad() {
 	var _maxpads = gamepad_get_device_count();

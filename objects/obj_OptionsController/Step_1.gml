@@ -1,6 +1,6 @@
 /// @desc Change keymap
 
-if(!in_controls) exit;
+if(!in_controls or !InputControlsRebindEnabled()) exit;
 
 if(alarm[10] > 0)
 {

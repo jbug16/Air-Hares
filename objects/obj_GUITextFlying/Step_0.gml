@@ -1,5 +1,5 @@
 /// @desc
-if (StoryPeacefulIntroFarmActive()) {
+if (StoryPeacefulIntroFarmActive() && !peaceful_intro_ok) {
 	instance_destroy();
 	exit;
 }

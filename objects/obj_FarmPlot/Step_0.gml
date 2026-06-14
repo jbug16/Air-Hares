@@ -17,9 +17,11 @@ switch(state) {
 			instance_destroy(collide_seed);
 			audio_play_sound(snd_ProjSeedHit, 1, false);
 			// Score fx
-			var _scr = instance_create_layer(x, y, "GUI", obj_GUITextFlying);
-			_scr.z = z;
-			_scr.text = "+10";
+			if (!StoryPeacefulIntroFarmActive()) {
+				var _scr = instance_create_layer(x, y, "GUI", obj_GUITextFlying);
+				_scr.z = z;
+				_scr.text = "+10";
+			}
 			CombosAddHit(10);
 			state = PLOTSTATE.SEEDED;
 		} else if collide_water && collide_water.target == id {
@@ -29,9 +31,11 @@ switch(state) {
 			instance_destroy(collide_water);
 			audio_play_sound(snd_ProjWaterHit, 1, false);
 			// Score fx
-			var _scr = instance_create_layer(x, y, "GUI", obj_GUITextFlying);
-			_scr.z = z;
-			_scr.text = "+10";
+			if (!StoryPeacefulIntroFarmActive()) {
+				var _scr = instance_create_layer(x, y, "GUI", obj_GUITextFlying);
+				_scr.z = z;
+				_scr.text = "+10";
+			}
 			CombosAddHit(10);
 			state = PLOTSTATE.WATERED;
 		}
@@ -45,10 +49,12 @@ switch(state) {
 			instance_destroy(collide_seed);
 			audio_play_sound(snd_ProjSeedHit, 1, false);
 			// Score fx
-			var _scr = instance_create_layer(x, y, "GUI", obj_GUITextFlying);
-			_scr.z = z;
-			_scr.text = "-15";
-			_scr.color = c_red;
+			if (!StoryPeacefulIntroFarmActive()) {
+				var _scr = instance_create_layer(x, y, "GUI", obj_GUITextFlying);
+				_scr.z = z;
+				_scr.text = "-15";
+				_scr.color = c_red;
+			}
 			CombosAddMiss(-15);
 		}
 		
@@ -60,9 +66,11 @@ switch(state) {
 			instance_destroy(collide_water);
 			audio_play_sound(snd_ProjWaterHit, 1, false);
 			// Score fx
-			var _scr = instance_create_layer(x, y, "GUI", obj_GUITextFlying);
-			_scr.z = z;
-			_scr.text = "+100";
+			if (!StoryPeacefulIntroFarmActive()) {
+				var _scr = instance_create_layer(x, y, "GUI", obj_GUITextFlying);
+				_scr.z = z;
+				_scr.text = "+100";
+			}
 			if (!StoryPeacefulIntroFarmActive()) global.score_base += 100;
 			state = PLOTSTATE.CARROT_FRESH;
 			alarm[1] = 2;
@@ -78,10 +86,12 @@ switch(state) {
 			instance_destroy(collide_water);
 			audio_play_sound(snd_ProjWaterHit, 1, false);
 			// Score fx
-			var _scr = instance_create_layer(x, y, "GUI", obj_GUITextFlying);
-			_scr.z = z;
-			_scr.text = "-15";
-			_scr.color = c_red;
+			if (!StoryPeacefulIntroFarmActive()) {
+				var _scr = instance_create_layer(x, y, "GUI", obj_GUITextFlying);
+				_scr.z = z;
+				_scr.text = "-15";
+				_scr.color = c_red;
+			}
 			CombosAddMiss(-15);
 		}
 	
@@ -93,9 +103,11 @@ switch(state) {
 			instance_destroy(collide_seed);
 			audio_play_sound(snd_ProjSeedHit, 1, false);
 			// Score fx
-			var _scr = instance_create_layer(x, y, "GUI", obj_GUITextFlying);
-			_scr.z = z;
-			_scr.text = "+100";
+			if (!StoryPeacefulIntroFarmActive()) {
+				var _scr = instance_create_layer(x, y, "GUI", obj_GUITextFlying);
+				_scr.z = z;
+				_scr.text = "+100";
+			}
 			if (!StoryPeacefulIntroFarmActive()) global.score_base += 100;
 			state = PLOTSTATE.CARROT_FRESH;
 			obj_ControllerFarm.crops_filled++;
@@ -112,10 +124,12 @@ switch(state) {
 			_fx.depth -= 1;
 			instance_destroy(collide_seed);
 			// Score fx
-			var _scr = instance_create_layer(x, y, "GUI", obj_GUITextFlying);
-			_scr.z = z;
-			_scr.text = "-15";
-			_scr.color = c_red;
+			if (!StoryPeacefulIntroFarmActive()) {
+				var _scr = instance_create_layer(x, y, "GUI", obj_GUITextFlying);
+				_scr.z = z;
+				_scr.text = "-15";
+				_scr.color = c_red;
+			}
 			CombosAddMiss(-15);
 		}
 		
@@ -126,10 +140,12 @@ switch(state) {
 			_fx.depth -= 1;
 			instance_destroy(collide_water);
 			// Score fx
-			var _scr = instance_create_layer(x, y, "GUI", obj_GUITextFlying);
-			_scr.z = z;
-			_scr.text = "-15";
-			_scr.color = c_red;
+			if (!StoryPeacefulIntroFarmActive()) {
+				var _scr = instance_create_layer(x, y, "GUI", obj_GUITextFlying);
+				_scr.z = z;
+				_scr.text = "-15";
+				_scr.color = c_red;
+			}
 			CombosAddMiss(-15);
 		}
 		break;

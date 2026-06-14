@@ -3,6 +3,7 @@
 // Collect cloud based on cloud_value
 var _scr = instance_create_layer(other.x, other.y - 64, "GUI", obj_GUITextFlying);
 _scr.z = 0;
+_scr.peaceful_intro_ok = true;
 _scr.color = c_aqua;
 _scr.text = "+ Water";
 

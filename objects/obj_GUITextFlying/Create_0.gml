@@ -8,6 +8,7 @@ sep = 36;
 w = 1280;
 
 z = 0;
+peaceful_intro_ok = false;
 image_xscale = 0;
 
 TweenStart("image_xscale", 0, 1, 0.2*GAMESPD, TWEENTYPE.CIRC_OUT);

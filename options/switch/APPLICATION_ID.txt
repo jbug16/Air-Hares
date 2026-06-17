@@ -11,7 +11,7 @@ Both of these tags must use the same value:
 Assets in this folder:
 - application.nmeta                              (merged build metadata)
 - legal_info_0100d470280e0000_c0ff_hac.zip       (SLIM legal info from publisher)
-- icon.bmp                                       (256x256, 24-bit BMP)
+- AmericanEnglish.jpg                            (1024x1024 baseline JPEG — required by Nintendo AuthoringTool)
 - banner.jpg                                     (eShop marketing — optional for devkit install)
 
 GameMaker: confirm Switch SDK path under Platform Settings before exporting.

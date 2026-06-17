@@ -8,6 +8,13 @@ y = room_height*0.9;
 lightning_phase = "NONE";	// "NONE", "FLASH", "DELAY", "LIGHTNING"
 player_hit = false;
 
+// Caution warning before lightning strike
+caution_flash_on = true;
+caution_flash_interval = 8;
+caution_flash_counter = caution_flash_interval;
+caution_scale = 0.35;
+caution_y_offset = -96;
+
 // Create particle emitter
 ps = part_system_create();
 p_emitter = part_emitter_create(ps);
@@ -37,6 +44,8 @@ lightning_fx_create = function(_alpha = 0.5, _delay = undefined) {
 	if _delay != undefined _sound_delay = _delay;
 	alarm[1] = _sound_delay;
 	if instance_exists(obj_PlayerPAR) x = obj_PlayerPAR.x;
+	caution_flash_on = true;
+	caution_flash_counter = caution_flash_interval;
 }
 
 // Special case for bossfight 4

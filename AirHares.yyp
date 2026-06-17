@@ -456,6 +456,7 @@
     {"id":{"name":"spr_CardBossIcon","path":"sprites/spr_CardBossIcon/spr_CardBossIcon.yy",},},
     {"id":{"name":"spr_CardBossName","path":"sprites/spr_CardBossName/spr_CardBossName.yy",},},
     {"id":{"name":"spr_Carrot","path":"sprites/spr_Carrot/spr_Carrot.yy",},},
+    {"id":{"name":"spr_Caution","path":"sprites/spr_Caution/spr_Caution.yy",},},
     {"id":{"name":"spr_Credits","path":"sprites/spr_Credits/spr_Credits.yy",},},
     {"id":{"name":"spr_CropBarren","path":"sprites/spr_CropBarren/spr_CropBarren.yy",},},
     {"id":{"name":"spr_CropBooming","path":"sprites/spr_CropBooming/spr_CropBooming.yy",},},

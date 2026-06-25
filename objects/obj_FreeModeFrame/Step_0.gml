@@ -4,7 +4,7 @@ if (global.arcade_popup_screen != 1) exit;
 
 if (VirtualKeyboardIsActive()) exit;
 
-if (keyboard_check_pressed(vk_escape) || InputGet(INPUT.PAUSE)) {
+if (InputMenuCancelPressed()) {
 	ArcadePopupExitInitialsScreen();
 	exit;
 }

@@ -346,7 +346,7 @@ function InputControlsRebindEnabled() {
 function InputSwitchControlsScreenLabel(_index) {
 	var _labels = [
 		"L Stick Left", "L Stick Right", "R Stick Up", "R Stick Down",
-		"ZL", "ZR", "Y", "B", "A", "X", "R"
+		"ZL", "ZR", "Y", "A", "B", "X", "R"
 	];
 	if (_index < 0 || _index >= array_length(_labels)) return "";
 	return _labels[_index];
@@ -374,6 +374,18 @@ function InputGpMenuConfirm() {
 /// @desc GameMaker gp_face* constant for menu back / cancel (Nintendo B on Switch = gp_face1).
 function InputGpMenuCancel() {
 	return SavePlatformIsSwitch() ? gp_face1 : gp_face2;
+}
+
+/// @desc Escape on keyboard or platform menu-cancel on any connected gamepad.
+function InputMenuCancelPressed() {
+	if (keyboard_check_pressed(vk_escape)) return true;
+	var _maxpads = gamepad_get_device_count();
+	for (var _gp = 0; _gp < _maxpads; _gp++) {
+		if (gamepad_is_connected(_gp) && gamepad_button_check_pressed(_gp, InputGpMenuCancel())) {
+			return true;
+		}
+	}
+	return false;
 }
 
 /// @desc Splash / logo screens: buttons that advance when pressed.
@@ -430,11 +442,11 @@ function InputApplyDesktopGamepadMap() {
 	global.gpmap[? INPUT.TOGGLE_AIM] = [gp_shoulderr];
 }
 
-/// @desc Match Xbox layout by physical position on Switch Pro / Joy-Con (GM constants):
-/// B=gp_face1, A=gp_face2, Y=gp_face4 (left), X=gp_face3 (top). Face3/face4 differ from desktop gpmap.
+/// @desc Nintendo face buttons for gameplay; Y/X use physical position (gp_face4/gp_face3).
+/// A=gp_face2 (seed, menu confirm), B=gp_face1 (water, menu cancel / pause in menus).
 function InputApplySwitchGamepadMap() {
-	global.gpmap[? INPUT.SEED] = [gp_face1];
-	global.gpmap[? INPUT.WATER] = [gp_face2];
+	global.gpmap[? INPUT.SEED] = [gp_face2];
+	global.gpmap[? INPUT.WATER] = [gp_face1];
 	global.gpmap[? INPUT.PARRY] = [gp_face4];
 	global.gpmap[? INPUT.UP] = [gp_padu];
 	global.gpmap[? INPUT.DOWN] = [gp_padd];

@@ -451,7 +451,7 @@ function VirtualKeyboardPollDeleteHold(_inst) {
 
 /// @desc Step navigation + actions for obj_VirtualKeyboard.
 function VirtualKeyboardStepController(_inst) {
-	if (InputGet(INPUT.WATER) || InputGet(INPUT.PAUSE) || keyboard_check_pressed(vk_escape)) {
+	if (InputMenuCancelPressed()) {
 		VirtualKeyboardClose(false);
 		return;
 	}

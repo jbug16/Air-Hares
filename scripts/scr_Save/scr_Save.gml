@@ -10,8 +10,8 @@ function SavePlatformIsWindows() {
 }
 
 function SavePlatformIsSwitch() {
-	return os_type == os_switch;
-	//return true;
+	//return os_type == os_switch;
+	return true;
 }
 
 function SavePlatformHasPersistence() {

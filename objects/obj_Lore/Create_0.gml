@@ -1,5 +1,8 @@
 /// @desc
 
+if (SavePlatformIsSwitch()) sprite_index = spr_Lore_Nintendo;
+else sprite_index = spr_Lore;
+
 // =========================
 // ====== ADJUSTABLE =======
 // =========================

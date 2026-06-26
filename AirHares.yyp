@@ -112,7 +112,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.4.222",
+    "IDEVersion":"2026.0.0.16",
   },
   "name":"AirHares",
   "resources":[
@@ -565,6 +565,7 @@
     {"id":{"name":"spr_LinnieRightMax","path":"sprites/spr_LinnieRightMax/spr_LinnieRightMax.yy",},},
     {"id":{"name":"spr_LinnieRollLeft","path":"sprites/spr_LinnieRollLeft/spr_LinnieRollLeft.yy",},},
     {"id":{"name":"spr_LinnieRollRight","path":"sprites/spr_LinnieRollRight/spr_LinnieRollRight.yy",},},
+    {"id":{"name":"spr_Lore_Nintendo","path":"sprites/spr_Lore_Nintendo/spr_Lore_Nintendo.yy",},},
     {"id":{"name":"spr_Lore","path":"sprites/spr_Lore/spr_Lore.yy",},},
     {"id":{"name":"spr_MissionAccomplished","path":"sprites/spr_MissionAccomplished/spr_MissionAccomplished.yy",},},
     {"id":{"name":"spr_MissionFailed","path":"sprites/spr_MissionFailed/spr_MissionFailed.yy",},},

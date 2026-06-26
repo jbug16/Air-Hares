@@ -478,6 +478,7 @@
     {"name":"spr_LinnieRightMax","order":7,"path":"sprites/spr_LinnieRightMax/spr_LinnieRightMax.yy",},
     {"name":"spr_LinnieRollLeft","order":8,"path":"sprites/spr_LinnieRollLeft/spr_LinnieRollLeft.yy",},
     {"name":"spr_LinnieRollRight","order":9,"path":"sprites/spr_LinnieRollRight/spr_LinnieRollRight.yy",},
+    {"name":"spr_Lore_Nintendo","order":14,"path":"sprites/spr_Lore_Nintendo/spr_Lore_Nintendo.yy",},
     {"name":"spr_Lore","order":10,"path":"sprites/spr_Lore/spr_Lore.yy",},
     {"name":"spr_MissionAccomplished","order":7,"path":"sprites/spr_MissionAccomplished/spr_MissionAccomplished.yy",},
     {"name":"spr_MissionFailed","order":10,"path":"sprites/spr_MissionFailed/spr_MissionFailed.yy",},

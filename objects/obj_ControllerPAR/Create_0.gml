@@ -31,6 +31,11 @@ multiplayer_status[1][MPPROP.JOINED] = false;
 multiplayer_status[0][MPPROP.COOLDOWN] = 0; // Start with no MP cooldown
 multiplayer_status[1][MPPROP.COOLDOWN] = 0;
 
+// Controller hot-plug guard: start each level with a clean reconnect state.
+global.controller_reconnect_wait = false;
+global.controller_reconnect_exclude = noone;
+global.controller_unbound_frames = 0;
+
 level_completed = false; // Flag whether level has been completed successfully
 
 // Combo parameters

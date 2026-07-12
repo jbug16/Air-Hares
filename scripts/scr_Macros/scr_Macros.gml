@@ -18,3 +18,13 @@
 #macro SHADOW_ANCHOR_Y 414
 #macro BORDER_LEFT 80
 #macro BORDER_RIGHT 1200
+
+// Controller hot-plug guard (Switch Joy-Con detach / dock / disconnect handling)
+// A freshly-connected gamepad must be seen idle (not holding confirm) for this many
+// frames before a confirm press counts as a drop-in join. Filters spurious presses
+// generated when Joy-Cons are re-enumerated on detach/attach.
+#macro CONTROLLER_JOIN_DEBOUNCE 15
+// A live player may be without a valid controller for this many frames (e.g. mid
+// re-enumeration) before we pause and show the reconnect prompt. Avoids false pauses
+// during the brief device shuffle when Joy-Cons are slid on/off.
+#macro CONTROLLER_UNBOUND_GRACE 12

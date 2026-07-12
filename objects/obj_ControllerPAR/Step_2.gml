@@ -3,6 +3,18 @@
 // Count elapsed time
 time_elapsed += 1;
 
+// Controller hot-plug guard (Switch): keep P1/P2 devices valid across Joy-Con
+// detach/attach & dock/undock; pause for reconnect if P1 loses its controller.
+if (ControllerGuardReconcile()) {
+	if (global.controller_reconnect_wait && !instance_exists(obj_Pause)) {
+		instance_create_depth(x, y, depth, obj_Pause);
+	}
+	exit;
+}
+
+// Arm drop-in join detection so re-enumerated pads can't spawn a phantom P2.
+ControllerJoinReadyUpdate();
+
 // Check for pause
 if (InputGet(INPUT.PAUSE) and !instance_exists(obj_EndLevelPAR) and !global.pause_coop_portrait_select) {
 	if !instance_exists(obj_Pause) instance_create_depth(x,y,depth,obj_Pause);
@@ -76,7 +88,7 @@ if _player_alive == 0 {
 		}
 	exit;
 } else if (_player_alive == 1 && !StoryPeacefulIntroFarmActive()) { // Check join request
-	var _join_requestor = InputGamepadGetJoinRequest();
+	var _join_requestor = InputGamepadGetJoinRequestStable();
 	if (_join_requestor != noone) {
 		var _p1_can_join = multiplayer_status[0][MPPROP.COOLDOWN] <= 0;
 		var _p2_can_join = multiplayer_status[1][MPPROP.COOLDOWN] <= 0;

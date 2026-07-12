@@ -48,6 +48,17 @@ global.coop_portrait_select_device = 0;
 global.coop_portrait_select_index = 0;
 global.coop_portrait_select_ignore_confirm = 0;
 
+// Controller hot-plug guard (Switch): drop-in join debounce + reconnect-pause state.
+// gp_join_ready[slot] counts consecutive frames a pad has been connected AND idle so
+// re-enumerated Joy-Cons cannot trigger a phantom P2 join (see ControllerJoinReadyUpdate).
+global.gp_join_ready = array_create(12, 0);
+// True while gameplay is frozen waiting for P1's controller to reconnect.
+global.controller_reconnect_wait = false;
+// Slot reserved for a still-connected P2 during a P1 reconnect wait (noone if solo).
+global.controller_reconnect_exclude = noone;
+// Consecutive frames a live player has had no valid controller (grace before pausing).
+global.controller_unbound_frames = 0;
+
 global.coop_portrait_sprite[0] = spr_DirkIcon;
 global.coop_portrait_sprite[1] = spr_LinnieIcon;
 global.coop_portrait_sprite[2] = spr_BettyIcon;

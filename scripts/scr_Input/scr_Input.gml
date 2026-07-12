@@ -585,3 +585,169 @@ function InputGamepadButtonReleased(_key = noone){
 	
 	return -1;
 }
+
+// ===================================================================================
+// Controller hot-plug guard (Switch): Joy-Con detach/attach, dock/undock, disconnect.
+// -----------------------------------------------------------------------------------
+// A control_device is either -1 (keyboard, never disconnects) or a gamepad slot >= 0.
+// On Switch the slot indices shift at runtime when Joy-Cons are detached/attached or
+// the console is docked/undocked, so slots must be treated as volatile and reconciled.
+// ===================================================================================
+
+/// @desc True if a control_device value refers to a physical gamepad slot.
+/// @param {Real} _dev
+function ControlDeviceIsGamepad(_dev) {
+	return is_real(_dev) && _dev >= 0 && _dev < gamepad_get_device_count();
+}
+
+/// @desc Array of currently-connected gamepad slot indices (ascending).
+function ControlDeviceConnectedGamepadSlots() {
+	var _slots = [];
+	var _n = gamepad_get_device_count();
+	for (var _s = 0; _s < _n; _s++) {
+		if (gamepad_is_connected(_s)) array_push(_slots, _s);
+	}
+	return _slots;
+}
+
+/// @desc First connected slot in _slots that is not _exclude (only excluded while _exclude is still connected).
+/// @param {Array} _slots
+/// @param {Real} _exclude
+function ControllerFirstFreeSlot(_slots, _exclude) {
+	for (var i = 0; i < array_length(_slots); i++) {
+		var _s = _slots[i];
+		if (_s == _exclude && gamepad_is_connected(_exclude)) continue;
+		return _s;
+	}
+	return noone;
+}
+
+/// @desc Per-frame: track how long each pad has been connected AND idle (not holding
+/// menu-confirm). Freshly re-enumerated pads (e.g. detached Joy-Cons) start at 0 so a
+/// spurious confirm at connect time cannot register as a drop-in join. Call from the
+/// active gameplay controller before reading join requests.
+function ControllerJoinReadyUpdate() {
+	var _n = gamepad_get_device_count();
+	var _confirm = InputGpMenuConfirm();
+	for (var _s = 0; _s < _n; _s++) {
+		if (_s >= array_length(global.gp_join_ready)) global.gp_join_ready[_s] = 0;
+		if (!gamepad_is_connected(_s)) {
+			global.gp_join_ready[_s] = 0;                       // gone: must re-arm on reconnect
+		} else if (!gamepad_button_check(_s, _confirm)) {
+			global.gp_join_ready[_s] += 1;                      // connected & idle: arm
+		}
+		// connected but holding confirm: hold current count (stays 0 until first idle frame)
+	}
+}
+
+/// @desc True if a gamepad slot has been idle long enough to accept an intentional join.
+/// @param {Real} _slot
+function ControllerSlotJoinArmed(_slot) {
+	if (_slot < 0 || _slot >= array_length(global.gp_join_ready)) return false;
+	return global.gp_join_ready[_slot] >= CONTROLLER_JOIN_DEBOUNCE;
+}
+
+/// @desc Debounced version of InputGamepadGetJoinRequest(): keyboard joins pass through,
+/// gamepad joins must come from a pad that has been connected & idle (not a hot-plug artifact).
+function InputGamepadGetJoinRequestStable() {
+	var _req = InputGamepadGetJoinRequest();
+	if (_req == noone) return noone;
+	if (_req == -1) return -1;                                   // keyboard join is always intentional
+	if (ControllerSlotJoinArmed(_req)) return _req;
+	if (global.gamepad_debug) {
+		show_debug_message("[ControllerGuard] Ignored join from slot " + string(_req) + " (not idle-armed yet; likely hot-plug artifact)");
+	}
+	return noone;
+}
+
+/// @desc Flag a P1 controller-reconnect freeze. The caller (a top-level gameplay event)
+/// is responsible for spawning obj_Pause after this returns. _p2_reserved_dev is the slot
+/// to keep free for a still-connected P2 (noone when solo).
+/// @param {Real} _p2_reserved_dev
+function ControllerReconnectBegin(_p2_reserved_dev) {
+	global.controller_reconnect_wait = true;
+	global.controller_reconnect_exclude = _p2_reserved_dev;
+	if (global.gamepad_debug) {
+		show_debug_message("[ControllerGuard] P1 controller lost - pausing for reconnect (reserve slot for P2: " + string(_p2_reserved_dev) + ")");
+	}
+}
+
+/// @desc Called each frame while frozen (from obj_Pause). Rebinds P1 to an available pad
+/// once one is present; returns true when resolved so the caller can resume.
+function ControllerReconnectTryResolve() {
+	var _slots = ControlDeviceConnectedGamepadSlots();
+	var _p1 = ControllerFirstFreeSlot(_slots, global.controller_reconnect_exclude);
+	if (_p1 == noone) return false;                             // no free pad for P1 yet
+	global.control_device[0] = _p1;
+	if (global.gamepad_debug) {
+		show_debug_message("[ControllerGuard] P1 controller reconnected -> slot " + string(_p1) + "; resuming");
+	}
+	return true;
+}
+
+/// @desc Remove player 2 (controller yanked with no spare pad). Continues solo.
+function ControllerRemovePlayer2() {
+	if (global.gamepad_debug) {
+		show_debug_message("[ControllerGuard] P2 controller lost with no spare pad - dropping P2 to solo");
+	}
+	with (obj_PlayerPAR) if (player == 1) instance_destroy();
+	with (obj_PlayerRabboSpawner) if (player == 1) instance_destroy();
+	with (obj_ControllerPAR) {
+		multiplayer_status[1][MPPROP.JOINED] = false;
+		multiplayer_status[1][MPPROP.COOLDOWN] = 0;
+	}
+	global.control_device[1] = noone;
+	global.character_selected[1] = CHARACTER.DIRK;
+}
+
+/// @desc Keep control devices valid across Switch controller hot-plug, and detect a
+/// lost P1 controller. Call from the active gameplay controller (obj_ControllerPAR).
+/// Returns true if it triggered a reconnect freeze (caller should exit its step).
+function ControllerGuardReconcile() {
+	if (global.controller_reconnect_wait) return false;         // already frozen
+	if (global.pause_coop_portrait_select) return false;        // portrait-select owns the freeze
+	if (instance_exists(obj_EndLevelPAR)) return false;         // level ending: leave input alone
+
+	var _slots = ControlDeviceConnectedGamepadSlots();
+	var _p1_alive = PlayerCheckAlive(0);
+	var _p2_alive = PlayerCheckAlive(1);
+
+	// ---- Player 1: must keep a controller (or be on keyboard). Rebind, else pause. ----
+	var _d1 = global.control_device[0];
+	if (_p1_alive && ControlDeviceIsGamepad(_d1) && !gamepad_is_connected(_d1)) {
+		var _new = ControllerFirstFreeSlot(_slots, global.control_device[1]);
+		if (_new != noone) {
+			global.control_device[0] = _new;                   // seamless follow (e.g. Joy-Con detach)
+			global.controller_unbound_frames = 0;
+			if (global.gamepad_debug) show_debug_message("[ControllerGuard] P1 rebound to slot " + string(_new) + " after device change");
+		} else {
+			global.controller_unbound_frames += 1;             // no pad available yet
+			if (global.controller_unbound_frames >= CONTROLLER_UNBOUND_GRACE) {
+				global.controller_unbound_frames = 0;
+				var _reserve = (_p2_alive && ControlDeviceIsGamepad(global.control_device[1]) && gamepad_is_connected(global.control_device[1]))
+					? global.control_device[1] : noone;
+				ControllerReconnectBegin(_reserve);
+				return true;
+			}
+			return false;                                      // within grace; hold this frame
+		}
+	} else {
+		global.controller_unbound_frames = 0;
+	}
+
+	// ---- Player 2: rebind to a spare pad, else drop out (continue solo). ----
+	if (_p2_alive) {
+		var _d2 = global.control_device[1];
+		if (ControlDeviceIsGamepad(_d2) && !gamepad_is_connected(_d2)) {
+			var _spare = ControllerFirstFreeSlot(_slots, global.control_device[0]);
+			if (_spare != noone) {
+				global.control_device[1] = _spare;
+				if (global.gamepad_debug) show_debug_message("[ControllerGuard] P2 rebound to slot " + string(_spare));
+			} else {
+				ControllerRemovePlayer2();
+			}
+		}
+	}
+
+	return false;
+}

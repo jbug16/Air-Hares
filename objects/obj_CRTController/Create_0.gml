@@ -1,5 +1,6 @@
 draw_set_color(c_white);
-show_debug_overlay(false);
+show_debug_overlay(false); // use QAPerfDraw overlay instead (F3 / L+R+Minus)
+QAPerfInit();
 
 ///MUST!!! disable automatic drawing of the application surface.
 ///It will be manually drawn too in the Draw GUI event with the CRT shader applied.
@@ -30,3 +31,8 @@ crt_gui_bezel_enabled = false;
 ///Setup the CRT shaders variables and shader uniforms
 //CRTInitShader(view_camera[0], false, 0.12, true, false, true, 0.03, 80.0, 1.0, false, 0);
 CRTInitShader(view_camera[0], false, 0.12, true, true, false, 0.04, 80, 1.0, false, 0);
+
+///Track the window size so the GUI layer is only re-sized when it actually changes
+///(e.g. dock/undock), instead of every frame - see Draw GUI.
+gui_last_w = -1;
+gui_last_h = -1;

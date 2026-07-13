@@ -235,6 +235,14 @@ audio_group_set_gain(audiogroup_default, global.options_sfx, 0);
 audio_group_set_gain(audiogroup_music, global.options_music, 0);
 // Scanline is applied at obj_CRTController
 
+// Texture prefetch (Switch): the project ships a single, on-demand texture group, so the
+// first time a level references its sprites the page is decompressed + uploaded to VRAM
+// mid-frame -> the "stutter when a level starts" from QA. We prefetch all pages up front
+// during the splash (see obj_SplashTitle) so level starts are smooth. Flip prefetch_textures
+// off here if a future build ever hits a VRAM limit (reverts to the old on-demand loading).
+global.prefetch_textures = true;
+global.textures_prefetched = false;
+
 // Transition
 //global.transition_art = noone;
 //global.transition_target = noone;

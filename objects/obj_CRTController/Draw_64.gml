@@ -1,10 +1,15 @@
-///Ensure GUI layer is the correct size, same as the application surface.
-display_set_gui_size(surface_width, surface_height);
+///Keep the GUI layer matched to the window size, but ONLY when it actually changes
+///(e.g. docking / undocking). This used to run every frame and, when docked (window
+///1920x1080 != 1280x720 application surface), it reallocated the GUI surface twice per
+///frame - a constant cost present in every room ("low FPS from the Main Menu onwards").
+var _ww = window_get_width();
+var _wh = window_get_height();
+if (_ww != gui_last_w || _wh != gui_last_h)
+{
+	display_set_gui_size(_ww, _wh);
+	display_set_gui_maximise();
+	gui_last_w = _ww;
+	gui_last_h = _wh;
+}
 
-///Check if the CRT shader is enabled and apply the effect to the application surface.
-////if (crt_shader_enabled) { _scr_CRT_appy_to_surface(application_surface, view_camera[0]); }	
-////  else draw_surface(application_surface, 0,0);
-
-///Reset GUI layer back to the window size so we can draw text, etc.
-display_set_gui_size(window_get_width(), window_get_height());
-display_set_gui_maximise();
+QAPerfDraw();

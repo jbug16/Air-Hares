@@ -21,7 +21,7 @@ global.menu = false;
 global.game_mode = GAMEMODE.STORY;
 global.current_level = 0;		// Current story mode level being played. (0-15)
 global.story_mode_progress = 0;	// Current progress in story mode
-global.arcade_max_unlocked = 13;	// Max level  ever unlocked for arcade (never decreases)
+global.arcade_max_unlocked = 0;	// Max level ever unlocked for arcade (starts locked; never decreases)
 // Main-menu Story popup: 0 = Continue/New/Back, 1 = New Story Game (initials + Continue/Back)
 global.story_popup_screen = 0;
 global.story_new_initials = "";
@@ -408,7 +408,7 @@ global.character_sprite[CHARACTER.CANDIE][CHARACTER_SPRITE.DEATH] = spr_CandieId
 }
 
 
-// Input (defaults + save overrides; Switch uses Nintendo-oriented gpmap)
+// Input (defaults + save overrides; Switch + PC share letter-based face map — A=select on both)
 InputInitDefaultMaps();
 
 // Keyboard/gamepad names

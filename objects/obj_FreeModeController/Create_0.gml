@@ -1,11 +1,10 @@
 /// @desc Init
 // Calc level that can be finished. Progress 2 means only two tutorials are completed
 
-//var _level_count = global.story_mode_progress;
 var _level_count = global.arcade_max_unlocked;
-//if (global.dev_mode) _level_count = 16;					// DEBUG
-if(global.demo) _level_count = 3;
-level_count = max(1, _level_count);
+if (global.demo) _level_count = 3;
+level_count = _level_count;
+show_empty_message = (_level_count <= 0);
 prev_left = false;
 prev_right = false;
 prev_up = false;
@@ -13,6 +12,14 @@ prev_down = false;
 
 selected = 0;
 selected_prev = 0;
+
+if (show_empty_message) {
+	image_xscale = 0.1;
+	image_yscale = 0.1;
+	TweenStart("image_xscale", 0.1, 1.8, 0.5*GAMESPD, TWEENTYPE.CIRC_OUT);
+	TweenStart("image_yscale", 0.1, 1.8, 0.5*GAMESPD, TWEENTYPE.CIRC_OUT);
+	exit;
+}
 
 var _anchor_x = 0.2*room_width;
 var _anchor_y = 0.24*room_height;

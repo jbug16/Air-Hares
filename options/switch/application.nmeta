@@ -62,7 +62,7 @@
       <Organization>PEGIPortugal</Organization>
       <Age>3</Age>
     </Rating>
-    <LegalInformationFilePath UseEnvironmentVariable="true">legal_info_0100d470280e0000_c0ff_hac.zip</LegalInformationFilePath>
+    <LegalInformationFilePath UseEnvironmentVariable="true">legal_info_0100d470280e0000_1732_hac.zip</LegalInformationFilePath>
     <UserAccountSaveDataSize>0x0000000000400000</UserAccountSaveDataSize>
     <UserAccountSaveDataJournalSize>0x0000000000100000</UserAccountSaveDataJournalSize>
     <LogoType>LicensedByNintendo</LogoType>

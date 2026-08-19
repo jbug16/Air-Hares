@@ -8,7 +8,7 @@ var _down = InputGet(INPUT.MENU_DOWN);
 var _select = InputGet(INPUT.MENU_SELECT);
 
 var _movement = _left or _right or _up or _down or _select;
-if ((_movement) and !instance_exists(obj_FreeModeFrame) and !instance_exists(obj_StoryModeFrame))
+if (level_count > 0 && (_movement) and !instance_exists(obj_FreeModeFrame) and !instance_exists(obj_StoryModeFrame))
 {
 	selected_prev = selected;
 	var _max = level_count - 1;

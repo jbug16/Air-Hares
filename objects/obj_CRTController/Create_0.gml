@@ -1,6 +1,11 @@
 draw_set_color(c_white);
-show_debug_overlay(false); // use QAPerfDraw overlay instead (F3 / L+R+Minus)
-QAPerfInit();
+show_debug_overlay(false);
+// QA perf overlay (F3 / L+R+Minus) — disabled for production
+//QAPerfInit();
+// QA save overlay (F4 / L+R+Plus) — enable for Switch Lotcheck / save debugging
+QASaveInit();
+// QA input overlay (F5/F2 / L+R+D-pad Down) — face-button mapping; works on Windows + Switch
+QAInputInit();
 
 ///MUST!!! disable automatic drawing of the application surface.
 ///It will be manually drawn too in the Draw GUI event with the CRT shader applied.

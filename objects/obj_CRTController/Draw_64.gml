@@ -12,4 +12,6 @@ if (_ww != gui_last_w || _wh != gui_last_h)
 	gui_last_h = _wh;
 }
 
-QAPerfDraw();
+//QAPerfDraw(); // QA perf overlay — disabled for production
+QASaveDraw(); // QA save overlay — F4 / L+R+Plus
+QAInputDraw(); // QA input overlay — F5/F2 (PC) or L+R+D-pad Down (pad)

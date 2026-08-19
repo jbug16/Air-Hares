@@ -342,11 +342,12 @@ function InputControlsRebindEnabled() {
 	return !SavePlatformIsSwitch();
 }
 
-/// @desc Fixed Nintendo labels for Options → Controls on Switch (index matches input[] order).
+/// @desc Fixed controller labels for Options → Controls on Switch (index matches input[] order).
+/// GM Switch maps face buttons by Xbox position, so Nintendo letters are: B=Seed, A=Water, Y=Parry, X=Loop.
 function InputSwitchControlsScreenLabel(_index) {
 	var _labels = [
 		"L Stick Left", "L Stick Right", "R Stick Up", "R Stick Down",
-		"ZL", "ZR", "Y", "A", "B", "X", "R"
+		"ZL", "ZR", "Y", "B", "A", "X", "R"
 	];
 	if (_index < 0 || _index >= array_length(_labels)) return "";
 	return _labels[_index];
@@ -366,14 +367,14 @@ function ControlDeviceAssignPrimaryFromGamepad() {
 	}
 }
 
-/// @desc GameMaker gp_face* constant for menu confirm / join (Nintendo A on Switch = gp_face2).
+/// @desc Menu confirm / join — letter A (gp_face1 on Switch and Xbox; GM Switch maps by label).
 function InputGpMenuConfirm() {
-	return SavePlatformIsSwitch() ? gp_face2 : gp_face1;
+	return gp_face1;
 }
 
-/// @desc GameMaker gp_face* constant for menu back / cancel (Nintendo B on Switch = gp_face1).
+/// @desc Menu back / cancel — letter B (gp_face2 on Switch and Xbox).
 function InputGpMenuCancel() {
-	return SavePlatformIsSwitch() ? gp_face1 : gp_face2;
+	return gp_face2;
 }
 
 /// @desc Escape on keyboard or platform menu-cancel on any connected gamepad.
@@ -390,9 +391,6 @@ function InputMenuCancelPressed() {
 
 /// @desc Splash / logo screens: buttons that advance when pressed.
 function InputGpSplashAdvanceButtons() {
-	if (SavePlatformIsSwitch()) {
-		return [gp_face2, gp_face1, gp_start];
-	}
 	return [gp_face1, gp_face2, gp_start];
 }
 
@@ -422,7 +420,14 @@ function InputApplyDefaultKeyboardMap() {
 	global.keymap[? INPUT.TOGGLE_AIM] = [vk_enter];
 }
 
-function InputApplyDesktopGamepadMap() {
+/// @desc Shared face-button map for PC and Switch (letter parity).
+/// QA confirmed Switch exports map gp_face* by Nintendo letter, same as Xbox letters:
+/// A=gp_face1, B=gp_face2, X=gp_face3, Y=gp_face4. Do NOT swap for position.
+function InputApplyDefaultGamepadMap() {
+	if (variable_global_exists("gpmap") && ds_exists(global.gpmap, ds_type_map)) {
+		ds_map_destroy(global.gpmap);
+	}
+	global.gpmap = ds_map_create();
 	global.gpmap[? INPUT.SEED] = [gp_face1];
 	global.gpmap[? INPUT.WATER] = [gp_face2];
 	global.gpmap[? INPUT.PARRY] = [gp_face3];
@@ -442,53 +447,20 @@ function InputApplyDesktopGamepadMap() {
 	global.gpmap[? INPUT.TOGGLE_AIM] = [gp_shoulderr];
 }
 
-/// @desc Nintendo face buttons for gameplay; Y/X use physical position (gp_face4/gp_face3).
-/// A=gp_face2 (seed, menu confirm), B=gp_face1 (water, menu cancel / pause in menus).
-function InputApplySwitchGamepadMap() {
-	global.gpmap[? INPUT.SEED] = [gp_face2];
-	global.gpmap[? INPUT.WATER] = [gp_face1];
-	global.gpmap[? INPUT.PARRY] = [gp_face4];
-	global.gpmap[? INPUT.UP] = [gp_padu];
-	global.gpmap[? INPUT.DOWN] = [gp_padd];
-	global.gpmap[? INPUT.LEFT] = [gp_padl];
-	global.gpmap[? INPUT.RIGHT] = [gp_padr];
-	global.gpmap[? INPUT.PAUSE] = [gp_start, gp_face1];
-	global.gpmap[? INPUT.LOOP_DE_LOOP] = [gp_face3];
-	global.gpmap[? INPUT.MENU_SELECT] = [gp_face2];
-	global.gpmap[? INPUT.MENU_UP] = [gp_padu];
-	global.gpmap[? INPUT.MENU_DOWN] = [gp_padd];
-	global.gpmap[? INPUT.MENU_LEFT] = [gp_padl];
-	global.gpmap[? INPUT.MENU_RIGHT] = [gp_padr];
-	global.gpmap[? INPUT.ROLL_RIGHT] = [gp_shoulderrb];
-	global.gpmap[? INPUT.ROLL_LEFT] = [gp_shoulderlb];
-	global.gpmap[? INPUT.TOGGLE_AIM] = [gp_shoulderr];
-}
-
-function InputApplyDefaultGamepadMap() {
-	if (variable_global_exists("gpmap") && ds_exists(global.gpmap, ds_type_map)) {
-		ds_map_destroy(global.gpmap);
-	}
-	global.gpmap = ds_map_create();
-	if (SavePlatformIsSwitch()) {
-		InputApplySwitchGamepadMap();
-	} else {
-		InputApplyDesktopGamepadMap();
-	}
-}
-
 function InputInitDefaultMaps() {
 	InputApplyDefaultKeyboardMap();
 	InputApplyDefaultGamepadMap();
 }
 
-/// @desc After global.key_names is populated — use Nintendo labels on Switch.
+/// @desc After global.key_names is populated — Switch shoulder/start labels (+/−, ZL/ZR).
 function InputInitBindingDisplayNames() {
 	if (!variable_global_exists("key_names") || !ds_exists(global.key_names, ds_type_map)) return;
 	if (!SavePlatformIsSwitch()) return;
+	// Face constants follow Xbox position; show Nintendo letters (bottom=B, right=A, left=Y, top=X).
 	global.key_names[? gp_face1] = "B";
 	global.key_names[? gp_face2] = "A";
-	global.key_names[? gp_face3] = "X";
-	global.key_names[? gp_face4] = "Y";
+	global.key_names[? gp_face3] = "Y";
+	global.key_names[? gp_face4] = "X";
 	global.key_names[? gp_shoulderl] = "L";
 	global.key_names[? gp_shoulderlb] = "ZL";
 	global.key_names[? gp_shoulderr] = "R";
@@ -536,7 +508,7 @@ function InputLoadBindingsFromSave() {
 				global.keymap[? _inp] = _keys_kb;
 			}
 		}
-		// Switch: always use platform gpmap — saved desktop-style face bindings swap X/Y in-game.
+		// Switch: keep letter-based default map (A=face1 select). Do not load saved PC rebinds.
 		if (!SavePlatformIsSwitch()) {
 			var _gp = SaveIniReadString("controls gp", string(_inp), "");
 			if (_gp != "") {

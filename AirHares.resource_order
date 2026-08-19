@@ -275,6 +275,8 @@
     {"name":"scr_Leaderboard","order":6,"path":"scripts/scr_Leaderboard/scr_Leaderboard.yy",},
     {"name":"scr_Macros","order":2,"path":"scripts/scr_Macros/scr_Macros.yy",},
     {"name":"scr_Player","order":2,"path":"scripts/scr_Player/scr_Player.yy",},
+    {"name":"scr_QAInput","order":10,"path":"scripts/scr_QAInput/scr_QAInput.yy",},
+    {"name":"scr_QASave","order":9,"path":"scripts/scr_QASave/scr_QASave.yy",},
     {"name":"scr_ResetSaveForTesting","order":8,"path":"scripts/scr_ResetSaveForTesting/scr_ResetSaveForTesting.yy",},
     {"name":"scr_Tween","order":5,"path":"scripts/scr_Tween/scr_Tween.yy",},
     {"name":"scr_VisualEffects","order":7,"path":"scripts/scr_VisualEffects/scr_VisualEffects.yy",},

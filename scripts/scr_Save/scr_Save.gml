@@ -56,8 +56,6 @@ function SaveIniClose() {
 	if (SavePlatformIsWindows()) {
 		ini_close();
 		if (variable_global_exists("save_ini_dirty") && global.save_ini_dirty) {
-			var _ok = file_exists(SAVE_WINDOWS_FILENAME);
-			QASaveNoteFlush(_ok, _ok ? "" : "ini_missing_after_close", 0);
 			global.save_ini_dirty = false;
 		}
 	} else if (SavePlatformIsSwitch() && variable_global_exists("save_switch_open") && global.save_switch_open) {
@@ -163,21 +161,16 @@ function SaveSwitchLoadFromDisk() {
 function SaveSwitchFlush() {
 	if (!SavePlatformIsSwitch()) return;
 	if (!variable_global_exists("save_switch_cache") || !is_struct(global.save_switch_cache)) {
-		QASaveNoteFlush(false, "no_cache", 0);
 		return;
 	}
 	var _j = json_stringify(global.save_switch_cache);
-	var _bytes = string_byte_length(_j);
 	var _fw = file_text_open_write(SAVE_SWITCH_FILENAME);
 	if (_fw == -1) {
 		show_debug_message("SaveSwitch: could not write " + SAVE_SWITCH_FILENAME);
-		QASaveNoteFlush(false, "open_write_failed", _bytes);
 		return;
 	}
 	file_text_write_string(_fw, _j);
 	file_text_close(_fw);
-	var _ok = file_exists(SAVE_SWITCH_FILENAME);
-	QASaveNoteFlush(_ok, _ok ? "" : "missing_after_write", _bytes);
 }
 
 function SaveSwitchSection(_section, _create) {

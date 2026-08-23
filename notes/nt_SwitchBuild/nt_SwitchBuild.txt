@@ -13,7 +13,8 @@ Boot & menus
   [ ] A confirms, B backs in all menus and virtual keyboard
 
 Save data
-  [ ] Story progress persists after quit/relaunch
+  [ ] Story progress persists after HOME → Close Software → relaunch (NAND commit)
+  [ ] Arcade unlocks persist after closing on the title
   [ ] Options > Erase all saved data works
   [ ] Leaderboard scores persist in airhares_save.json
 

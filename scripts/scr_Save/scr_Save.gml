@@ -1,4 +1,4 @@
-/// @desc Platform save I/O — Windows: INI (save.sav + leaderboard JSON). Switch: JSON (airhares_save.json).
+/// @desc Platform save I/O — Windows: INI (save.sav + leaderboard JSON). Switch: JSON (airhares_save.json) + NAND commit.
 
 #macro SAVE_WINDOWS_FILENAME "save.sav"
 #macro SAVE_WINDOWS_LEADERBOARD_FILENAME "local_leaderboard_story_run.json"
@@ -116,30 +116,56 @@ function SaveSwitchEnsureLoaded() {
 	}
 }
 
+function SaveSwitchEmptyRoot() {
+	return {
+		leaderboard_story_run: { singleplayer: [], coop: [] }
+	};
+}
+
+/// @desc Read a save file as text (buffer I/O — more reliable on Switch than file_text).
+function SaveSwitchReadFileText(_filename) {
+	if (!file_exists(_filename)) return "";
+	var _buf = buffer_load(_filename);
+	if (_buf < 0) return "";
+	var _size = buffer_get_size(_buf);
+	if (_size <= 0) {
+		buffer_delete(_buf);
+		return "";
+	}
+	buffer_seek(_buf, buffer_seek_start, 0);
+	var _s = buffer_read(_buf, buffer_text);
+	buffer_delete(_buf);
+	return is_string(_s) ? _s : "";
+}
+
+/// @desc Write save file bytes. Returns true if the file exists afterwards.
+function SaveSwitchWriteFileText(_filename, _text) {
+	var _bytes = string_byte_length(_text);
+	var _buf = buffer_create(max(_bytes, 1), buffer_fixed, 1);
+	if (_bytes > 0) {
+		buffer_write(_buf, buffer_text, _text);
+	}
+	buffer_save(_buf, _filename);
+	buffer_delete(_buf);
+	return file_exists(_filename);
+}
+
+/// @desc Copy the mounted Switch save cache to NAND. Without this, writes only last until the process exits.
+function SaveSwitchCommitNand() {
+	if (os_type != os_switch) return true;
+	var _result = switch_save_data_commit();
+	show_debug_message("SaveSwitch: nand commit result=" + string(_result));
+	return true;
+}
+
 function SaveSwitchLoadFromDisk() {
-	var _empty_sp = [];
-	var _empty_co = [];
+	var _empty = SaveSwitchEmptyRoot();
 	if (!file_exists(SAVE_SWITCH_FILENAME)) {
-		return {
-			leaderboard_story_run: { singleplayer: _empty_sp, coop: _empty_co }
-		};
+		return _empty;
 	}
-	var _f = file_text_open_read(SAVE_SWITCH_FILENAME);
-	if (_f == -1) {
-		return {
-			leaderboard_story_run: { singleplayer: _empty_sp, coop: _empty_co }
-		};
-	}
-	var _s = "";
-	while (!file_text_eof(_f)) {
-		_s += file_text_read_string(_f);
-		file_text_readln(_f);
-	}
-	file_text_close(_f);
+	var _s = SaveSwitchReadFileText(SAVE_SWITCH_FILENAME);
 	if (string_length(_s) == 0) {
-		return {
-			leaderboard_story_run: { singleplayer: _empty_sp, coop: _empty_co }
-		};
+		return _empty;
 	}
 	var _root = undefined;
 	try {
@@ -148,12 +174,10 @@ function SaveSwitchLoadFromDisk() {
 		_root = undefined;
 	}
 	if (!is_struct(_root)) {
-		return {
-			leaderboard_story_run: { singleplayer: _empty_sp, coop: _empty_co }
-		};
+		return _empty;
 	}
 	if (!variable_struct_exists(_root, SAVE_SWITCH_LB_KEY) || !is_struct(_root[$ SAVE_SWITCH_LB_KEY])) {
-		_root[$ SAVE_SWITCH_LB_KEY] = { singleplayer: _empty_sp, coop: _empty_co };
+		_root[$ SAVE_SWITCH_LB_KEY] = { singleplayer: [], coop: [] };
 	}
 	return _root;
 }
@@ -164,13 +188,12 @@ function SaveSwitchFlush() {
 		return;
 	}
 	var _j = json_stringify(global.save_switch_cache);
-	var _fw = file_text_open_write(SAVE_SWITCH_FILENAME);
-	if (_fw == -1) {
+	if (!SaveSwitchWriteFileText(SAVE_SWITCH_FILENAME, _j)) {
 		show_debug_message("SaveSwitch: could not write " + SAVE_SWITCH_FILENAME);
 		return;
 	}
-	file_text_write_string(_fw, _j);
-	file_text_close(_fw);
+	// file_text / buffer_save only update the mounted cache. NAND persist requires commit.
+	SaveSwitchCommitNand();
 }
 
 function SaveSwitchSection(_section, _create) {
@@ -272,6 +295,8 @@ function SaveEraseAllFiles() {
 		}
 		global.save_switch_cache = undefined;
 		global.save_switch_open = false;
+		global.save_ini_dirty = false;
+		SaveSwitchCommitNand();
 	}
 
 	return [_removed_save, _removed_lb];

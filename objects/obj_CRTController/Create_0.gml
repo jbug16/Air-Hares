@@ -10,6 +10,9 @@ view_enabled = true;
 view_wport[0] = 1280;
 view_hport[0] = 720;
 OptionsDisplayApply();
+// The game is drawn at 1280x720. Leaving the application surface at the
+// window size scales that image twice and the text goes soft.
+surface_resize(application_surface, 1280, 720);
 
 ///_xx and _yy variables are used to move the views position around.
 ///Just for demonstration purposes, can be removed.

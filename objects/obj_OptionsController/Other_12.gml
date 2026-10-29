@@ -54,27 +54,19 @@ else //back from controls to options
 	else
 	{
 		//bring back options buttons
-		menu[0] = "Controls";
-		menu[1] = "Music Volume";
-		menu[2] = "SFX Volume";
-		menu[3] = "Graphics";
-		menu[4] = "Tutorial";
-		menu[5] = "Credits";
-		menu[6] = "Back";
-		
-		//return status bar
-		menu_status[0] = "";
+		menu = OptionsMainMenuLabels();
+		menu_status = array_create(array_length(menu), "");
 		menu_status[1] = string(round(global.options_music * 100));
 		menu_status[2] = string(round(global.options_sfx * 100));
-		menu_status[3] = "";
-		menu_status[4] = "";
-		menu_status[5] = "";
-		menu_status[6] = "";
-		
 		menu_count = array_length(menu);
 		
 		if(in_controls) menu_selected = 0;
-		if(in_graphics) menu_selected = 3;
+		if(in_graphics) {
+			menu_selected = 0;
+			for (var _gi = 0; _gi < menu_count; _gi++) {
+				if (menu[_gi] == "Graphics") menu_selected = _gi;
+			}
+		}
 	}
 	
 	in_controls = false;

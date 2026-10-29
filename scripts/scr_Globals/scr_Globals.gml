@@ -226,14 +226,13 @@ DemoApplyProgressCaps();
 
 LeaderboardDownloadTopScores();
 
-// Options (music/sfx/CRT; windowed + resolution on Windows only)
+// Options (music/sfx; windowed + resolution on Windows only)
 OptionsDisplayLoadFromSave();
 
 // Apply the options setting
 audio_group_load(audiogroup_music);
 audio_group_set_gain(audiogroup_default, global.options_sfx, 0);
 audio_group_set_gain(audiogroup_music, global.options_music, 0);
-// Scanline is applied at obj_CRTController
 
 // Texture prefetch (Switch): the project ships a single, on-demand texture group, so the
 // first time a level references its sprites the page is decompressed + uploaded to VRAM

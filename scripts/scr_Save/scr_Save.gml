@@ -311,9 +311,27 @@ function OptionsDisplayAllowsWindowToggles() {
 	return SavePlatformIsWindows();
 }
 
-/// @desc Default CRT scanlines for first launch (off on Switch for handheld performance).
-function OptionsDefaultScanline() {
-	return SavePlatformIsSwitch() ? 0 : 1;
+/// @returns {Array<String>} Main options rows. Graphics exists only where window settings exist.
+function OptionsMainMenuLabels() {
+	var _menu = ["Controls", "Music Volume", "SFX Volume"];
+	if (OptionsDisplayAllowsWindowToggles()) array_push(_menu, "Graphics");
+	array_push(_menu, "Tutorial", "Credits", "Back");
+	return _menu;
+}
+
+/// @desc Extra vertical gap before Tutorial and before Back, in pixels.
+function OptionsMenuRowExtra(_menu, _index, _line) {
+	var _gap = _line * 0.5;
+	var _extra = 0;
+	var _tutorial = -1;
+	var _back = -1;
+	for (var _j = 0; _j < array_length(_menu); _j++) {
+		if (_menu[_j] == "Tutorial") _tutorial = _j;
+		if (_menu[_j] == "Back") _back = _j;
+	}
+	if (_tutorial > 0 && _index >= _tutorial) _extra += _gap;
+	if (_back > 0 && _index >= _back) _extra += _gap;
+	return _extra;
 }
 
 function OptionsDisplayResolutionList() {
@@ -333,12 +351,11 @@ function OptionsDisplayApply() {
 	window_set_size(global.options_res_w, global.options_res_h);
 }
 
-/// @desc Load audio/CRT options and platform-appropriate display settings from save.
+/// @desc Load audio options and platform-appropriate display settings from save.
 function OptionsDisplayLoadFromSave() {
 	SaveIniOpen();
 	global.options_music = SaveIniReadReal("options", "music", 1);
 	global.options_sfx = SaveIniReadReal("options", "sfx", 1);
-	global.options_scanline = SaveIniReadReal("options", "scanline", OptionsDefaultScanline());
 	if (OptionsDisplayAllowsWindowToggles()) {
 		global.options_windowed = bool(SaveIniReadReal("options", "windowed", 1));
 		global.options_res_h = SaveIniReadReal("options", "resolution height", OPTIONS_DESIGN_H);
@@ -355,20 +372,19 @@ function OptionsDisplayLoadFromSave() {
 /// @returns {Struct} { menu: Array, status: Array, count: Real } for the graphics submenu
 function OptionsGraphicsMenuData() {
 	OptionsDisplaySyncWindowedStateFromOS();
-	var _scan = global.options_scanline ? "ON" : "OFF";
-	if (OptionsDisplayAllowsWindowToggles()) {
-		var _win = global.options_windowed ? "ON" : "OFF";
-		var _res = string(global.options_res_w) + " x " + string(global.options_res_h);
+	if (!OptionsDisplayAllowsWindowToggles()) {
 		return {
-			menu: ["CRT lines", "Windowed", "Resolution", "Back"],
-			status: [_scan, _win, _res, ""],
-			count: 4
+			menu: ["Back"],
+			status: [""],
+			count: 1
 		};
 	}
+	var _win = global.options_windowed ? "ON" : "OFF";
+	var _res = string(global.options_res_w) + " x " + string(global.options_res_h);
 	return {
-		menu: ["CRT lines", "Back"],
-		status: [_scan, ""],
-		count: 2
+		menu: ["Windowed", "Resolution", "Back"],
+		status: [_win, _res, ""],
+		count: 3
 	};
 }
 

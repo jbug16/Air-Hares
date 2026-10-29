@@ -50,7 +50,7 @@ if(in_controls)
 		menu_status[_i] = "";
 	}
 }
-// Create graphics (Switch: CRT + Back only; Windows: + Windowed + Resolution)
+// Create graphics (Windows: Windowed + Resolution + Back)
 else if(in_graphics)
 {
 	var _gfx = OptionsGraphicsMenuData();

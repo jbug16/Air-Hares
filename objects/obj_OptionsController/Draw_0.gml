@@ -13,10 +13,7 @@ var _oa = image_alpha;
 // Main options / graphics / saves column — below obj_OptionsTitle (logo); tighter than 0.3*rh
 var _opts_menu_y0 = max(room_height * 0.17, 120);
 var _opts_line = 44;
-// Main 7-row list: same small gap after Graphics and before Back
-var _opts_gap_block = _opts_line * 0.5;
-var _opts_grouped_main = (!in_scores && menu_count == 7);
-var _opts_grouped_scores = in_scores;
+var _opts_row_gaps = !in_graphics;
 
 // Draw options
 if menu_draw and !in_controls and !in_leaderboards and !in_achievements and !in_saves {
@@ -29,11 +26,7 @@ if menu_draw and !in_controls and !in_leaderboards and !in_achievements and !in_
 		}
 		
 		var _yy = _opts_menu_y0 + _opts_line * i;
-		if (_opts_grouped_main) {
-			if (i >= 4) _yy += _opts_gap_block;
-			if (i >= 6) _yy += _opts_gap_block;
-		}
-		else if (_opts_grouped_scores && i >= 4) _yy += _opts_gap_block;
+		if (_opts_row_gaps) _yy += OptionsMenuRowExtra(menu, i, _opts_line);
 		
 		// Draw menu		
 		draw_set_halign(fa_left)

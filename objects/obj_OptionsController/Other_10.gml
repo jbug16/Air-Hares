@@ -50,6 +50,54 @@ if (in_scores)
 	exit;
 }
 
+// Rows below SFX move when Graphics is hidden (Switch has no window settings).
+var _picked = menu[menu_selected];
+
+if (in_graphics) {
+	if (_picked == "Back") event_user(2);
+	else if (_picked == "Windowed") {
+		var _win_status = OptionsDisplayToggleWindowed();
+		if (_win_status != undefined) menu_status[menu_selected] = _win_status;
+	}
+	else if (_picked == "Resolution") {
+		var _res_label = OptionsDisplayCycleResolution(menu_status[menu_selected], 1);
+		if (_res_label != undefined) menu_status[menu_selected] = _res_label;
+	}
+	exit;
+}
+
+if (_picked == "Graphics") {
+	in_graphics = true;
+	menu_selected = 0;
+	event_user(1);
+	exit;
+}
+if (_picked == "Tutorial") {
+	ControlDeviceAssignPrimaryFromGamepad();
+	global.game_mode = GAMEMODE.STORY;
+	global.tutorial_from_options = true;
+	with (all) {
+		if (!persistent) instance_deactivate_object(id);
+	}
+	instance_create_depth(0.5*room_width, 0.5*room_height, depth - 100, obj_Tutorial);
+	instance_deactivate_object(id);
+	instance_deactivate_object(obj_OptionsTitle);
+	exit;
+}
+if (_picked == "Credits") {
+	with (instance_create_depth(0.5*room_width, 0.5*room_height, depth - 100, obj_Credits)) {
+		from_options = true;
+		alarm[1] = 1;
+	}
+	instance_deactivate_object(id);
+	instance_deactivate_object(obj_OptionsTitle);
+	exit;
+}
+if (_picked == "Back") {
+	event_user(2);
+	exit;
+}
+
 switch(menu_selected)
 {
 	case 0:
@@ -63,19 +111,6 @@ switch(menu_selected)
 			in_controls = true;
 			event_user(1);
 		}
-		else if(menu[0] == "CRT lines")
-		{
-			global.options_scanline = global.options_scanline xor 1;	
-			SaveIniOpen();
-			SaveIniWriteReal("options", "scanline", global.options_scanline);
-			SaveIniClose();	
-			if global.options_scanline menu_status[0] = "ON";
-			else menu_status[0] = "OFF";
-		}
-		else if(menu[0] == "Back" and (in_leaderboards or in_achievements))
-		{
-			event_user(2);
-		}
 		break;
 		
 	case 1:
@@ -87,12 +122,6 @@ switch(menu_selected)
 			SaveIniWriteReal("options", "music", global.options_music);
 			SaveIniClose();
 			menu_status[1] = string(round(global.options_music * 100));
-		}
-		else if(menu[1] == "Back" or menu[2] == "BACK") event_user(2);
-		else if(menu[1] == "Windowed")
-		{
-			var _win_status = OptionsDisplayToggleWindowed();
-			if (_win_status != undefined) menu_status[1] = _win_status;
 		}
 		break;
 	
@@ -107,57 +136,6 @@ switch(menu_selected)
 			SaveIniClose();
 			menu_status[2] = string(round(global.options_sfx * 100));
 		}
-		else if(menu[2] == "Back" or menu[2] == "Back") event_user(2);
-		else if(menu[2] == "Resolution")
-		{
-			var _res_label = OptionsDisplayCycleResolution(menu_status[2], 1);
-			if (_res_label != undefined) menu_status[2] = _res_label;
-		}
-		break;
-		
-	case 3:
-		if(menu[3] == "Graphics"){
-			in_graphics = true;
-			menu_selected = 0;
-			event_user(1);
-		}
-		else if(menu[3] == "Back" or menu[2] == "BACK") event_user(2);
-		break;
-	
-	case 4:
-		if(menu[4] == "Tutorial")
-		{
-			ControlDeviceAssignPrimaryFromGamepad();
-			global.game_mode = GAMEMODE.STORY;
-			global.tutorial_from_options = true;
-			with (all) {
-				if (!persistent) instance_deactivate_object(id);
-			}
-			instance_create_depth(0.5*room_width, 0.5*room_height, depth - 100, obj_Tutorial);
-			instance_deactivate_object(id);
-			instance_deactivate_object(obj_OptionsTitle);
-		}
-		break;
-	
-	case 5:
-		if(menu[5] == "Credits")
-		{
-			with(instance_create_depth(0.5*room_width, 0.5*room_height, depth - 100, obj_Credits)) 
-			{
-				from_options = true;
-				alarm[1] = 1;
-			}
-			instance_deactivate_object(id);
-			instance_deactivate_object(obj_OptionsTitle);
-		}
-		break;
-		
-	case 6:
-		if(menu[6] == "Back" or menu[6] == "Back") event_user(2);
-		break;
-	
-	case 7:
-		event_user(2);
 		break;
 	
 	default:

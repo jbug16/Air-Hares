@@ -48,57 +48,35 @@ else if(_select)
 	exit;
 } else if(_left or _right){ 
 	if(in_controls and alarm[1] > 0) exit;
-	if(menu_selected == 1)
-	{ 
-		//if manipulating music
-		if(menu[1] == "Music Volume")
-		{
-			global.options_music = clamp(global.options_music + (0.1 * (_right - _left)), 0, 1);
-			audio_group_set_gain(audiogroup_music, global.options_music, 0);
-			SaveIniOpen();
-			SaveIniWriteReal("options", "music", global.options_music);
-			SaveIniClose();
-			menu_status[1] = string(round(global.options_music * 100));
-		}
-		// If manipulating windowing (Windows only)
-		else if(menu[1] == "Windowed")
-		{
+	if (in_graphics) {
+		var _label = menu[menu_selected];
+		if (_label == "Windowed") {
 			var _win_status = OptionsDisplayToggleWindowedDirection(_left or _right);
-			if (_win_status != undefined) menu_status[1] = _win_status;
+			if (_win_status != undefined) menu_status[menu_selected] = _win_status;
 		}
-	} 
-	else if(menu_selected == 2)
-	{ 
-		//if manipulating sfx
-		if(menu[2] == "SFX Volume")
-		{
-			global.options_sfx = clamp(global.options_sfx + (0.1 * (_right - _left)), 0, 1);
-			audio_group_set_gain(audiogroup_default, global.options_sfx, 0);
-			audio_play_sound(snd_ProjSeedShot, 1, false);
-			SaveIniOpen();
-			SaveIniWriteReal("options", "sfx", global.options_sfx);
-			SaveIniClose();
-			menu_status[2] = string(round(global.options_sfx * 100));
+		else if (_label == "Resolution") {
+			var _res_label = OptionsDisplayCycleResolution(menu_status[menu_selected], _right - _left);
+			if (_res_label != undefined) menu_status[menu_selected] = _res_label;
 		}
-		// If manipulating resolution (Windows only)
-		if(menu[2] == "Resolution")
-		{
-			var _res_label = OptionsDisplayCycleResolution(menu_status[2], _right - _left);
-			if (_res_label != undefined) menu_status[2] = _res_label;
-		}
-	} 
-	  else if(menu_selected == 0)
-	  { 
-		 //if manipulating CRT lines
-		 if(menu[0] == "CRT lines")
-		 {
-			global.options_scanline = global.options_scanline xor (_left or _right);	
-			SaveIniOpen();
-			SaveIniWriteReal("options", "scanline", global.options_scanline);
-			SaveIniClose();	
-			if global.options_scanline menu_status[0] = "ON";
-			else menu_status[0] = "OFF";
-		 }
+	}
+	else if(menu_selected == 1 && menu[1] == "Music Volume")
+	{
+		global.options_music = clamp(global.options_music + (0.1 * (_right - _left)), 0, 1);
+		audio_group_set_gain(audiogroup_music, global.options_music, 0);
+		SaveIniOpen();
+		SaveIniWriteReal("options", "music", global.options_music);
+		SaveIniClose();
+		menu_status[1] = string(round(global.options_music * 100));
+	}
+	else if(menu_selected == 2 && menu[2] == "SFX Volume")
+	{
+		global.options_sfx = clamp(global.options_sfx + (0.1 * (_right - _left)), 0, 1);
+		audio_group_set_gain(audiogroup_default, global.options_sfx, 0);
+		audio_play_sound(snd_ProjSeedShot, 1, false);
+		SaveIniOpen();
+		SaveIniWriteReal("options", "sfx", global.options_sfx);
+		SaveIniClose();
+		menu_status[2] = string(round(global.options_sfx * 100));
 	}
 }
 
@@ -148,17 +126,10 @@ if(mouse_prev_x != mouse_x or mouse_prev_y != mouse_y)
 		_x_left = room_width*0.07;
 		_y_start = room_height*0.24;
 	}
-	var _grouped_opts = (!in_controls && !in_saves && !in_scores && menu_count == 7);
-	var _grouped_scores = in_scores;
-	var _g_blk = _row * 0.5;
 	for(var _i = 0; _i < menu_count; _i++)
 	{
 		var _yy = _y_start + _row * _i;
-		if (_grouped_opts) {
-			if (_i >= 4) _yy += _g_blk;
-			if (_i >= 6) _yy += _g_blk;
-		}
-		else if (_grouped_scores && _i >= 4) _yy += _g_blk;
+		if (!in_controls && !in_saves && !in_graphics) _yy += OptionsMenuRowExtra(menu, _i, _row);
 		if(point_in_rectangle(mouse_x, mouse_y, _x_left, _yy - 0.03*room_height,
 			_x_left + string_width(menu[_i]), _yy + 0.03*room_height))
 			{
@@ -199,17 +170,10 @@ else
 		_x_left = room_width*0.07;
 		_y_start = room_height*0.24;
 	}
-	var _grouped_opts = (!in_controls && !in_saves && !in_scores && menu_count == 7);
-	var _grouped_scores = in_scores;
-	var _g_blk = _row * 0.5;
 	for(var _i = 0; _i < menu_count; _i++)
 	{
 		var _yy = _y_start + _row * _i;
-		if (_grouped_opts) {
-			if (_i >= 4) _yy += _g_blk;
-			if (_i >= 6) _yy += _g_blk;
-		}
-		else if (_grouped_scores && _i >= 4) _yy += _g_blk;
+		if (!in_controls && !in_saves && !in_graphics) _yy += OptionsMenuRowExtra(menu, _i, _row);
 		if(point_in_rectangle(mouse_x, mouse_y, _x_left, _yy - 0.03*room_height,
 			_x_left + string_width(menu[_i]), _yy + 0.03*room_height))
 			{

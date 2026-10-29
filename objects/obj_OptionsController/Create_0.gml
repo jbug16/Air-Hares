@@ -22,22 +22,10 @@ alarm[0] = 30;
 control_alpha = 1;
 blink_dur = 0.5*GAMESPD;
 
-menu[0] = "Controls";
-menu[1] = "Music Volume";
-menu[2] = "SFX Volume";
-menu[3] = "Graphics";
-menu[4] = "Tutorial";
-menu[5] = "Credits";
-menu[6] = "Back";
-
-menu_status[0] = "";
+menu = OptionsMainMenuLabels();
+menu_status = array_create(array_length(menu), "");
 menu_status[1] = string(round(global.options_music * 100));
 menu_status[2] = string(round(global.options_sfx * 100));
-menu_status[3] = "";
-menu_status[4] = "";
-menu_status[5] = "";
-menu_status[6] = "";
-
 menu_count = array_length(menu);
 
 

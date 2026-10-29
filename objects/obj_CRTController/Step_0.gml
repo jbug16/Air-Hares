@@ -1,2 +1,1 @@
-/// @desc Shader var calc
-crt_shader_enabled = global.options_scanline;
+/// CRT lines were removed. GUI resize still lives in Draw GUI.

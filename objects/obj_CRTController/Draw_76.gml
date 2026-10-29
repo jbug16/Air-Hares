@@ -1,3 +1,1 @@
-///@desc Reset shader
-
-shader_reset();
+/// CRT shader was removed. Nothing to reset.

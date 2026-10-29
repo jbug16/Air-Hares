@@ -239,11 +239,38 @@ global.ending_outro_voice = noone;
 
 // Texture prefetch (Switch): the project ships a single, on-demand texture group, so the
 // first time a level references its sprites the page is decompressed + uploaded to VRAM
-// mid-frame -> the "stutter when a level starts" from QA. We prefetch all pages up front
-// during the splash (see obj_SplashTitle) so level starts are smooth. Flip prefetch_textures
-// off here if a future build ever hits a VRAM limit (reverts to the old on-demand loading).
+// mid-frame -> the "stutter when a level starts" from QA. Pages are uploaded a few per
+// frame from boot (see TexturePrefetchTick) instead of all at once on the Wondoro logo.
+// Flip prefetch_textures off here if a future build ever hits a VRAM limit.
 global.prefetch_textures = true;
 global.textures_prefetched = false;
+global.prefetch_pages = undefined;
+global.prefetch_index = 0;
+
+/// @desc Upload a few Default-group texture pages. One page while the Wondoro logo is up.
+function TexturePrefetchTick() {
+	if (!SavePlatformIsSwitch() || !global.prefetch_textures || global.textures_prefetched) return;
+	if (!is_array(global.prefetch_pages)) {
+		global.prefetch_pages = texturegroup_get_textures("Default");
+		global.prefetch_index = 0;
+	}
+	var _pages = global.prefetch_pages;
+	var _count = array_length(_pages);
+	if (_count <= 0) {
+		global.textures_prefetched = true;
+		return;
+	}
+	var _budget = instance_exists(obj_SplashTitle) ? 1 : 2;
+	repeat (_budget) {
+		if (global.prefetch_index >= _count) {
+			global.textures_prefetched = true;
+			return;
+		}
+		texture_prefetch(_pages[global.prefetch_index]);
+		global.prefetch_index += 1;
+	}
+	if (global.prefetch_index >= _count) global.textures_prefetched = true;
+}
 
 // Transition
 //global.transition_art = noone;

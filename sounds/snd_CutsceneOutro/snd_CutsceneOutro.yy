@@ -17,7 +17,7 @@
     "name":"Cutscenes",
     "path":"folders/Sounds/Cutscenes.yy",
   },
-  "preload":false,
+  "preload":true,
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,

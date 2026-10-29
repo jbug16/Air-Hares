@@ -13,6 +13,12 @@
 
 #macro GAMESPD game_get_speed(gamespeed_fps)
 
+// snd_CutsceneOutro is 72.4s, but the music falls silent around 65.5s.
+// Hand off before that tail. snd_Credits goes quiet around 80.5s of 84.8s;
+// loop the bed before that tail so the roll does not drop out.
+#macro ENDING_OUTRO_CROSSFADE_AT 63
+#macro ENDING_CREDITS_LOOP_AT 78
+
 // Level stuff
 #macro SHADOW_ANCHOR_X 640
 #macro SHADOW_ANCHOR_Y 414

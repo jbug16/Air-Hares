@@ -20,3 +20,6 @@ if ((InputGet(INPUT.ANY) or (!global.mouse_disable and mouse_check_button_presse
 		event_perform(ev_alarm, 3);	
 	}
 }
+
+// Options → Credits keeps the title theme. The ending sequence crossfades.
+if (!from_options) EndingCreditsMaintainMusic();

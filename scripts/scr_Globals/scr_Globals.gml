@@ -235,6 +235,9 @@ audio_group_set_gain(audiogroup_default, global.options_sfx, 0);
 audio_group_set_gain(audiogroup_music, global.options_music, 0);
 // Scanline is applied at obj_CRTController
 
+// Voice id of the outro bed, kept across the room change into the credits.
+global.ending_outro_voice = noone;
+
 // Texture prefetch (Switch): the project ships a single, on-demand texture group, so the
 // first time a level references its sprites the page is decompressed + uploaded to VRAM
 // mid-frame -> the "stutter when a level starts" from QA. We prefetch all pages up front

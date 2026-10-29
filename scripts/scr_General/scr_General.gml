@@ -699,6 +699,31 @@ function AudioBgmChange(_bgm){
 	return true;
 }
 
+/// @desc Keep the ending bed audible. Call from obj_Credits.
+/// Outro music dies into a silent tail around 65s, and the credits track does the same around 80s.
+/// Crossfade before the outro tail, and loop the credits bed before its tail.
+function EndingCreditsMaintainMusic() {
+	var _outro_on = (global.ending_outro_voice != noone) && audio_is_playing(global.ending_outro_voice);
+	var _outro_pos = _outro_on ? audio_sound_get_track_position(global.ending_outro_voice) : 0;
+	var _bed_on = (music != noone) && audio_is_playing(music);
+
+	if (!_bed_on) {
+		var _handoff = !_outro_on || (_outro_pos >= ENDING_OUTRO_CROSSFADE_AT) || (phase > 0);
+		if (_handoff) {
+			audio_sound_gain(snd_Credits, 1, 0);
+			music = audio_play_sound(snd_Credits, 1, false);
+			if (_outro_on) {
+				audio_sound_gain(music, 0, 0);
+				audio_sound_gain(music, 1, 2000);
+				audio_sound_gain(global.ending_outro_voice, 0, 2000);
+			}
+		}
+	}
+	else if (phase < 2 && audio_sound_get_track_position(music) >= ENDING_CREDITS_LOOP_AT) {
+		audio_sound_set_track_position(music, 0);
+	}
+}
+
 // Data structure
 function Profile() constructor{
 	stat = {

@@ -32,7 +32,12 @@ timings_txt = 0.2*GAMESPD;
 tween_fadein_img = TWEENTYPE.QUAD_OUT;		// image fadein
 tween_fadein_txt = TWEENTYPE.QUAD_OUT;
 
-// BG music
+// BG music. Played next frame (Alarm 2), not in this Create.
+// Parent Create calls audio_stop_all() in the same step, which drops the
+// new voice on Switch. Asset gain is forced back to 1 there too: a previous
+// ending faded the asset itself, and that gain sticks.
 music_bg = snd_CutsceneOutro;
+defer_music = true;
 
 event_user(0);
+alarm[2] = 1;

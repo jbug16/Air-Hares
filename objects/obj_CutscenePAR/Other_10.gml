@@ -29,5 +29,10 @@ TweenStart("image_xscale", zoom_img[image_index][0], zoom_img[image_index][1], _
 TweenStart("x", x + x_start[image_index], x + x_stop[image_index], _time_next, tween_pos_img);
 TweenStart("y", y0 + y_start[image_index], y0 + y_stop[image_index], _time_next, tween_pos_img);
 
-// Sounds
-music_bg = audio_play_sound(music_bg, 1, false);
+// Sounds. Outro defers this by a frame: audio_stop_all() in Create is still
+// in the audio queue on Switch and will swallow a sound started beside it.
+var _defer = variable_instance_exists(id, "defer_music") && defer_music;
+if (!_defer) {
+	audio_sound_gain(music_bg, 1, 0);
+	music_bg = audio_play_sound(music_bg, 1, false);
+}
